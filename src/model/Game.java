@@ -1,10 +1,15 @@
 package model;
 
-public class Game {
+import java.util.Optional;
 
-	Player player_1 = new Player("Samuele",1);
-	Player player_2 = null;
+public class Game{
+
+	private Player firstp;
+	private Optional<Player> secondp;
 	
+	public Game() {
+
+	}
 	
 	
 	
