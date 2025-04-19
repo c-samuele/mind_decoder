@@ -1,4 +1,6 @@
-/.DS_Store
 /model/
-/view/
 /Test/
+/view/
+/control/
+/diagram.xml
+/diagram.io
