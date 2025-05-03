@@ -37,5 +37,5 @@ Il gioco può essere svolto in:
 
 ## Suddivisione del lavoro
 
-- Samuele si occuperà del design della GUI e del Model.
-- Cristiano si occuperà del Control e dell'implementazione della GUI.
+-
+- 
