@@ -3,12 +3,31 @@ package model;
 import java.util.List;
 
 public class GameSessionImpl implements GameSession {
+	private final Player firstPlayer;
+	private GameMode mode;
+	private GameStats stats;
+	private int level;
 	
+	public GameSessionImpl(Player p,GameMode m,GameStats s) {
+		this.firstPlayer = p;
+		this.mode = m;
+		this.stats = s;
+		this.level = 1;
+	}
 	
-	public GameSessionImpl() {
+	@Override
+	public Player getPlayer() {
+		return firstPlayer;
+	}
 	
-		Player ply = new PlayerImpl("Samuele");
-		
+	@Override
+	public GameMode getMode() {
+		return mode;
+	}
+	
+	@Override
+	public int getLevel() {
+		return level;
 	}
 
 	@Override
@@ -70,5 +89,7 @@ public class GameSessionImpl implements GameSession {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 }

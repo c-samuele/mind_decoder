@@ -4,14 +4,13 @@ public class PlayerImpl implements Player {
 	
 	private String name;
 	
-	PlayerImpl(String name){
+	public PlayerImpl(String name){
 		this.name = name;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override

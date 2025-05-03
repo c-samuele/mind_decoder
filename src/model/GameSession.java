@@ -13,4 +13,7 @@ public interface GameSession {
 	public boolean loadSession();
 	public boolean saveSession();
 	public boolean resetSession();
+	public Player getPlayer();
+	public int getLevel();
+	public GameMode getMode();
 }
