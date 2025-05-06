@@ -1,10 +1,17 @@
 package model;
 
 public class GameImpl implements Game {
+	
+	private GameMode mode;
+	private int attempts; 
+	
+	public GameImpl(GameMode mode,int attempts) {
+		this.mode = mode;
+		this.attempts = attempts;
+	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 		
 	}
 

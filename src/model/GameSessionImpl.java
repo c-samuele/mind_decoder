@@ -3,14 +3,17 @@ package model;
 import java.util.List;
 
 public class GameSessionImpl implements GameSession {
+	private final int MAX_LEVEL = 10;
 	private final Player firstPlayer;
-	private GameMode mode;
 	private GameStats stats;
 	private int level;
+	private Game game;
+	private boolean gameActive;
 	
-	public GameSessionImpl(Player p,GameMode m,GameStats s) {
+	
+	public GameSessionImpl(Player p,GameStats s) {
+		this.gameActive = false;
 		this.firstPlayer = p;
-		this.mode = m;
 		this.stats = s;
 		this.level = 1;
 	}
@@ -21,51 +24,56 @@ public class GameSessionImpl implements GameSession {
 	}
 	
 	@Override
-	public GameMode getMode() {
-		return mode;
-	}
-	
-	@Override
 	public int getLevel() {
 		return level;
 	}
-
+	
 	@Override
-	public void startNewGame(GameMode mode) {
-		// TODO Auto-generated method stub
-		
+	public int getMaxLevel() {
+		return MAX_LEVEL;
 	}
-
-	@Override
-	public GameImpl getCurrentGame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasAcriveGame() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public int getUnlockedLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.level;
 	}
 
 	@Override
 	public void unlockNextLevel() {
-		// TODO Auto-generated method stub
+		if(this.level < MAX_LEVEL)
+			this.level++;
+		else
+			throw new IllegalStateException("Maximum level already reached.");
+	}
+	
+	
+
+	@Override
+	public void startNewGame(GameMode mode,int attempts) {
+		game = new GameImpl(mode,attempts);
 		
 	}
 
 	@Override
-	public List<GameStats> getGameHistory() {
-		// TODO Auto-generated method stub
-		return null;
+	public Game getCurrentGame() {
+		return this.game;
 	}
 
+	@Override
+	public boolean hasActiveGame() {
+		return this.gameActive;
+	}
+
+	
+	
+	
+
+	
+
+	
+	
+// ------------	DA FARE IN SEGUITO ------------------
+	
 	@Override
 	public GameStats getBestScore() {
 		// TODO Auto-generated method stub
@@ -90,6 +98,13 @@ public class GameSessionImpl implements GameSession {
 		return false;
 	}
 
+	@Override
+	public List<GameStats> getGameHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 
 }

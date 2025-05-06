@@ -2,6 +2,8 @@ package Test;
 import model.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,14 +19,21 @@ public class TestModel {
 	Player player = new PlayerImpl(name);
 	mode = GameMode.SINGLE_PLAYER;
 	GameStats stats = new GameStats();
-	session = new GameSessionImpl(player,mode,stats);
+	session = new GameSessionImpl(player,stats);
 	}
 	
 	@Test
-	public void testSession() {
+	public void testBasicSession() {
+		assertFalse(session.hasActiveGame());
 		assertEquals(name,session.getPlayer().getName());
-		assertEquals(mode,session.getMode());
 		assertEquals(1,session.getLevel());
+	}
+	
+	@Test
+	public void testSessionLevel() {
+		while (session.getLevel() < session.getMaxLevel())
+			session.unlockNextLevel();
+		assertThrows(IllegalStateException.class, () -> session.unlockNextLevel());
 	}
 	
 	@Test

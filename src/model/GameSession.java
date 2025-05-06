@@ -3,9 +3,9 @@ package model;
 import java.util.List;
 
 public interface GameSession {
-	public void startNewGame(GameMode mode);
-	public GameImpl getCurrentGame();
-	public boolean hasAcriveGame();
+	public void startNewGame(GameMode mode,int attempts);
+	public Game getCurrentGame();
+	public boolean hasActiveGame();
 	public int getUnlockedLevel();
 	public void unlockNextLevel();
 	public List<GameStats> getGameHistory();
@@ -15,5 +15,6 @@ public interface GameSession {
 	public boolean resetSession();
 	public Player getPlayer();
 	public int getLevel();
-	public GameMode getMode();
+	public int getMaxLevel();
+
 }
