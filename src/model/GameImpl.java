@@ -3,11 +3,11 @@ package model;
 public class GameImpl implements Game {
 	
 	private GameMode mode;
-	private int attempts; 
+	private int level; 
 	
-	public GameImpl(GameMode mode,int attempts) {
+	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
-		this.attempts = attempts;
+		this.level = level;
 	}
 
 	@Override

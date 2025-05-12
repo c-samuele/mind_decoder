@@ -45,12 +45,10 @@ public class GameSessionImpl implements GameSession {
 		else
 			throw new IllegalStateException("Maximum level already reached.");
 	}
-	
-	
 
 	@Override
-	public void startNewGame(GameMode mode,int attempts) {
-		game = new GameImpl(mode,attempts);
+	public void startNewGame(GameMode mode,int level) {
+		game = new GameImpl(mode,level);
 		
 	}
 
@@ -67,40 +65,35 @@ public class GameSessionImpl implements GameSession {
 	
 	
 	
-
-	
-
-	
-	
 // ------------	DA FARE IN SEGUITO ------------------
 	
 	@Override
 	public GameStats getBestScore() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean loadSession() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean saveSession() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean resetSession() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public List<GameStats> getGameHistory() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public interface GameSession {
-	public void startNewGame(GameMode mode,int attempts);
+	public void startNewGame(GameMode mode,int level);
 	public Game getCurrentGame();
 	public boolean hasActiveGame();
 	public int getUnlockedLevel();
