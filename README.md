@@ -22,20 +22,22 @@ Il gioco può essere svolto in:
 - Punteggio e Tentativi
 - Legenda e regole di gioco
 - Indizi partita
-- Statistiche di gioco
+- Log di gioco
 
 ## Funzionalità opzionali
 
 - Modalità 2 giocatori
 - Modalità a tempo
-- Modalità difficile (più colonne e meno tentativi)
+- Modalità sfida
 
 ## "Challenge" principali
 
-- Creazione di un controllore che al termine della "giocata" permetta di dare consigli all'utente oltre che verificare la corretta applicazione delle meccaniche implementate.
-- Realizzare una GUI per semplificare e rendere intuitiva la modalità di gioco.
+- Creazione di un controllore che verificare la corretta applicazione delle regole di gioco.
+- Gestione dei livelli e round di gioco.
+- Gestione dei comportamenti imprevisti dell'utente.
+- Generazione procedurale del codice segreto.
 
 ## Suddivisione del lavoro
 
 -
-- 
+-
