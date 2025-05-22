@@ -15,7 +15,7 @@ public class GameSessionImpl implements GameSession {
 		this.gameActive = false;
 		this.firstPlayer = p;
 		this.stats = s;
-		this.level = 1;
+		this.level = p.getCurrentLevel();
 	}
 	
 	@Override

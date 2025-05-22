@@ -1,4 +1,4 @@
-package Test;
+package test;
 import model.*;
 
 import static org.junit.Assert.assertEquals;
@@ -16,10 +16,10 @@ public class TestModel {
 	
 	@Before
 	public void setUp() {
-	Player player = new PlayerImpl(name);
-	mode = GameMode.SINGLE_PLAYER;
-	GameStats stats = new GameStats();
-	session = new GameSessionImpl(player,stats);
+		Player player = new PlayerImpl(name);
+		mode = GameMode.SINGLE_PLAYER;
+		GameStats stats = new GameStats();
+		session = new GameSessionImpl(player,stats);
 	}
 	
 	@Test
