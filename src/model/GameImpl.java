@@ -46,12 +46,6 @@ public class GameImpl implements Game {
 	}
 
 	@Override
-	public SecretCode getSecretCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public GameStats getGameStats() {
 		// TODO Auto-generated method stub
 		return null;

@@ -7,7 +7,6 @@ public interface Game {
 	public boolean isWon();
 	public int getRemainingAttempts();
 	public void getHints(); // List<Hint>
-	public SecretCode getSecretCode();
 	public GameStats getGameStats();
 	
 	
