@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class GameSessionImpl implements GameSession {
-	private final int MAX_LEVEL = 10;
+	private final int MAX_LEVEL = 12;
 	private final Player firstPlayer;
 	private GameStats stats;
 	private int level;
