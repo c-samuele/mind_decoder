@@ -4,6 +4,7 @@ public class GameImpl implements Game {
 	
 	private GameMode mode;
 	private int level; 
+	private GameStats stats;
 	
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
@@ -53,8 +54,7 @@ public class GameImpl implements Game {
 
 	@Override
 	public GameStats generateStats() {
-		// TODO Auto-generated method stub
-		return null;
+		return stats;
 	}
 
 }

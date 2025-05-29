@@ -15,11 +15,18 @@ public class GameSessionImpl implements GameSession {
 	private Game game;										// Riferimento a game
 	private boolean gameActive;								// flag
 	
-	
+//	costruttore iniziale
 	public GameSessionImpl(Player p) {
 		this.gameActive = false;
 		this.firstPlayer = p;
 		this.level = 1;
+	}
+	
+//	Se ho già partite pregresse
+	public GameSessionImpl(Player p,GameStats g) {
+		firstPlayer = p;
+		level = g.getLevel();
+		
 	}
 	
 	@Override
@@ -66,6 +73,11 @@ public class GameSessionImpl implements GameSession {
 	
 
 	@Override
+	public List<GameStats> getGameStats() {
+		return gameStats;
+	}
+
+	@Override
 	public Game getCurrentGame() {
 		return this.game;
 	}
@@ -94,20 +106,12 @@ public class GameSessionImpl implements GameSession {
 
 	@Override
 	public boolean saveSession() {
-		
 		return false;
 	}
 
 	@Override
 	public boolean resetSession() {
-		
 		return false;
-	}
-
-	@Override
-	public List<GameStats> getGameStats() {
-		
-		return null;
 	}
 
 	
