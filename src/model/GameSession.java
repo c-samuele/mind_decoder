@@ -4,11 +4,12 @@ import java.util.List;
 
 public interface GameSession {
 	public void startNewGame(GameMode mode,int level);
+	public void endGame();
 	public Game getCurrentGame();
 	public boolean hasActiveGame();
 	public int getUnlockedLevel();
 	public void unlockNextLevel();
-	public List<GameStats> getGameHistory();
+	public List<GameStats> getGameStats();
 	public GameStats getBestScore();
 	public boolean loadSession();
 	public boolean saveSession();
@@ -16,5 +17,5 @@ public interface GameSession {
 	public Player getPlayer();
 	public int getLevel();
 	public int getMaxLevel();
-
+	
 }

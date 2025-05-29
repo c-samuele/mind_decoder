@@ -18,8 +18,7 @@ public class TestModel {
 	public void setUp() {
 		Player player = new PlayerImpl(name);
 		mode = GameMode.SINGLE_PLAYER;
-		GameStats stats = new GameStats();
-		session = new GameSessionImpl(player,stats);
+		session = new GameSessionImpl(player);
 	}
 	
 	@Test

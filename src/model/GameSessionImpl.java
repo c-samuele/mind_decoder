@@ -1,21 +1,25 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameSessionImpl implements GameSession {
-	private final int MAX_LEVEL = 12;
-	private final Player firstPlayer;
-	private GameStats stats;
-	private int level;
-	private Game game;
-	private boolean gameActive;
+	
+	private final Player firstPlayer;						// Giocatore 1
+	
+	private final int MAX_LEVEL = 12;						// Livello massimo del gioco
+	private int level;										// Livello corrente
+	
+	private List<GameStats> gameStats = new ArrayList<>();	// Storico Game passati
+						
+	private Game game;										// Riferimento a game
+	private boolean gameActive;								// flag
 	
 	
-	public GameSessionImpl(Player p,GameStats s) {
+	public GameSessionImpl(Player p) {
 		this.gameActive = false;
 		this.firstPlayer = p;
-		this.stats = s;
-		this.level = p.getCurrentLevel();
+		this.level = 1;
 	}
 	
 	@Override
@@ -49,8 +53,17 @@ public class GameSessionImpl implements GameSession {
 	@Override
 	public void startNewGame(GameMode mode,int level) {
 		game = new GameImpl(mode,level);
+		gameActive = true;
 		
 	}
+	
+	public void endGame() {
+	    if (game == null) throw new IllegalStateException("Game doesn't exist.");
+	    gameStats.add(game.generateStats());
+	    game = null;
+	    gameActive = false;
+	}
+	
 
 	@Override
 	public Game getCurrentGame() {
@@ -92,7 +105,7 @@ public class GameSessionImpl implements GameSession {
 	}
 
 	@Override
-	public List<GameStats> getGameHistory() {
+	public List<GameStats> getGameStats() {
 		
 		return null;
 	}

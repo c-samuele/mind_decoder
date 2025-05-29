@@ -8,6 +8,5 @@ public interface Game {
 	public int getRemainingAttempts();
 	public void getHints(); // List<Hint>
 	public GameStats getGameStats();
-	
-	
+	public GameStats generateStats();
 }
