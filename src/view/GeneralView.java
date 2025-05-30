@@ -1,7 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
-
+import java.awt.GridLayout;
 import javax.swing.JFrame;
 
 //
@@ -13,7 +12,7 @@ public abstract class GeneralView {
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setLayout(new BorderLayout()); 
+        frame.setLayout(new GridLayout()); 
     }
 
     public void show() {
