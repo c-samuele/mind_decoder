@@ -1,3 +1,10 @@
+/**
+ * Class implementing the Code interface.
+ * 
+ * @author Samuele Caporale
+ * @version 0.1.0
+ */
+
 package model;
 
 public class GameImpl implements Game {

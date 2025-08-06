@@ -1,32 +1,41 @@
+/**
+ * Class implementing the gameSession.
+ * 
+ * @author Samuele Caporale
+ * @version 0.1.0
+ */
+
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class GameSessionImpl implements GameSession {
+public class SessionImpl implements Session {
 	
-	private final Player firstPlayer;						// Giocatore 1
+	private final Player firstPlayer;						// 1° player
+	private final Optional<Player> secondPlayer; 			// 2° player
 	
-	private final int MAX_LEVEL = 12;						// Livello massimo del gioco
-	private int level;										// Livello corrente
+	private final int MAX_LEVEL = 12;						// Max Level
+	private int unlockedLevel;
+	private int currentLevel;	
+	// Current Level
 	
-	private List<GameStats> gameStats = new ArrayList<>();	// Storico Game passati
+	private List<GameStats> gameStats = new ArrayList<>();	// Game stats
 						
-	private Game game;										// Riferimento a game
-	private boolean gameActive;								// flag
+	private Game game;										// Current Game
+	private boolean gameActive;								// Active game
 	
-//	costruttore iniziale
-	public GameSessionImpl(Player p) {
+	/**
+	 * Constructor for the Session
+	 * 
+	 * @param first player
+	 * @param second player optional
+	 */
+	public SessionImpl(Player p1,Player p2) {
 		this.gameActive = false;
-		this.firstPlayer = p;
-		this.level = 1;
-	}
-	
-//	Se ho già partite pregresse
-	public GameSessionImpl(Player p,GameStats g) {
-		firstPlayer = p;
-		level = g.getLevel();
-		
+		this.firstPlayer = p1;
+		this.secondPlayer = Optional.of(p2);
 	}
 	
 	@Override
@@ -36,7 +45,7 @@ public class GameSessionImpl implements GameSession {
 	
 	@Override
 	public int getLevel() {
-		return level;
+		return this.unlockedLevel;
 	}
 	
 	@Override
@@ -46,13 +55,13 @@ public class GameSessionImpl implements GameSession {
 	
 	@Override
 	public int getUnlockedLevel() {
-		return this.level;
+		return this.unlockedLevel;
 	}
 
 	@Override
 	public void unlockNextLevel() {
-		if(this.level < MAX_LEVEL)
-			this.level++;
+		if(this.unlockedLevel < MAX_LEVEL)
+			this.unlockedLevel++;
 		else
 			throw new IllegalStateException("Maximum level already reached.");
 	}
@@ -112,6 +121,12 @@ public class GameSessionImpl implements GameSession {
 	@Override
 	public boolean resetSession() {
 		return false;
+	}
+
+	@Override
+	public void startNewGame(GameMode mode) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

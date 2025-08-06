@@ -3,16 +3,19 @@ package test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import model.*;
 
-public class TestGameSession {
+public class TestSession {
 	
 	private String name;
 	private Player player;
 	private GameMode mode;
-	private GameSession session;
+	private Session session;
 
 // --- SET UP -------------------------------------------- //
 	
@@ -21,7 +24,7 @@ public class TestGameSession {
 		name = "Samuele";
 		player = new PlayerImpl(name);
 		mode = GameMode.SINGLE_PLAYER;
-		session = new GameSessionImpl(player);
+		session = new SessionImpl(player,null);
 	}
 	
 // --- GAME TEST --------------------------------------- //

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,13 +14,13 @@ public class TestModel {
 
 	private String name = "player1";
 	private GameMode mode;
-	private GameSession session;
+	private Session session;
 	
 	@Before
 	public void setUp() {
 		Player player = new PlayerImpl(name);
 		mode = GameMode.SINGLE_PLAYER;
-		session = new GameSessionImpl(player);
+		session = new SessionImpl(player,null);
 	}
 	
 	@Test
