@@ -18,6 +18,10 @@ public class GameImpl implements Game {
 		this.level = level;
 	}
 
+	public GameImpl(GameMode mode) {
+		this.mode = mode;
+	}	
+	
 	@Override
 	public void start() {
 		

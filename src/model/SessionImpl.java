@@ -13,13 +13,12 @@ import java.util.Optional;
 
 public class SessionImpl implements Session {
 	
+	private final int MAX_LEVEL = 12;						// Max Level
+	
 	private final Player firstPlayer;						// 1° player
 	private final Optional<Player> secondPlayer; 			// 2° player
 	
-	private final int MAX_LEVEL = 12;						// Max Level
 	private int unlockedLevel;
-	private int currentLevel;	
-	// Current Level
 	
 	private List<GameStats> gameStats = new ArrayList<>();	// Game stats
 						
@@ -32,21 +31,23 @@ public class SessionImpl implements Session {
 	 * @param first player
 	 * @param second player optional
 	 */
-	public SessionImpl(Player p1,Player p2) {
-		this.gameActive = false;
-		this.firstPlayer = p1;
-		this.secondPlayer = Optional.of(p2);
+	public SessionImpl(Player p1,Optional<Player> p2) {
+		this.unlockedLevel = 1;		// current unlocked level
+		this.gameActive = false;	// status game
+		this.firstPlayer = p1;		// player1
+		this.secondPlayer = p2;		// player2
 	}
 	
 	@Override
-	public Player getPlayer() {
+	public Player getFirstPlayer() {
 		return firstPlayer;
 	}
 	
 	@Override
-	public int getLevel() {
-		return this.unlockedLevel;
+	public Optional<Player> getSecondPlayer() {
+		return secondPlayer;
 	}
+	
 	
 	@Override
 	public int getMaxLevel() {
@@ -66,9 +67,17 @@ public class SessionImpl implements Session {
 			throw new IllegalStateException("Maximum level already reached.");
 	}
 
+	
 	@Override
 	public void startNewGame(GameMode mode,int level) {
 		game = new GameImpl(mode,level);
+		gameActive = true;
+		
+	}
+	
+	@Override
+	public void startNewGame(GameMode mode) {
+		game = new GameImpl(mode);
 		gameActive = true;
 		
 	}
@@ -121,12 +130,6 @@ public class SessionImpl implements Session {
 	@Override
 	public boolean resetSession() {
 		return false;
-	}
-
-	@Override
-	public void startNewGame(GameMode mode) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	

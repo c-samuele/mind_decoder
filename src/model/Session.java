@@ -8,6 +8,7 @@
 package model;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Session {
 	
@@ -20,7 +21,7 @@ public interface Session {
 	public void startNewGame(GameMode mode,int level);
 	
 	/**
-	 * Method for start new game - multy player or ai challenge
+	 * Method for start new game - multy_player or Ai_challenge
 	 * 
 	 * @param mode mode of game
 	 * @param level of game
@@ -77,18 +78,19 @@ public interface Session {
 	public GameStats getBestScore();
 	
 	/**
-	 * Get the current player
+	 * Get the current first player
 	 * 
-	 * @return the current player
+	 * @return the current first player
 	 */
-	public Player getPlayer();
+	public Player getFirstPlayer();
 	
 	/**
-	 * Get the current level
+	 * Get the current second player
 	 * 
-	 * @return level
+	 * @return the current second player
 	 */
-	public int getLevel();
+	public Optional<Player> getSecondPlayer();
+	
 	
 	/**
 	 * Get the max level of the session
