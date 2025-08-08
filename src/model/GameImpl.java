@@ -24,7 +24,7 @@ public class GameImpl implements Game {
 	
 	@Override
 	public void start() {
-		
+		System.out.println("\n------ The game is start ------\n");
 	}
 
 	@Override
@@ -66,6 +66,17 @@ public class GameImpl implements Game {
 	@Override
 	public GameStats generateStats() {
 		return stats;
+	}
+
+	@Override
+	public void end() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getLevel() {
+		return this.level;
 	}
 
 }

@@ -6,7 +6,6 @@
  */
 
 package model;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,7 @@ public interface Session {
 	 * @param mode mode of game
 	 * @param level of game
 	 */
-	public void startNewGame(GameMode mode,int level);
+	public void createNewGame(GameMode mode,int level);
 	
 	/**
 	 * Method for start new game - multy_player or Ai_challenge
@@ -26,7 +25,7 @@ public interface Session {
 	 * @param mode mode of game
 	 * @param level of game
 	 */
-	public void startNewGame(GameMode mode);
+	public void createNewGame(GameMode mode);
 	
 	/**
 	 * For end the game

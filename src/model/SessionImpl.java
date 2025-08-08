@@ -8,10 +8,11 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class SessionImpl implements Session {
+public class SessionImpl implements Session,GameAction {
 	
 	private final int MAX_LEVEL = 12;						// Max Level
 	
@@ -20,7 +21,7 @@ public class SessionImpl implements Session {
 	
 	private int unlockedLevel;
 	
-	private List<GameStats> gameStats = new ArrayList<>();	// Game stats
+	private List<GameStats> gameStats = new ArrayList<GameStats>();
 						
 	private Game game;										// Current Game
 	private boolean gameActive;								// Active game
@@ -69,14 +70,14 @@ public class SessionImpl implements Session {
 
 	
 	@Override
-	public void startNewGame(GameMode mode,int level) {
+	public void createNewGame(GameMode mode,int level) {
 		game = new GameImpl(mode,level);
 		gameActive = true;
 		
 	}
 	
 	@Override
-	public void startNewGame(GameMode mode) {
+	public void createNewGame(GameMode mode) {
 		game = new GameImpl(mode);
 		gameActive = true;
 		
@@ -92,7 +93,7 @@ public class SessionImpl implements Session {
 
 	@Override
 	public List<GameStats> getGameStats() {
-		return gameStats;
+		return this.gameStats;
 	}
 
 	@Override
@@ -130,6 +131,54 @@ public class SessionImpl implements Session {
 	@Override
 	public boolean resetSession() {
 		return false;
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void end() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void makeAttempt(Code c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isOver() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isWon() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getRemainingAttempts() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void getHints() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public GameStats generateStats() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

@@ -15,23 +15,23 @@ public class CodeImpl implements Code {
 	/**
 	 * secretCode sequence of code
 	 * */
-	private List<Color> secretCode;	 
+	private List<Color> code;	 
 	
 	/**
 	 * @param colors variable sequence of secret colors 
 	 */
 	CodeImpl(Color...colors){
-		secretCode = new ArrayList<Color>(List.of(colors));
+		code = new ArrayList<Color>(List.of(colors));
 	}
 
 	@Override
 	public List<Color> getColor() {
-		return List.copyOf(secretCode);
+		return List.copyOf(code);
 	}
 	
 	@Override
 	public Color getColorByIndex(int index) {
-		return secretCode.get(index);
+		return code.get(index);
 	}
 
 }

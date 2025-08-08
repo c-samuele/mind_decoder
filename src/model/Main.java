@@ -24,10 +24,11 @@ public class Main {
 //		}
 	
 		// Start new Single player Game
-		tSession.startNewGame(GameMode.SINGLE_PLAYER,tSession.getUnlockedLevel());
-		System.out.println("\n------ StartNewGame ------ \n\n"
+		tSession.createNewGame(GameMode.SINGLE_PLAYER,tSession.getUnlockedLevel());
+		System.out.println("\n------ Create New Game ------ \n\n"
 						  +"[GAME ACTIVE] \t\t"+tSession.hasActiveGame());
-			
+		
+		tSession.getCurrentGame().start();
 		
 		
 	}
