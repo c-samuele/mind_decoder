@@ -83,13 +83,6 @@ public class SessionImpl implements Session,GameAction {
 		
 	}
 	
-	public void endGame() {
-	    if (game == null) throw new IllegalStateException("Game doesn't exist.");
-	    gameStats.add(game.generateStats());
-	    game = null;
-	    gameActive = false;
-	}
-	
 
 	@Override
 	public List<GameStats> getGameStats() {
@@ -105,15 +98,9 @@ public class SessionImpl implements Session,GameAction {
 	public boolean hasActiveGame() {
 		return this.gameActive;
 	}
-
-	
-	
-	
-// ------------	DA FARE IN SEGUITO ------------------
 	
 	@Override
 	public GameStats getBestScore() {
-		
 		return null;
 	}
 
@@ -135,14 +122,18 @@ public class SessionImpl implements Session,GameAction {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		if(gameActive==false) {
+			this.gameActive = true;
+			this.getCurrentGame().start();
+		}
 	}
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
-		
+		if(gameActive==true) {
+			this.gameActive = false;
+			this.getCurrentGame().end();
+		}
 	}
 
 	@Override
@@ -179,6 +170,15 @@ public class SessionImpl implements Session,GameAction {
 	public GameStats generateStats() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void sessionLog() {
+		System.out.println("[FIRST PLAYER] \t\t" + this.getFirstPlayer().getName());
+		System.out.println("[SECOND PLAYER] \t" + this.getSecondPlayer());
+		System.out.println("[UNLOCKED LEVEL] \t" + this.getUnlockedLevel()+"/"+this.getMaxLevel());
+		System.out.println("[GAME ACTIVE] \t\t"+this.hasActiveGame());
+		
 	}
 
 	

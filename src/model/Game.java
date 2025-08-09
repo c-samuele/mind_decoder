@@ -11,6 +11,7 @@ public interface Game {
 	public void start();
 	public void end();
 	public int getLevel();
+	public SecretCode makeSecretCode(int level);
 	public void makeAttempt(Code c);
 	public boolean isOver();
 	public boolean isWon();

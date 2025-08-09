@@ -7,11 +7,17 @@
 
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class GameImpl implements Game {
 	
 	private GameMode mode;
 	private int level; 
 	private GameStats stats;
+	
+	private SecretCode sCode;
 	
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
@@ -25,6 +31,18 @@ public class GameImpl implements Game {
 	@Override
 	public void start() {
 		System.out.println("\n------ The game is start ------\n");
+	}
+	
+	public SecretCode makeSecretCode(int level) {
+		System.out.print("--- MAKE A SECRET COD ---\n\n");
+		System.out.print("[LEVEL GAME]\t"+this.level+"\n");
+		System.out.print("[NUMBER OF COLORS FOR SECRETCODE]\t"+ this.numberOfColors(this.level)+"\n");
+		System.out.print("ALL COLORS: ");
+		List<Color> allColors = new ArrayList<>(Arrays.asList(Color.values()));
+		
+		System.out.print(allColors);
+		
+		return null;
 	}
 
 	@Override
@@ -70,8 +88,7 @@ public class GameImpl implements Game {
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("\n------ The game is end ------\n");
 	}
 
 	@Override
@@ -79,4 +96,12 @@ public class GameImpl implements Game {
 		return this.level;
 	}
 
+	
+	public int numberOfColors(int level) {
+		if(level<=9)
+			return level+=2;
+		else
+			return 12;
+	}
+	
 }

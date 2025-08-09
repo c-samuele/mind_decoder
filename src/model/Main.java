@@ -1,3 +1,10 @@
+/**
+ * Main Class.
+ * 
+ * @author Samuele Caporale
+ * @version 0.1.0
+ */
+
 package model;
 
 import java.util.Optional;
@@ -10,12 +17,7 @@ public class Main {
 		
 		Session tSession = new SessionImpl(p1,Optional.empty());
 		
-		System.out.println("[FIRST PLAYER] \t\t" + tSession.getFirstPlayer().getName());
-		System.out.println("[SECOND PLAYER] \t" + tSession.getSecondPlayer());
-		
-		System.out.println("[UNLOCKED LEVEL] \t" + tSession.getUnlockedLevel()+"/"+tSession.getMaxLevel());
-		
-		System.out.println("[GAME ACTIVE] \t\t"+tSession.hasActiveGame());
+		tSession.sessionLog();
 		
 //		// Test Unlock Next Level
 //		for(int i =1;i<12;i++) {
@@ -25,10 +27,14 @@ public class Main {
 	
 		// Start new Single player Game
 		tSession.createNewGame(GameMode.SINGLE_PLAYER,tSession.getUnlockedLevel());
-		System.out.println("\n------ Create New Game ------ \n\n"
-						  +"[GAME ACTIVE] \t\t"+tSession.hasActiveGame());
+		
+		System.out.println("\n------ Create New Game ------ \n\n");
+		
+		tSession.sessionLog();
 		
 		tSession.getCurrentGame().start();
+		
+		tSession.getCurrentGame().makeSecretCode(tSession.getUnlockedLevel());
 		
 		
 	}

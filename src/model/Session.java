@@ -28,13 +28,6 @@ public interface Session {
 	public void createNewGame(GameMode mode);
 	
 	/**
-	 * For end the game
-	 * 
-	 * for close current game
-	 */
-	public void endGame();
-	
-	/**
 	 * Get the current game
 	 * 
 	 * @return a current game
@@ -102,5 +95,10 @@ public interface Session {
 	public boolean loadSession();
 	public boolean saveSession();
 	public boolean resetSession();
+	
+	/**
+	 * Method for print the log of session
+	 */
+	public void sessionLog();
 	
 }
