@@ -9,6 +9,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class GameImpl implements Game {
@@ -17,11 +19,13 @@ public class GameImpl implements Game {
 	private int level; 
 	private GameStats stats;
 	
-	private SecretCode sCode;
+	private List<Color> secretCode; 
+	
 	
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
 		this.level = level;
+		this.secretCode = this.makeSecretCode(this.level);
 	}
 
 	public GameImpl(GameMode mode) {
@@ -33,16 +37,26 @@ public class GameImpl implements Game {
 		System.out.println("\n------ The game is start ------\n");
 	}
 	
-	public SecretCode makeSecretCode(int level) {
+	public List<Color> makeSecretCode(int level) {
 		System.out.print("--- MAKE A SECRET COD ---\n\n");
 		System.out.print("[LEVEL GAME]\t"+this.level+"\n");
 		System.out.print("[NUMBER OF COLORS FOR SECRETCODE]\t"+ this.numberOfColors(this.level)+"\n");
-		System.out.print("ALL COLORS: ");
+		
 		List<Color> allColors = new ArrayList<>(Arrays.asList(Color.values()));
 		
-		System.out.print(allColors);
+		System.out.print("ALL COLORS: "+allColors+"\n");
 		
-		return null;
+		List<Color> availableColors = allColors.subList(0,this.numberOfColors(level));
+		
+		System.out.print("AVAILABLE COLORS: "+availableColors+"\n");
+		Collections.shuffle(availableColors);
+		
+		System.out.print("-----------------------------------------------\n\n");
+		return availableColors;
+	}
+	
+	public List<Color> getSecretCode(){
+		return this.secretCode;
 	}
 
 	@Override

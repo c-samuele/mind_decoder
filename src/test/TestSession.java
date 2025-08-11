@@ -37,12 +37,12 @@ public class TestSession {
 	
 	@Test 
 	public void  PlayerNotNull() {
-		assertNotNull(session.getPlayer());
+		assertNotNull(session.getFirstPlayer());
 	}
 	
 	@Test
 	public void PlayerCorrect() {
-		assertTrue(session.getPlayer().equals(player));
+		assertTrue(session.getFirstPlayer().equals(player));
 	}
 	
 

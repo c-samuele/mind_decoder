@@ -36,6 +36,8 @@ public class Main {
 		
 		tSession.getCurrentGame().makeSecretCode(tSession.getUnlockedLevel());
 		
+		System.out.println(tSession.getCurrentGame().getSecretCode());
+		
 		
 	}
 

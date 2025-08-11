@@ -26,13 +26,13 @@ public class TestModel {
 	@Test
 	public void testBasicSession() {
 		assertFalse(session.hasActiveGame());
-		assertEquals(name,session.getPlayer().getName());
-		assertEquals(1,session.getLevel());
+		assertEquals(name,session.getFirstPlayer().getName());
+		assertEquals(1,session.getUnlockedLevel());
 	}
 	
 	@Test
 	public void testSessionLevel() {
-		while (session.getLevel() < session.getMaxLevel())
+		while (session.getUnlockedLevel() < session.getMaxLevel())
 			session.unlockNextLevel();
 		assertThrows(IllegalStateException.class, () -> session.unlockNextLevel());
 	}
