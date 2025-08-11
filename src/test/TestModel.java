@@ -37,6 +37,20 @@ public class TestModel {
 		assertThrows(IllegalStateException.class, () -> session.unlockNextLevel());
 	}
 	
+
+	
+	@Test
+	public void testLevelUnlock() {
+		// Test Unlock Next Level
+		for(int i = 1;i < 12; i++) {
+			session.unlockNextLevel();
+		}	
+		assertFalse(session.getUnlockedLevel() > 12 || session.getUnlockedLevel() < 1  );
+	}
+	
+	
+	
+	
 	@Test
 	public void testGame() {
 		

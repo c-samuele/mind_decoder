@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class SessionImpl implements Session,GameAction {
 	
-	private final int MAX_LEVEL = 12;						// Max Level
+	private static final int MAX_LEVEL = 12;						// Max Level
 	
 	private final Player firstPlayer;						// 1° player
 	private final Optional<Player> secondPlayer; 			// 2° player

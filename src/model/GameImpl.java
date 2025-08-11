@@ -19,50 +19,50 @@ public class GameImpl implements Game {
 	private int level; 
 	private GameStats stats;
 	
+	private int attemps;
+	
 	private List<Color> secretCode; 
 	
-	
+	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
 		this.level = level;
-		this.secretCode = this.makeSecretCode(this.level);
+		this.attemps = 10 + (level * 2);
+		this.secretCode = makeSecretCode(level);
 	}
-
+	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
 	public GameImpl(GameMode mode) {
 		this.mode = mode;
 	}	
 	
 	@Override
 	public void start() {
-		System.out.println("\n------ The game is start ------\n");
+		
 	}
 	
 	public List<Color> makeSecretCode(int level) {
-		System.out.print("--- MAKE A SECRET COD ---\n\n");
-		System.out.print("[LEVEL GAME]\t"+this.level+"\n");
-		System.out.print("[NUMBER OF COLORS FOR SECRETCODE]\t"+ this.numberOfColors(this.level)+"\n");
+		System.out.print("Number of color for level:\t" + numberOfColors(level) + "\n");
 		
 		List<Color> allColors = new ArrayList<>(Arrays.asList(Color.values()));
 		
-		System.out.print("ALL COLORS: "+allColors+"\n");
+		System.out.print("All colors:\t\t" + allColors + "\n");
 		
-		List<Color> availableColors = allColors.subList(0,this.numberOfColors(level));
+		List<Color> availableColors = allColors.subList(0,numberOfColors(level));
 		
-		System.out.print("AVAILABLE COLORS: "+availableColors+"\n");
+		System.out.print("Availables colors:\t" + availableColors + "\n");
 		Collections.shuffle(availableColors);
-		
-		System.out.print("-----------------------------------------------\n\n");
+
 		return availableColors;
 	}
 	
 	public List<Color> getSecretCode(){
-		return this.secretCode;
+		System.out.println("Secret Code:\t\t" + secretCode);
+		return secretCode;
 	}
 
 	@Override
-	public void makeAttempt(Code c) {
-		// TODO Auto-generated method stub
-		
+	public void makeAttempt(Attempt attempt) {
+		System.out.println("Attempts code:\t\t" + attempt.getColors());
 	}
 
 	@Override

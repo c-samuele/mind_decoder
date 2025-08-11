@@ -7,38 +7,34 @@
 
 package model;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		Player p1 = new PlayerImpl("Samuele");
+		System.out.print("|-- PLAYER CREATE\n");				Player p1 = new PlayerImpl("Samuele");	
+		System.out.print("|-- SESSION CREATE \n");				Session tSession = new SessionImpl(p1, Optional.empty());
+		System.out.print("|   |- GAME CREATE \n");			
+		System.out.print("|   |  |- MAKE A SECRET CODE \n");
+		System.out.print("|---|--|---------------------------------------------------------------------------------------------------|\n\n");
+			
+																tSession.createNewGame(GameMode.SINGLE_PLAYER,tSession.getUnlockedLevel());
+																tSession.getCurrentGame().getSecretCode();
 		
-		Session tSession = new SessionImpl(p1,Optional.empty());
-		
-		tSession.sessionLog();
-		
-//		// Test Unlock Next Level
-//		for(int i =1;i<12;i++) {
-//			tSession.unlockNextLevel();
-//			System.out.println("[UNLOCKED LEVEL] \t" + tSession.getUnlockedLevel()+"/"+tSession.getMaxLevel());
-//		}
-	
-		// Start new Single player Game
-		tSession.createNewGame(GameMode.SINGLE_PLAYER,tSession.getUnlockedLevel());
-		
-		System.out.println("\n------ Create New Game ------ \n\n");
-		
-		tSession.sessionLog();
-		
-		tSession.getCurrentGame().start();
-		
-		tSession.getCurrentGame().makeSecretCode(tSession.getUnlockedLevel());
-		
-		System.out.println(tSession.getCurrentGame().getSecretCode());
-		
-		
+        System.out.print("\n|---|--|---------------------------------------------------------------------------------------------------|\n");
+		System.out.print("|   |  |- MAKE ATTEMPT \n");
+		System.out.print("|---|--|---|-----------------------------------------------------------------------------------------------|\n\n");
+																Attempt a1 = new Attempt(List.of(Color.RED, Color.BLUE, Color.GREEN));
+																tSession.getCurrentGame().makeAttempt(a1);
+		System.out.print("\n|---|--|---|------------------------------------------------------------------------------------------------|\n");
+		System.out.print("|   |  |   |- IS CORRET \n");
+		System.out.print("|   |  |   |- HINT CREATE\n");
+		System.out.print("|   |  |   \n");
+		System.out.print("|   |  |- END GAME\n");
+		System.out.print("|   |  |  |- SAVE GAMESTATS\n");
+     
 	}
 
 }
