@@ -22,12 +22,14 @@ public class Main {
 			
 																tSession.createNewGame(GameMode.SINGLE_PLAYER,tSession.getUnlockedLevel());
 																tSession.getCurrentGame().getSecretCode();
+																tSession.getCurrentGame().getRemainingAttempts();
 		
         System.out.print("\n|---|--|---------------------------------------------------------------------------------------------------|\n");
 		System.out.print("|   |  |- MAKE ATTEMPT \n");
 		System.out.print("|---|--|---|-----------------------------------------------------------------------------------------------|\n\n");
-																Attempt a1 = new Attempt(List.of(Color.RED, Color.BLUE, Color.GREEN));
-																tSession.getCurrentGame().makeAttempt(a1);
+																Code c1 = new CodeImpl(Color.RED, Color.BLUE, Color.GREEN);
+																tSession.getCurrentGame().makeAttempt(c1);
+																tSession.getCurrentGame().getRemainingAttempts();
 		System.out.print("\n|---|--|---|------------------------------------------------------------------------------------------------|\n");
 		System.out.print("|   |  |   |- IS CORRET \n");
 		System.out.print("|   |  |   |- HINT CREATE\n");

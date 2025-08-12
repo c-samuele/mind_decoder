@@ -40,7 +40,7 @@ public interface Game {
 	 * 
 	 * @param Attempt's code
 	 */
-	public void makeAttempt(Attempt attempt);
+	public void makeAttempt(Code codeAttempt);
 	
 	/**
 	 * Getter for secretCode

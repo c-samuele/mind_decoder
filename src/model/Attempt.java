@@ -11,14 +11,17 @@ import java.util.List;
 
 public class Attempt {
 
-	private List<Color> attemptCode;
+	private Code attemptCode;
+	
+	private int correctPosition;
+	private int corretColors;
 	
 	
-	public Attempt(List<Color> att) {	
-		attemptCode = att;
+	public Attempt(Code attemptCode) {	
+		this.attemptCode = attemptCode;
 	}
 	
-	public List<Color> getColors() {
+	public Code getCode() {
 		return attemptCode;
 	}
 	

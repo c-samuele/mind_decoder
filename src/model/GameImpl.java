@@ -17,17 +17,20 @@ public class GameImpl implements Game {
 	
 	private GameMode mode;
 	private int level; 
+	
+	private int attempts;
+	
+	private List<Color> secretCode;
+	
 	private GameStats stats;
 	
-	private int attemps;
 	
-	private List<Color> secretCode; 
 	
 	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
 		this.level = level;
-		this.attemps = 10 + (level * 2);
+		this.attempts = 10 + (level * 2);
 		this.secretCode = makeSecretCode(level);
 	}
 	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
@@ -37,6 +40,11 @@ public class GameImpl implements Game {
 	
 	@Override
 	public void start() {
+		
+	}
+	
+	@Override
+	public void end() {
 		
 	}
 	
@@ -61,37 +69,40 @@ public class GameImpl implements Game {
 	}
 
 	@Override
-	public void makeAttempt(Attempt attempt) {
-		System.out.println("Attempts code:\t\t" + attempt.getColors());
+	public void makeAttempt(Code codeAttempt) throws IllegalStateException {
+		if(attempts > 0) {
+			this.attempts--;
+			System.out.println("Attempts code:\t\t" + codeAttempt.getColor());
+		} else throw new IllegalStateException("No attempt remaining");
 	}
 
 	@Override
 	public boolean isOver() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public boolean isWon() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public int getRemainingAttempts() {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("Attempts remaining:\t" + attempts);
+		return attempts;
 	}
 
 	@Override
 	public void getHints() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public GameStats getGameStats() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -100,10 +111,6 @@ public class GameImpl implements Game {
 		return stats;
 	}
 
-	@Override
-	public void end() {
-		System.out.println("\n------ The game is end ------\n");
-	}
 
 	@Override
 	public int getLevel() {
