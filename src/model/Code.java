@@ -26,5 +26,11 @@ public interface Code {
 	 */
 	public Color getColorByIndex(int index);
 	
+	/**
+	 * Size of attemptCode
+	 * 
+	 * @return a number of colors in code
+	 */
+	public int size();
 	
 }

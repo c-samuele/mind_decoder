@@ -20,7 +20,7 @@ public class CodeImpl implements Code {
 	/**
 	 * @param colors variable sequence of secret colors 
 	 */
-	CodeImpl(Color...colors){
+	public CodeImpl(Color...colors){
 		code = new ArrayList<Color>(List.of(colors));
 	}
 
@@ -32,6 +32,11 @@ public class CodeImpl implements Code {
 	@Override
 	public Color getColorByIndex(int index) {
 		return code.get(index);
+	}
+
+	@Override
+	public int size() {
+		return code.size();
 	}
 
 }

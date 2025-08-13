@@ -25,7 +25,6 @@ public class GameImpl implements Game {
 	private GameStats stats;
 	
 	
-	
 	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
@@ -70,10 +69,42 @@ public class GameImpl implements Game {
 
 	@Override
 	public void makeAttempt(Code codeAttempt) throws IllegalStateException {
+		
+		int colorCorrect,		/* Number of correct colors for gameStats */
+			indexCorrect = 0;	/* Number of color and index correct for gameStats */
+		
 		if(attempts > 0) {
 			this.attempts--;
 			System.out.println("Attempts code:\t\t" + codeAttempt.getColor());
+		
+		// Color check
+		colorCorrect = verifyColor(codeAttempt);	
+		System.out.println("Number of correct colors: " + colorCorrect);
+			
+			
+			
 		} else throw new IllegalStateException("No attempt remaining");
+	}
+	
+	
+	@Override
+	public int verifyColor(Code codeAttempt) throws IllegalArgumentException {
+		
+		int colorCorrect = 0;
+		
+		if(codeAttempt.size() != this.numberOfColors(this.level))
+			throw new IllegalArgumentException("The code contains an incorrect number of colors");
+		
+		for(int i = 0;i < this.numberOfColors(this.level);i++) {
+			if(this.secretCode.contains(codeAttempt.getColorByIndex(i)))
+				colorCorrect++;
+		}
+		return colorCorrect;
+	}
+	
+	@Override
+	public int verifyIndex(Code codeAttempt) {
+		return 0;
 	}
 
 	@Override

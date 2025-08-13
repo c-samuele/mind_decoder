@@ -50,6 +50,18 @@ public interface Game {
 	public List<Color> getSecretCode();
 	
 	/**
+	 * Verifies how many colors in the given attempt exist in the secret code.
+	 *
+	 * @param codeAttempt the code to check
+	 * @return the number of correct colors
+	 * @throws IllegalArgumentException if the number of colors in the attempt is greater or smaller than expected
+	 */
+	public int verifyColor(Code codeAttempt) throws IllegalArgumentException;
+	
+	
+	public int verifyIndex(Code codeAttempt);
+	
+	/**
 	 * 
 	 * @return
 	 */
