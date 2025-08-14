@@ -22,6 +22,8 @@ public class GameImpl implements Game {
 	
 	private List<Color> secretCode;
 	
+	int nColors;
+	
 	private GameStats stats;
 	
 	
@@ -29,6 +31,7 @@ public class GameImpl implements Game {
 	public GameImpl(GameMode mode,int level) {
 		this.mode = mode;
 		this.level = level;
+		this.nColors = numberOfColors(level);
 		this.attempts = 10 + (level * 2);
 		this.secretCode = makeSecretCode(level);
 	}
@@ -80,22 +83,45 @@ public class GameImpl implements Game {
 		// Color check
 		colorCorrect = verifyColor(codeAttempt);	
 		System.out.println("Number of correct colors: " + colorCorrect);
+		
+		// Index check
+		indexCorrect = verifyIndex(codeAttempt);
+		System.out.println("Number of correct index: " + indexCorrect);
+		
+		/* Win check 
+		 * IMPORTANT FIRST BY LOSE CHECK FOR ATTEMPT = 0
+		 */
+		if(isWon(indexCorrect,this.nColors)) {
+			// GENERATE GAMESTATS
+			System.out.println("You win!");
+			// EXIT THE GAME
+		}
 			
+		// Lose check
+		if(isOver()) {
+			// GENERATE GAMESTATS
+			System.out.println("Game over!");
+			// EXIT THE GAME
+		}
+		
+		// GENERATE HINTS
 			
-			
+		
 		} else throw new IllegalStateException("No attempt remaining");
+
 	}
 	
 	
 	@Override
 	public int verifyColor(Code codeAttempt) throws IllegalArgumentException {
 		
-		int colorCorrect = 0;
+		int numberOfColors = this.numberOfColors(this.level);
+		int colorCorrect = 0; 
 		
-		if(codeAttempt.size() != this.numberOfColors(this.level))
+		if(codeAttempt.size() != numberOfColors)
 			throw new IllegalArgumentException("The code contains an incorrect number of colors");
 		
-		for(int i = 0;i < this.numberOfColors(this.level);i++) {
+		for(int i = 0;i < numberOfColors; i++) {
 			if(this.secretCode.contains(codeAttempt.getColorByIndex(i)))
 				colorCorrect++;
 		}
@@ -103,20 +129,35 @@ public class GameImpl implements Game {
 	}
 	
 	@Override
-	public int verifyIndex(Code codeAttempt) {
-		return 0;
+	public int verifyIndex(Code codeAttempt) throws IllegalArgumentException {
+		
+		int numberOfColors = this.numberOfColors(this.level);
+		int indexCorrect = 0;
+		
+		if(codeAttempt.size() != numberOfColors)
+			throw new IllegalArgumentException("The code contains an incorrect number of colors");
+		
+		for(int i = 0; i < numberOfColors; i++)
+			if(codeAttempt.getColorByIndex(i).equals(this.secretCode.get(i)))
+				indexCorrect++;
+		
+		return indexCorrect;
 	}
 
+	@Override
+	public boolean isWon(int indexCorrect,int numberOfColors) {
+		if(indexCorrect == numberOfColors)
+			return true;
+		else
+			return false;
+	}
+	
 	@Override
 	public boolean isOver() {
-		
-		return false;
-	}
-
-	@Override
-	public boolean isWon() {
-		
-		return false;
+		if(this.attempts == 0)
+			return true;
+		else 
+			return false;
 	}
 
 	@Override
@@ -151,7 +192,7 @@ public class GameImpl implements Game {
 	
 	public int numberOfColors(int level) {
 		if(level<=9)
-			return level+=2;
+			return level + 2;
 		else
 			return 12;
 	}

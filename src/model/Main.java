@@ -31,7 +31,7 @@ public class Main {
 																tSession.getCurrentGame().makeAttempt(c1);
 																tSession.getCurrentGame().getRemainingAttempts();
 		System.out.print("\n|---|--|---|------------------------------------------------------------------------------------------------|\n");
-		System.out.print("|   |  |   |- IS CORRET \n");
+		System.out.print("|   |  |   |- IS WON \n");
 		System.out.print("|   |  |   |- HINT CREATE\n");
 		System.out.print("|   |  |   \n");
 		System.out.print("|   |  |- END GAME\n");

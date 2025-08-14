@@ -59,7 +59,13 @@ public interface Game {
 	public int verifyColor(Code codeAttempt) throws IllegalArgumentException;
 	
 	
-	public int verifyIndex(Code codeAttempt);
+	public int verifyIndex(Code codeAttempt) throws IllegalArgumentException;
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isWon(int indexCorrect,int numberOfColors);
 	
 	/**
 	 * 
@@ -67,11 +73,7 @@ public interface Game {
 	 */
 	public boolean isOver();
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isWon();
+	
 	
 	
 	public int getRemainingAttempts();
