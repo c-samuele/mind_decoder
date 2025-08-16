@@ -20,9 +20,9 @@ public class GameImpl implements Game {
 	
 	private int attempts;
 	
-	private List<Color> secretCode;
+	private Code secretCode;
 	
-	int nColors;
+	int nColors; // DA RENDERE PRIVATE PER RISPETTARE IL PRINCIPIO DI INFORMATION HIDING O ELIMINARE E GESTIRE DIVERSAMENTE
 	
 	private GameStats stats;
 	
@@ -50,7 +50,7 @@ public class GameImpl implements Game {
 		
 	}
 	
-	public List<Color> makeSecretCode(int level) {
+	public Code makeSecretCode(int level) {
 		System.out.print("Number of color for level:\t" + numberOfColors(level) + "\n");
 		
 		List<Color> allColors = new ArrayList<>(Arrays.asList(Color.values()));
@@ -61,12 +61,14 @@ public class GameImpl implements Game {
 		
 		System.out.print("Availables colors:\t" + availableColors + "\n");
 		Collections.shuffle(availableColors);
-
-		return availableColors;
+		
+		Code secretCode = new CodeImpl(availableColors);
+		
+		return secretCode;
 	}
 	
-	public List<Color> getSecretCode(){
-		System.out.println("Secret Code:\t\t" + secretCode);
+	public Code getSecretCode(){
+		System.out.println("Secret Code:\t\t" + secretCode.getColor());
 		return secretCode;
 	}
 
@@ -122,7 +124,7 @@ public class GameImpl implements Game {
 			throw new IllegalArgumentException("The code contains an incorrect number of colors");
 		
 		for(int i = 0;i < numberOfColors; i++) {
-			if(this.secretCode.contains(codeAttempt.getColorByIndex(i)))
+			if(this.secretCode.getColor().contains(codeAttempt.getColorByIndex(i)))
 				colorCorrect++;
 		}
 		return colorCorrect;
@@ -138,7 +140,7 @@ public class GameImpl implements Game {
 			throw new IllegalArgumentException("The code contains an incorrect number of colors");
 		
 		for(int i = 0; i < numberOfColors; i++)
-			if(codeAttempt.getColorByIndex(i).equals(this.secretCode.get(i)))
+			if(codeAttempt.getColorByIndex(i).equals(this.secretCode.getColorByIndex(i)))
 				indexCorrect++;
 		
 		return indexCorrect;

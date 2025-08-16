@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class TestModel {
 	private GameMode mode;
 	private Session session;
 	Code c1,c2;
+	List<Color> l1,l2;
 	
 	@Before
 	public void setUp() {
@@ -24,8 +26,11 @@ public class TestModel {
 		session = new SessionImpl(player,Optional.empty());
 		session.createNewGame(mode,session.getUnlockedLevel());
 
-		c1 = new CodeImpl(Color.RED, Color.BLUE, Color.GREEN,Color.PINK);
-		c2 = new CodeImpl(Color.PINK);
+		l1 = List.of(Color.RED, Color.BLUE, Color.GREEN,Color.PINK);
+		l2 = List.of(Color.PINK);
+		
+		c1 = new CodeImpl(l1);
+		c2 = new CodeImpl(l2);
 	}
 	
 	@Test

@@ -27,7 +27,8 @@ public class Main {
         System.out.print("\n|---|--|---------------------------------------------------------------------------------------------------|\n");
 		System.out.print("|   |  |- MAKE ATTEMPT \n");
 		System.out.print("|---|--|---|-----------------------------------------------------------------------------------------------|\n\n");
-																Code c1 = new CodeImpl(Color.RED, Color.BLUE, Color.GREEN);
+																List<Color> l1 = List.of(Color.RED, Color.BLUE, Color.GREEN); 
+																Code c1 = new CodeImpl(l1);
 																tSession.getCurrentGame().makeAttempt(c1);
 																tSession.getCurrentGame().getRemainingAttempts();
 		System.out.print("\n|---|--|---|------------------------------------------------------------------------------------------------|\n");

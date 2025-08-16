@@ -33,7 +33,7 @@ public interface Game {
 	 * @param level
 	 * @return the secret code
 	 */
-	public List<Color> makeSecretCode(int level);
+	public Code makeSecretCode(int level);
 	
 	/**
 	 * For make Attempt
@@ -47,7 +47,7 @@ public interface Game {
 	 * 
 	 * @return SecretCode
 	 */
-	public List<Color> getSecretCode();
+	public Code getSecretCode();
 	
 	/**
 	 * Verifies how many colors in the given attempt exist in the secret code.
