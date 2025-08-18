@@ -7,9 +7,9 @@
 *.class
 
 # IDE files
-.classpath
-.project
-.settings/
+#.classpath
+#.project
+#.settings/
 
 # macOS files
 .DS_Store
