@@ -79,7 +79,7 @@ public interface Game {
 	public int getRemainingAttempts();
 	
 	
-	public void getHints();
+	public List<Hint> getHints();
 	
 	
 	public GameStats getGameStats();

@@ -22,9 +22,11 @@ public class GameImpl implements Game {
 	
 	private Code secretCode;
 	
-	int nColors; // DA RENDERE PRIVATE PER RISPETTARE IL PRINCIPIO DI INFORMATION HIDING O ELIMINARE E GESTIRE DIVERSAMENTE
+	private int nColors;
 	
 	private GameStats stats;
+	
+	private Hints hints;
 	
 	
 	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
@@ -33,7 +35,8 @@ public class GameImpl implements Game {
 		this.level = level;
 		this.nColors = numberOfColors(level);
 		this.attempts = 10 + (level * 2);
-		this.secretCode = makeSecretCode(level);
+		this.secretCode = makeSecretCode(level); 
+		this.hints = new Hints();
 	}
 	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
 	public GameImpl(GameMode mode) {
@@ -75,12 +78,14 @@ public class GameImpl implements Game {
 	@Override
 	public void makeAttempt(Code codeAttempt) throws IllegalStateException {
 		
+		Hint currentHint; 		/* Current hint to add to the hints list */
+		
 		int colorCorrect,		/* Number of correct colors for gameStats */
 			indexCorrect = 0;	/* Number of color and index correct for gameStats */
 		
 		if(attempts > 0) {
 			this.attempts--;
-			System.out.println("Attempts code:\t\t" + codeAttempt.getColor());
+			System.out.println("Attempts code:\t\t" + codeAttempt.getColor() + "\n");
 		
 		// Color check
 		colorCorrect = verifyColor(codeAttempt);	
@@ -106,7 +111,11 @@ public class GameImpl implements Game {
 			// EXIT THE GAME
 		}
 		
-		// GENERATE HINTS
+		// GENERATE AND ADD HINTS TO LIST
+		currentHint = new HintImpl(colorCorrect,indexCorrect);
+		
+		hints.addHint(currentHint);
+		System.out.print("\nHINT:\n" +" |- Number of correct colors: " + currentHint.getColorCorrect() + "\n" +" |- Number of correct index: "+ currentHint.getIndexCorrect()+"\n\n");
 			
 		
 		} else throw new IllegalStateException("No attempt remaining");
@@ -169,9 +178,8 @@ public class GameImpl implements Game {
 	}
 
 	@Override
-	public void getHints() {
-
-		
+	public List<Hint> getHints() {
+		return this.hints.getAllHints();
 	}
 
 	@Override
