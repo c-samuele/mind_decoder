@@ -42,6 +42,14 @@ public interface Game {
 	 */
 	public void makeAttempt(Code codeAttempt);
 	
+	
+	/**
+	 * 
+	 * @param level of current game
+	 * @return number of attempt to use
+	 */
+	public int calculateAttempts(int level);
+	
 	/**
 	 * Getter for secretCode
 	 * 
@@ -85,7 +93,7 @@ public interface Game {
 	public GameStats getGameStats();
 	
 	
-	public GameStats generateStats();
+	public void generateStats();
 	
 	
 }

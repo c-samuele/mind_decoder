@@ -16,8 +16,12 @@ import java.util.List;
 public class GameImpl implements Game {
 	
 	private GameMode mode;
+	
+	private GameState state;
+	
 	private int level; 
 	
+	private final int maxAttempts;
 	private int attempts;
 	
 	private Code secretCode;
@@ -31,17 +35,21 @@ public class GameImpl implements Game {
 	
 	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
 	public GameImpl(GameMode mode,int level) {
+		this.state = GameState.PLAYING;
 		this.mode = mode;
 		this.level = level;
 		this.nColors = numberOfColors(level);
-		this.attempts = 10 + (level * 2);
+		this.attempts = calculateAttempts(level);
 		this.secretCode = makeSecretCode(level); 
 		this.hints = new Hints();
+		this.stats= new GameStatsImpl();
+		this.maxAttempts = attempts; // dopo dell'init di attempts poichè dipende da esso
 	}
+	
 	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
-	public GameImpl(GameMode mode) {
-		this.mode = mode;
-	}	
+//	public GameImpl(GameMode mode) {
+//		this.mode = mode;
+//	}	
 	
 	@Override
 	public void start() {
@@ -78,14 +86,18 @@ public class GameImpl implements Game {
 	@Override
 	public void makeAttempt(Code codeAttempt) throws IllegalStateException {
 		
+		if(state != GameState.PLAYING || attempts == 0) {
+		    state = GameState.LOSE;
+		    throw new IllegalStateException("Game is over, no more attempts allowed.");
+		}
+		
 		Hint currentHint; 		/* Current hint to add to the hints list */
 		
 		int colorCorrect,		/* Number of correct colors for gameStats */
 			indexCorrect = 0;	/* Number of color and index correct for gameStats */
 		
-		if(attempts > 0) {
-			this.attempts--;
-			System.out.println("Attempts code:\t\t" + codeAttempt.getColor() + "\n");
+		this.attempts--;
+		System.out.println("Attempts code:\t\t" + codeAttempt.getColor() + "\n");
 		
 		// Color check
 		colorCorrect = verifyColor(codeAttempt);	
@@ -100,16 +112,31 @@ public class GameImpl implements Game {
 		 */
 		if(isWon(indexCorrect,this.nColors)) {
 			// GENERATE GAMESTATS
+			this.generateStats();
+			
+			// CHANGE STATE
+			state = GameState.WIN;
+			
+			// LOG
 			System.out.println("You win!");
+			
 			// EXIT THE GAME
 		}
 			
 		// Lose check
 		if(isOver()) {
 			// GENERATE GAMESTATS
+			this.generateStats();
+			
+			// CHANGE STATE
+			state = GameState.LOSE;
+			
+			// LOG
 			System.out.println("Game over!");
+			
 			// EXIT THE GAME
 		}
+		
 		
 		// GENERATE AND ADD HINTS TO LIST
 		currentHint = new HintImpl(colorCorrect,indexCorrect);
@@ -117,9 +144,11 @@ public class GameImpl implements Game {
 		hints.addHint(currentHint);
 		System.out.print("\nHINT:\n" +" |- Number of correct colors: " + currentHint.getColorCorrect() + "\n" +" |- Number of correct index: "+ currentHint.getIndexCorrect()+"\n\n");
 			
-		
-		} else throw new IllegalStateException("No attempt remaining");
-
+	}
+	
+	@Override
+	public int calculateAttempts(int level) {
+		return (10 + (level * 2));
 	}
 	
 	
@@ -183,16 +212,24 @@ public class GameImpl implements Game {
 	}
 
 	@Override
-	public GameStats getGameStats() {
-
-		return null;
+	public void generateStats() {
+		int attemptsUsed,
+			time,
+			score;
+		
+		attemptsUsed = (maxAttempts - attempts);
+		score = attemptsUsed * 10;
+		time = 0; // tmp
+		
+		this.stats.setScore(score);
+		this.stats.setAttemptsUsed(attemptsUsed);
+		this.stats.setTime(time);
 	}
-
+	
 	@Override
-	public GameStats generateStats() {
-		return stats;
+	public GameStats getGameStats() {
+		return this.stats;
 	}
-
 
 	@Override
 	public int getLevel() {
