@@ -27,27 +27,30 @@ public class Main {
         System.out.print("\n|---|------------------------------------------------------------------------------------------------------|\n");
 		System.out.print("|   |---- MAKE ATTEMPT \n");
 		System.out.print("|---|------------------------------------------------------------------------------------------------------|\n\n");
-																List<Color> l1 = List.of(Color.GREEN, Color.RED, Color.BLUE); 
-																List<Color> l2 = List.of(Color.BLUE, Color.RED, Color.GREEN); 
-																Code c1 = new CodeImpl(l1);
-																Code c2 = new CodeImpl(l2);
-																tSession.getCurrentGame().makeAttempt(c1);
+																List<Color> l1 = List.of(Color.GREEN, Color.GREEN, Color.BLUE); 
+																List<Color> l2 = List.of(Color.BLUE, Color.BLUE, Color.GREEN); 
+																Code wrong1 = new CodeImpl(l1);
+																Code wrong2 = new CodeImpl(l2);
+																tSession.getCurrentGame().makeAttempt(wrong1);
 																tSession.getCurrentGame().getRemainingAttempts();
 		System.out.print("\n|---|------------------------------------------------------------------------------------------------------|\n");
 		System.out.print("|   |---- MAKE ATTEMPT \n");
 		System.out.print("|---|------------------------------------------------------------------------------------------------------|\n\n");
-																tSession.getCurrentGame().makeAttempt(c2);
+																tSession.getCurrentGame().makeAttempt(wrong2);
 																tSession.getCurrentGame().getRemainingAttempts();
-		System.out.print("\n|---|-------------------------------------------------------------------------------------------------------|\n\n");
+		System.out.print("\n|---|------------------------------------------------------------------------------------------------------|\n");
+		System.out.print("|   |---- MAKE ATTEMPT \n");
+		System.out.print("|---|------------------------------------------------------------------------------------------------------|\n\n");															
+																Code correctCode = tSession.getCurrentGame().getSecretCode();
+																tSession.getCurrentGame().makeAttempt(correctCode);
+																
 																List<Hint> hints = tSession.getCurrentGame().getHints();
-																System.out.printf("%-10s | %-12s%n", "Colore", "Indice");
-																System.out.println("----------------------");
-																for (Hint h : hints) 
-																    System.out.printf("%-10d | %-12d%n", h.getColorCorrect(), h.getIndexCorrect());
+																
+		System.out.printf("%-10s | %-12s%n", "correctColor", "correctIndex");
+		System.out.println("----------------------");
+		for (Hint h : hints) 
+		    System.out.printf(" %-10d  | %-12d%n", h.getColorCorrect(), h.getIndexCorrect());
 		System.out.print("\n|---|-------------------------------------------------------------------------------------------------------|\n");
-		System.out.print("|   |  |   |- IS WON \n");
-		System.out.print("|   |  |   |- HINT CREATE\n");
-		System.out.print("|   |  |   \n");
 		System.out.print("|   |  |- END GAME\n");
 		System.out.print("|   |  |  |- SAVE GAMESTATS\n");
      
