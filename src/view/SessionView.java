@@ -1,0 +1,66 @@
+package view;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+
+public class SessionView {
+
+    private BorderPane root;
+
+    public SessionView() {
+        root = new BorderPane();
+
+        // TITLE
+        Label title = new Label("Mind Decoder");
+        title.getStyleClass().add("title");
+
+        // STATS
+        GridPane stats = new GridPane();
+        stats.getStyleClass().add("containerStats");
+
+        Label score = new Label("BEST SCORE: 500");
+        score.getStyleClass().add("statsLabel");
+        Label attemptsAvg = new Label("RATIO: 0.8");
+        attemptsAvg.getStyleClass().add("statsLabel");
+        Label timeAvg = new Label("AVG TIME: 12m 36s");
+        timeAvg.getStyleClass().add("statsLabel");
+        Label level = new Label("CURRENT LEVEL: 1");
+        level.getStyleClass().add("statsLabel");
+
+        stats.add(score,0,0);
+        stats.add(attemptsAvg,1,0);
+        stats.add(timeAvg,2,0);
+        stats.add(level,3,0);
+        stats.setAlignment(Pos.CENTER);
+        stats.setPadding(new Insets(10,10,10,10));
+        stats.setHgap(40);
+
+        VBox statsBox = new VBox(title, stats);
+        statsBox.setAlignment(Pos.CENTER);
+        root.setTop(statsBox);
+
+        // BUTTONS
+        Button singleBtn = new Button("Single Player");
+        singleBtn.getStyleClass().add("btnMain");
+        Button multyBtn = new Button("Multy Player");
+        multyBtn.getStyleClass().add("btnMain");
+        Button AiBtn = new Button("Challenge Ai");
+        AiBtn.getStyleClass().add("btnMain");
+
+        VBox boxBtn = new VBox(singleBtn, multyBtn, AiBtn);
+        boxBtn.setAlignment(Pos.CENTER);
+        boxBtn.setSpacing(30);
+
+        root.setCenter(boxBtn);
+    }
+
+    public Parent getRoot() {
+        return root;
+    }
+}

@@ -76,9 +76,10 @@ public class SessionImpl implements Session,GameAction {
 		
 	}
 	
+	// da modificare
 	@Override
 	public void createNewGame(GameMode mode) {
-		game = new GameImpl(mode);
+		game = new GameImpl(mode,0);
 		gameActive = true;
 		
 	}
