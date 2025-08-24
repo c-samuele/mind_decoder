@@ -60,3 +60,9 @@
 .loginView{
 	-fx-background-color:-dark-color;	
 }
+
+.username{
+	-fx-text-fill:-light-color;
+	-fx-font-size:1em;
+	-fx-padding:10 0 0 0;	
+}

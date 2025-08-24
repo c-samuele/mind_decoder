@@ -26,7 +26,7 @@ public class LoginController {
 		
 		Session session = new SessionImpl(player,Optional.empty());
 		
-		SessionView sessionView = new SessionView();
+		SessionView sessionView = new SessionView(session.getFirstPlayer().getName());
 		
 		stage.getScene().setRoot(sessionView.getRoot());
 		stage.setWidth(1200);

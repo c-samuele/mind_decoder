@@ -13,7 +13,7 @@ public class SessionView {
 
     private BorderPane root;
 
-    public SessionView() {
+    public SessionView(String username) {
         root = new BorderPane();
 
         // TITLE
@@ -32,6 +32,9 @@ public class SessionView {
         timeAvg.getStyleClass().add("statsLabel");
         Label level = new Label("CURRENT LEVEL: 1");
         level.getStyleClass().add("statsLabel");
+        
+        Label welcomeMsg = new Label("Welcome " + username);
+        welcomeMsg.getStyleClass().add("username");
 
         stats.add(score,0,0);
         stats.add(attemptsAvg,1,0);
@@ -41,7 +44,7 @@ public class SessionView {
         stats.setPadding(new Insets(10,10,10,10));
         stats.setHgap(40);
 
-        VBox statsBox = new VBox(title, stats);
+        VBox statsBox = new VBox(title, stats,welcomeMsg);
         statsBox.setAlignment(Pos.CENTER);
         root.setTop(statsBox);
 
@@ -50,10 +53,10 @@ public class SessionView {
         singleBtn.getStyleClass().add("btnMain");
         Button multyBtn = new Button("Multy Player");
         multyBtn.getStyleClass().add("btnMain");
-        Button AiBtn = new Button("Challenge Ai");
-        AiBtn.getStyleClass().add("btnMain");
+        Button aiBtn = new Button("Challenge Ai");
+        aiBtn.getStyleClass().add("btnMain");
 
-        VBox boxBtn = new VBox(singleBtn, multyBtn, AiBtn);
+        VBox boxBtn = new VBox(singleBtn, multyBtn, aiBtn);
         boxBtn.setAlignment(Pos.CENTER);
         boxBtn.setSpacing(30);
 
