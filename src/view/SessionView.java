@@ -8,12 +8,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import model.GameStats;
 
 public class SessionView {
 
     private BorderPane root;
+    
+    Button 	singleBtn,
+			multyBtn,
+			aiBtn;
 
-    public SessionView(String username) {
+    public SessionView(String username,int maxScore,int attempts,int time,int currentLevel) {
         root = new BorderPane();
 
         // TITLE
@@ -24,13 +29,13 @@ public class SessionView {
         GridPane stats = new GridPane();
         stats.getStyleClass().add("containerStats");
 
-        Label score = new Label("BEST SCORE: 500");
+        Label score = new Label("BEST SCORE: " + maxScore);
         score.getStyleClass().add("statsLabel");
-        Label attemptsAvg = new Label("RATIO: 0.8");
+        Label attemptsAvg = new Label("AVG ATTEMPTS: "+ attempts);
         attemptsAvg.getStyleClass().add("statsLabel");
-        Label timeAvg = new Label("AVG TIME: 12m 36s");
+        Label timeAvg = new Label("AVG TIME: " + time);
         timeAvg.getStyleClass().add("statsLabel");
-        Label level = new Label("CURRENT LEVEL: 1");
+        Label level = new Label("CURRENT LEVEL: " + currentLevel);
         level.getStyleClass().add("statsLabel");
         
         Label welcomeMsg = new Label("Welcome " + username);
@@ -49,11 +54,11 @@ public class SessionView {
         root.setTop(statsBox);
 
         // BUTTONS
-        Button singleBtn = new Button("Single Player");
+        singleBtn = new Button("Single Player");
         singleBtn.getStyleClass().add("btnMain");
-        Button multyBtn = new Button("Multy Player");
+        multyBtn = new Button("Multy Player");
         multyBtn.getStyleClass().add("btnMain");
-        Button aiBtn = new Button("Challenge Ai");
+        aiBtn = new Button("Challenge Ai");
         aiBtn.getStyleClass().add("btnMain");
 
         VBox boxBtn = new VBox(singleBtn, multyBtn, aiBtn);
@@ -62,8 +67,12 @@ public class SessionView {
 
         root.setCenter(boxBtn);
     }
-
+    
     public Parent getRoot() {
-        return root;
+		return root;
+	}
+	
+   public Button getSinglePlayerBtn() {
+        return this.singleBtn;
     }
 }

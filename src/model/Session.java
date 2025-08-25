@@ -67,7 +67,9 @@ public interface Session {
 	 * 
 	 * @return best score of the session current
 	 */
-	public GameStats getBestScore();
+	public int getBestScore();
+	public int getTimeAvg();
+	public int getAttemptsAvg();
 	
 	/**
 	 * Get the current first player
@@ -90,7 +92,6 @@ public interface Session {
 	 * @return max level of the session
 	 */
 	public int getMaxLevel();
-	
 	
 	public boolean loadSession();
 	public boolean saveSession();

@@ -14,6 +14,8 @@ import java.util.Optional;
 
 public class SessionImpl implements Session,GameAction {
 	
+	private static SessionImpl sessionInst; 
+	
 	private static final int MAX_LEVEL = 12;						// Max Level
 	
 	private final Player firstPlayer;						// 1° player
@@ -32,12 +34,27 @@ public class SessionImpl implements Session,GameAction {
 	 * @param first player
 	 * @param second player optional
 	 */
-	public SessionImpl(Player p1,Optional<Player> p2) {
+	private SessionImpl(Player p1,Optional<Player> p2) {
 		this.unlockedLevel = 1;		// current unlocked level
 		this.gameActive = false;	// status game
 		this.firstPlayer = p1;		// player1
 		this.secondPlayer = p2;		// player2
 	}
+	
+	
+	public static SessionImpl getInstance(Player p1, Optional<Player> p2) {
+	    if (sessionInst == null) {
+	    	sessionInst = new SessionImpl(p1, p2); 
+	    }
+	    return sessionInst;
+	}
+	public static SessionImpl getInstance() throws IllegalStateException {
+	    if (sessionInst != null)
+	    	return sessionInst;
+	    else
+	    	throw new IllegalStateException("Singleton session null");
+	}
+
 	
 	@Override
 	public Player getFirstPlayer() {
@@ -101,9 +118,21 @@ public class SessionImpl implements Session,GameAction {
 	}
 	
 	@Override
-	public GameStats getBestScore() {
-		return null;
+	public int getBestScore() {
+		return 100 ;
 	}
+	
+	@Override
+	public int getTimeAvg() {
+		return 120;
+	}
+
+
+	@Override
+	public int getAttemptsAvg() {
+		return 11;
+	}
+
 
 	@Override
 	public boolean loadSession() {
@@ -139,19 +168,16 @@ public class SessionImpl implements Session,GameAction {
 
 	@Override
 	public void makeAttempt(Code c) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean isOver() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isWon() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -181,6 +207,7 @@ public class SessionImpl implements Session,GameAction {
 		System.out.println("[GAME ACTIVE] \t\t"+this.hasActiveGame());
 		
 	}
+
 
 	
 	
