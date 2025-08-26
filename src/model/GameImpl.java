@@ -113,7 +113,7 @@ public class GameImpl implements Game {
 		if(isWon(indexCorrect,this.nColors)) {
 			// GENERATE GAMESTATS
 			this.generateStats();
-			
+			SessionImpl.getInstance().addGameStats(stats);
 			// CHANGE STATE
 			state = GameState.WIN;
 			
@@ -127,7 +127,7 @@ public class GameImpl implements Game {
 		if(isOver()) {
 			// GENERATE GAMESTATS
 			this.generateStats();
-			
+			SessionImpl.getInstance().addGameStats(stats);
 			// CHANGE STATE
 			state = GameState.LOSE;
 			
@@ -218,7 +218,7 @@ public class GameImpl implements Game {
 			score;
 		
 		attemptsUsed = (maxAttempts - attempts);
-		score = attemptsUsed * 10;
+		score = attempts * 10;
 		time = 0; // tmp
 		
 		this.stats.setScore(score);

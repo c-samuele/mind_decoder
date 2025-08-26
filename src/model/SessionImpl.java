@@ -119,7 +119,16 @@ public class SessionImpl implements Session,GameAction {
 	
 	@Override
 	public int getBestScore() {
-		return 100 ;
+		int bestScore = 0;
+		
+		if(!gameStats.isEmpty())
+			bestScore = gameStats.stream()
+								.mapToInt(GameStats::getScore)
+								.max()
+								.getAsInt();
+		
+		return bestScore;
+		
 	}
 	
 	@Override
@@ -130,7 +139,13 @@ public class SessionImpl implements Session,GameAction {
 
 	@Override
 	public int getAttemptsAvg() {
-		return 11;
+		if(gameStats.isEmpty())
+			return 0;
+		else
+			return  (gameStats.stream()
+							.mapToInt(GameStats::getAttemptsUsed)
+							.sum()
+					)/gameStats.size();
 	}
 
 
@@ -206,6 +221,12 @@ public class SessionImpl implements Session,GameAction {
 		System.out.println("[UNLOCKED LEVEL] \t" + this.getUnlockedLevel()+"/"+this.getMaxLevel());
 		System.out.println("[GAME ACTIVE] \t\t"+this.hasActiveGame());
 		
+	}
+
+
+	@Override
+	public void addGameStats(GameStats stats) {
+		gameStats.add(stats);
 	}
 
 

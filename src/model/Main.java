@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		System.out.print("|-- PLAYER CREATE\n");				Player p1 = new PlayerImpl("Samuele");	
-		System.out.print("|-- SESSION CREATE \n");				Session tSession = new SessionImpl(p1, Optional.empty());
+		System.out.print("|-- SESSION CREATE \n");				Session tSession = SessionImpl.getInstance(p1, Optional.empty());
 		System.out.print("|   |- GAME CREATE \n");			
 		System.out.print("|   |  |- MAKE A SECRET CODE \n");
 		System.out.print("|---|------------------------------------------------------------------------------------------------------|\n\n");
@@ -53,6 +53,10 @@ public class Main {
 		System.out.print("\n|---|-------------------------------------------------------------------------------------------------------|\n");
 		System.out.print("|   |  |- END GAME\n");
 		System.out.print("|   |  |  |- SAVE GAMESTATS\n");
+		System.out.print("|   |  |  |- PRINT GAMESTATS\n");
+		System.out.println("BEST SCORE: " + tSession.getBestScore());
+		System.out.println("AVG ATTEMPTS: " + tSession.getAttemptsAvg());
+		
      
 	}
 

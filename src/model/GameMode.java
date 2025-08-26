@@ -2,6 +2,6 @@ package model;
 
 public enum GameMode {
 	SINGLE_PLAYER,
-	MULTI_PLAYER,
-	TIME_CHALLENGE
+	MULTY_PLAYER,
+	AI_CHALLENGE
 }

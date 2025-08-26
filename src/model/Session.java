@@ -63,6 +63,11 @@ public interface Session {
 	public List<GameStats> getGameStats();
 	
 	/**
+	 * method for add the current gameStats to the list of gameStats
+	 */
+	public void addGameStats(GameStats stats);
+	
+	/**
 	 * Get the best score of session
 	 * 
 	 * @return best score of the session current
