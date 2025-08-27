@@ -28,6 +28,13 @@ public interface Session {
 	public void createNewGame(GameMode mode);
 	
 	/**
+	 * Set current game
+	 * 
+	 * @param game
+	 */
+	public void setCurrentGame(Game game);
+	
+	/**
 	 * Get the current game
 	 * 
 	 * @return a current game

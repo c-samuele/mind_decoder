@@ -30,7 +30,7 @@ public class LoginController {
 												  SessionImpl.getInstance().getBestScore(),
 												  SessionImpl.getInstance().getAttemptsAvg(),
 												  SessionImpl.getInstance().getTimeAvg(),
-												  SessionImpl.getInstance().getMaxLevel());
+												  SessionImpl.getInstance().getUnlockedLevel());
 		
 		stage.getScene().setRoot(sessionView.getRoot());
 		stage.setWidth(1200);

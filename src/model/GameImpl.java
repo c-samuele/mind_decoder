@@ -61,6 +61,12 @@ public class GameImpl implements Game {
 		
 	}
 	
+	@Override
+	public List<Color> getAvailableColors(List<Color> allColors,int level){
+		return allColors.subList(0,numberOfColors(level));
+	}
+	
+	
 	public Code makeSecretCode(int level) {
 		System.out.print("Number of color for level:\t" + numberOfColors(level) + "\n");
 		
@@ -68,7 +74,7 @@ public class GameImpl implements Game {
 		
 		System.out.print("All colors:\t\t" + allColors + "\n");
 		
-		List<Color> availableColors = allColors.subList(0,numberOfColors(level));
+		List<Color> availableColors = getAvailableColors(allColors,level);
 		
 		System.out.print("Availables colors:\t" + availableColors + "\n");
 		Collections.shuffle(availableColors);

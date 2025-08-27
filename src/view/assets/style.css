@@ -16,10 +16,11 @@
 	-fx-font-size:1.2em;
 }
 
-.title{
-	-fx-font-size:2.2em;
+.statsText{
+	-fx-font-size:1.4em;
 	-fx-text-fill:white;
-	-fx-padding:40 0 40 0;
+	-fx-font-weight: bold;
+	-fx-padding:25 50 25 50;
 }
 
 .titleLogin{

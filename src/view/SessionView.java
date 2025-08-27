@@ -5,6 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -22,8 +24,11 @@ public class SessionView {
         root = new BorderPane();
 
         // TITLE
-        Label title = new Label("Mind Decoder");
-        title.getStyleClass().add("title");
+        Image brand = new Image(getClass().getResourceAsStream("/negativo.png"));
+        
+        ImageView brandView = new ImageView(brand); 
+        brandView.setFitHeight(80); 
+        brandView.setPreserveRatio(true); 
 
         // STATS
         GridPane stats = new GridPane();
@@ -49,7 +54,7 @@ public class SessionView {
         stats.setPadding(new Insets(10,10,10,10));
         stats.setHgap(40);
 
-        VBox statsBox = new VBox(title, stats,welcomeMsg);
+        VBox statsBox = new VBox(brandView, stats,welcomeMsg);
         statsBox.setAlignment(Pos.CENTER);
         root.setTop(statsBox);
 
@@ -75,4 +80,10 @@ public class SessionView {
    public Button getSinglePlayerBtn() {
         return this.singleBtn;
     }
+   public Button getMultyPlayerBtn() {
+       return this.multyBtn;
+   }
+   public Button getAiChallengeBtn() {
+       return this.aiBtn;
+   }
 }

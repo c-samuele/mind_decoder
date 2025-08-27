@@ -27,6 +27,13 @@ public interface Game {
 	 * @return the level
 	 */	
 	public int getLevel();
+	/**
+	 * 
+	 * @param allColors
+	 * @param level
+	 * @return available Colors
+	 */
+	public List<Color> getAvailableColors(List<Color> allColors,int level);
 	
 	/**
 	 * For make a secret code

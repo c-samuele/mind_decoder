@@ -106,6 +106,10 @@ public class SessionImpl implements Session,GameAction {
 	public List<GameStats> getGameStats() {
 		return this.gameStats;
 	}
+	
+	public void setCurrentGame(Game game) {
+	    this.game = game;
+	}
 
 	@Override
 	public Game getCurrentGame() {
