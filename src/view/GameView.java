@@ -1,8 +1,9 @@
 package view;
 
+import java.util.Arrays;
 import java.util.List;
 import model.Color;
-
+import model.GameImpl;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -10,33 +11,38 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import model.GameMode;
 
 public class GameView {
 
     private BorderPane root;
 
     private GridPane attemptsGrid;
+ 
 
-    public GameView(GameMode mode,
-    				int level,
-    				int attempts,
-    				int time,
-    				List<Color> colorsAvailable) {
+    public GameView(GameImpl game) {
         root = new BorderPane();
+        
+        int attempts = game.getRemainingAttempts();
+        
 
+        
         // GAME STATS
         HBox statsBox = new HBox();
         statsBox.setAlignment(Pos.CENTER);
         statsBox.setSpacing(20);
         statsBox.setPadding(new Insets(10));
+        Label titleAttemptsLabel = new Label("Attempts: ");
+        titleAttemptsLabel.getStyleClass().add("statsText");
+        Label attemptsLabel = new Label("" + attempts);
+        attemptsLabel.getStyleClass().add("statsValue");
+        
+        Label titleTimeLabel = new Label("Time: ");
+        titleTimeLabel.getStyleClass().add("statsText");
+        Label timeLabel = new Label("");
+        timeLabel.textProperty().bind(game.getStopWatch().secondsProperty().asString());
+        timeLabel.getStyleClass().add("statsValue");
 
-        Label attemptsLabel = new Label("Attempts: " + attempts);
-        attemptsLabel.getStyleClass().add("statsText");
-        Label timeLabel = new Label("Time:" + time);
-        timeLabel.getStyleClass().add("statsText");
-
-        statsBox.getChildren().addAll(attemptsLabel, timeLabel);
+        statsBox.getChildren().addAll(titleAttemptsLabel,attemptsLabel,titleTimeLabel,timeLabel);
         root.setTop(statsBox);
 
         // MSG
@@ -67,6 +73,8 @@ public class GameView {
         colorsBox.setAlignment(Pos.CENTER);
         colorsBox.setSpacing(16);
         colorsBox.setPadding(new Insets(16, 16, 16, 16));
+        
+        List<Color> colorsAvailable = game.getAvailableColors(Arrays.asList(Color.values()), game.getLevel());
 
         for (Color c : colorsAvailable) {
             Circle circle = new Circle(18, toFXColor(c));
@@ -94,6 +102,7 @@ public class GameView {
         };
     }
 
+    
 
     
     public GridPane getAttemptsGrid() {

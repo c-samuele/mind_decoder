@@ -36,7 +36,7 @@ public class SessionController {
 	
 	private void handleStartSinglePlayer() {
 		
-		Game gameModel = new GameImpl(GameMode.SINGLE_PLAYER,
+		GameImpl gameModel = new GameImpl(GameMode.SINGLE_PLAYER,
 									 SessionImpl.getInstance().getUnlockedLevel());
 		
 		SessionImpl.getInstance().setCurrentGame(gameModel);
@@ -45,12 +45,7 @@ public class SessionController {
 		
 		int level = SessionImpl.getInstance().getUnlockedLevel();
 		
-		GameView gameView = new GameView(GameMode.SINGLE_PLAYER,
-										 level,
-										 SessionImpl.getInstance().getRemainingAttempts(),
-										 120,
-										 SessionImpl.getInstance().getCurrentGame().getAvailableColors(allColors,level)
-										 );
+		GameView gameView = new GameView(gameModel);
 		
 		
 		

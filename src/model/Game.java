@@ -102,5 +102,6 @@ public interface Game {
 	
 	public void generateStats();
 	
+	public int getTime();
 	
 }

@@ -23,6 +23,12 @@
 	-fx-padding:25 50 25 50;
 }
 
+.statsValue{
+	-fx-font-size:1.1em;
+	-fx-text-fill:red;
+	-fx-padding:25 50 25 50;
+}
+
 .titleLogin{
 	-fx-font-size:1em;
 	-fx-text-fill:white;
