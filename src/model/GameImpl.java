@@ -13,6 +13,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class GameImpl implements Game {
 	
 	private GameMode mode;
@@ -47,7 +50,7 @@ public class GameImpl implements Game {
 		this.stats = new GameStatsImpl();
 		this.maxAttempts = attempts; // dopo dell'init di attempts poichè dipende da esso
 		this.stopWatch = new StopWatch();
-		
+		Code secret = getSecretCode();
 		stopWatch.start(); // start stopWatch
 	}
 	
@@ -85,7 +88,7 @@ public class GameImpl implements Game {
 		Collections.shuffle(availableColors);
 		
 		Code secretCode = new CodeImpl(availableColors);
-		
+	
 		return secretCode;
 	}
 	
@@ -257,8 +260,10 @@ public class GameImpl implements Game {
 	}
 	
 	public int getTime() {
-		return stopWatch.getSeconds();
+		return stopWatch.getSecondsInt();
 	}
+	
+	
 	public StopWatch getStopWatch() {
 		return this.stopWatch;
 	}

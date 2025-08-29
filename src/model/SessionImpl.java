@@ -137,7 +137,14 @@ public class SessionImpl implements Session,GameAction {
 	
 	@Override
 	public int getTimeAvg() {
-		return 120;
+		if(gameStats.size()==0)
+			return 0;
+		else {
+		 int avgTime = (gameStats.stream()
+								.mapToInt(GameStats::getTime)
+								.sum()/gameStats.size());
+		return avgTime;
+		}
 	}
 
 

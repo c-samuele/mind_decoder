@@ -29,11 +29,11 @@ public class StopWatch  {
 	    	seconds.set(0); 
 	    }
 	    
-	    public IntegerProperty secondsProperty() { 
+	    public IntegerProperty getSecondsProperty() { 
 	    	return seconds; 
 	    }
 	    
-	    public int getSeconds() { 
+	    public int getSecondsInt() { 
 	    	return seconds.get(); 
 	    }
 }

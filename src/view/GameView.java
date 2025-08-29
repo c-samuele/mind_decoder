@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import model.Color;
 import model.GameImpl;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -31,6 +32,7 @@ public class GameView {
         statsBox.setAlignment(Pos.CENTER);
         statsBox.setSpacing(20);
         statsBox.setPadding(new Insets(10));
+        
         Label titleAttemptsLabel = new Label("Attempts: ");
         titleAttemptsLabel.getStyleClass().add("statsText");
         Label attemptsLabel = new Label("" + attempts);
@@ -39,8 +41,18 @@ public class GameView {
         Label titleTimeLabel = new Label("Time: ");
         titleTimeLabel.getStyleClass().add("statsText");
         Label timeLabel = new Label("");
-        timeLabel.textProperty().bind(game.getStopWatch().secondsProperty().asString());
-        timeLabel.getStyleClass().add("statsValue");
+        timeLabel.getStyleClass().add("statsValue"); 
+        timeLabel.textProperty().bind(
+        	    Bindings.createStringBinding(() -> {
+        	        int second = game.getStopWatch().getSecondsInt();
+        	        int hours = second / 3600;
+        	        int minutes = (second % 3600) / 60;
+        	        int seconds = second % 60;
+        	        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        	    }, game.getStopWatch().getSecondsProperty())
+        	);
+        
+        
 
         statsBox.getChildren().addAll(titleAttemptsLabel,attemptsLabel,titleTimeLabel,timeLabel);
         root.setTop(statsBox);
@@ -60,10 +72,13 @@ public class GameView {
         attemptsGrid.setVgap(10);
         attemptsGrid.setPadding(new Insets(10));
         attemptsGrid.setAlignment(Pos.CENTER);
+        
+        
+        createRowAttempts(0,3);
 
         ScrollPane scrollPane = new ScrollPane(attemptsGrid);
         scrollPane.setFitToWidth(true);
-        scrollPane.setPrefViewportHeight(500); // altezza visibile
+        scrollPane.setPrefViewportHeight(600);
         centerBox.getChildren().add(scrollPane);
 
         root.setCenter(centerBox);
@@ -102,7 +117,16 @@ public class GameView {
         };
     }
 
-    
+    public void createRowAttempts(int rowIndex,int numCells) {
+    	for(int col = 0; col <numCells; col++) {
+    		Pane cell = new Pane();
+    		cell.getStyleClass().add("cell");
+    		this.getAttemptsGrid().add(cell, col, rowIndex);
+    		
+    		// DRAG & DROP...
+    	}
+    	
+    }
 
     
     public GridPane getAttemptsGrid() {

@@ -26,11 +26,7 @@ public class LoginController {
 		
 		SessionImpl session = SessionImpl.getInstance(player,Optional.empty());
 		
-		SessionView sessionView = new SessionView(session.getFirstPlayer().getName(),
-												  SessionImpl.getInstance().getBestScore(),
-												  SessionImpl.getInstance().getAttemptsAvg(),
-												  SessionImpl.getInstance().getTimeAvg(),
-												  SessionImpl.getInstance().getUnlockedLevel());
+		SessionView sessionView = new SessionView(SessionImpl.getInstance());
 		
 		stage.getScene().setRoot(sessionView.getRoot());
 		stage.setWidth(1200);

@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import model.GameStats;
+import model.SessionImpl;
 
 public class SessionView {
 
@@ -20,9 +21,9 @@ public class SessionView {
 			multyBtn,
 			aiBtn;
 
-    public SessionView(String username,int maxScore,int attempts,int time,int currentLevel) {
+    public SessionView(SessionImpl session) {
         root = new BorderPane();
-
+        
         // TITLE
         Image brand = new Image(getClass().getResourceAsStream("/negativo.png"));
         
@@ -34,16 +35,16 @@ public class SessionView {
         GridPane stats = new GridPane();
         stats.getStyleClass().add("containerStats");
 
-        Label score = new Label("BEST SCORE: " + maxScore);
+        Label score = new Label("BEST SCORE: " + session.getBestScore());
         score.getStyleClass().add("statsLabel");
-        Label attemptsAvg = new Label("AVG ATTEMPTS: "+ attempts);
+        Label attemptsAvg = new Label("AVG ATTEMPTS: "+ session.getAttemptsAvg());
         attemptsAvg.getStyleClass().add("statsLabel");
-        Label timeAvg = new Label("AVG TIME: " + time);
+        Label timeAvg = new Label("AVG TIME: " + session.getTimeAvg());
         timeAvg.getStyleClass().add("statsLabel");
-        Label level = new Label("CURRENT LEVEL: " + currentLevel);
+        Label level = new Label("CURRENT LEVEL: " + session.getUnlockedLevel());
         level.getStyleClass().add("statsLabel");
         
-        Label welcomeMsg = new Label("Welcome " + username);
+        Label welcomeMsg = new Label("Welcome " + session.getFirstPlayer().getName());
         welcomeMsg.getStyleClass().add("username");
 
         stats.add(score,0,0);
