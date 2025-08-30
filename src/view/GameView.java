@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 public class GameView {
 
@@ -42,6 +43,7 @@ public class GameView {
         titleTimeLabel.getStyleClass().add("statsText");
         Label timeLabel = new Label("");
         timeLabel.getStyleClass().add("statsValue"); 
+        
         timeLabel.textProperty().bind(
         	    Bindings.createStringBinding(() -> {
         	        int second = game.getStopWatch().getSecondsInt();
@@ -72,13 +74,15 @@ public class GameView {
         attemptsGrid.setVgap(10);
         attemptsGrid.setPadding(new Insets(10));
         attemptsGrid.setAlignment(Pos.CENTER);
+        attemptsGrid.getStyleClass().add("attemptsArea");
         
-        
-        createRowAttempts(0,3);
+        for(int i=0;i<20;i++)
+        	createRowAttempts(i,3);
 
         ScrollPane scrollPane = new ScrollPane(attemptsGrid);
         scrollPane.setFitToWidth(true);
-        scrollPane.setPrefViewportHeight(600);
+        scrollPane.setPrefViewportHeight(500);
+        scrollPane.getStyleClass().add("scrollPane");
         centerBox.getChildren().add(scrollPane);
 
         root.setCenter(centerBox);
@@ -118,14 +122,31 @@ public class GameView {
     }
 
     public void createRowAttempts(int rowIndex,int numCells) {
+    	// Attempts colors
     	for(int col = 0; col <numCells; col++) {
     		Pane cell = new Pane();
     		cell.getStyleClass().add("cell");
     		this.getAttemptsGrid().add(cell, col, rowIndex);
-    		
-    		// DRAG & DROP...
     	}
+    	// Hints msg
     	
+    		StackPane colorCorrect = new StackPane();
+    		colorCorrect.getStyleClass().add("hint");
+    		Text labelColor = new Text("Colors correct");
+    		labelColor.getStyleClass().add("hintText");
+    		colorCorrect.getChildren().add(labelColor);
+    		
+    		StackPane indexCorrect = new StackPane();
+    		indexCorrect.getStyleClass().add("hint");
+    		Text labelIndex = new Text("Positions correct");
+    		labelIndex.getStyleClass().add("hintText");
+    		indexCorrect.getChildren().add(labelIndex);
+    		
+    		this.getAttemptsGrid().add(colorCorrect, numCells+1, rowIndex);
+    		this.getAttemptsGrid().add(indexCorrect, numCells+2, rowIndex);
+    		
+    		
+    	// DRAG & DROP...
     }
 
     

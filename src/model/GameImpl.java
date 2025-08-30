@@ -50,7 +50,7 @@ public class GameImpl implements Game {
 		this.stats = new GameStatsImpl();
 		this.maxAttempts = attempts; // dopo dell'init di attempts poichè dipende da esso
 		this.stopWatch = new StopWatch();
-		Code secret = getSecretCode();
+		
 		stopWatch.start(); // start stopWatch
 	}
 	

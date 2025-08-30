@@ -37,6 +37,30 @@
 	-fx-pref-height: 32;
 	-fx-border-radius:16;
 }
+.hint{
+	-fx-border-color: black;
+	-fx-text-fill:black;
+	-fx-pref-width:120;
+}
+
+.hintText{
+	-fx-text-fill:-dark-color;
+	-fx-font-size:0.8em;	
+}
+
+.boxAttempts{
+	-fx-background-color:-grey-color;
+}
+.attemptsArea{
+	-fx-background-color:-light-color;
+}
+.grid-pane:focused {
+    -fx-background-color: transparent; 
+}
+.scroll-pane:focused {
+    -fx-background-color: transparent;
+}
+
 
 .titleLogin{
 	-fx-font-size:1em;

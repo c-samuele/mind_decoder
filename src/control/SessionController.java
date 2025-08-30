@@ -50,9 +50,9 @@ public class SessionController {
 		
 		
 		stage.getScene().setRoot(gameView.getRoot());
-		stage.setWidth(1200);
+		stage.setWidth(1024);
 		stage.setHeight(800);
-		stage.setMinWidth(1200);
+		stage.setMinWidth(1024);
 	    stage.setMinHeight(800);
 	    stage.centerOnScreen();
 	}

@@ -29,9 +29,9 @@ public class LoginController {
 		SessionView sessionView = new SessionView(SessionImpl.getInstance());
 		
 		stage.getScene().setRoot(sessionView.getRoot());
-		stage.setWidth(1200);
+		stage.setWidth(1024);
 		stage.setHeight(800);
-		stage.setMinWidth(1200);
+		stage.setMinWidth(1024);
 	    stage.setMinHeight(800);
 	    stage.centerOnScreen();
 	    
