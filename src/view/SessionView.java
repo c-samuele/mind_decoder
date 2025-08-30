@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import model.GameStats;
 import model.SessionImpl;
@@ -26,8 +27,10 @@ public class SessionView {
         
         // TITLE
         Image brand = new Image(getClass().getResourceAsStream("/negativo.png"));
-        
         ImageView brandView = new ImageView(brand); 
+        StackPane brandPane = new StackPane(brandView);
+        brandPane.getStyleClass().add("brand");
+        
         brandView.setFitHeight(80); 
         brandView.setPreserveRatio(true); 
 
@@ -55,9 +58,9 @@ public class SessionView {
         stats.setPadding(new Insets(10,10,10,10));
         stats.setHgap(40);
 
-        VBox statsBox = new VBox(brandView, stats,welcomeMsg);
-        statsBox.setAlignment(Pos.CENTER);
-        root.setTop(statsBox);
+        VBox topBox = new VBox(brandPane, stats,welcomeMsg);
+        topBox.setAlignment(Pos.CENTER);
+        root.setTop(topBox);
 
         // BUTTONS
         singleBtn = new Button("Single Player");

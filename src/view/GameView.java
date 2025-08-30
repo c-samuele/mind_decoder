@@ -26,13 +26,12 @@ public class GameView {
         
         int attempts = game.getRemainingAttempts();
         
-
+        VBox topBox = new VBox(); // container for stats and msg
         
         // GAME STATS
         HBox statsBox = new HBox();
         statsBox.setAlignment(Pos.CENTER);
-        statsBox.setSpacing(20);
-        statsBox.setPadding(new Insets(10));
+        statsBox.getStyleClass().add("statsBox");        
         
         Label titleAttemptsLabel = new Label("Attempts: ");
         titleAttemptsLabel.getStyleClass().add("statsText");
@@ -54,20 +53,21 @@ public class GameView {
         	    }, game.getStopWatch().getSecondsProperty())
         	);
         
-        
-
         statsBox.getChildren().addAll(titleAttemptsLabel,attemptsLabel,titleTimeLabel,timeLabel);
-        root.setTop(statsBox);
-
+        topBox.getChildren().add(statsBox);
+        
         // MSG
-        VBox centerBox = new VBox();
-        centerBox.setSpacing(25);
-        centerBox.setAlignment(Pos.CENTER);
+        StackPane msgBox = new StackPane();
+        msgBox.getStyleClass().add("msgBox");
         
         Label msg = new Label("Make your guess!");
         msg.getStyleClass().add("msg");
-        centerBox.getChildren().add(msg);
+        msgBox.getChildren().add(msg);
+        
+        topBox.getChildren().add(msgBox);
 
+        root.setTop(topBox);
+        
         // ATTEMPTS GRID
         attemptsGrid = new GridPane();
         attemptsGrid.setHgap(10);
@@ -83,9 +83,8 @@ public class GameView {
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefViewportHeight(500);
         scrollPane.getStyleClass().add("scrollPane");
-        centerBox.getChildren().add(scrollPane);
 
-        root.setCenter(centerBox);
+        root.setCenter(scrollPane);
 
         // AVAILABLE COLORS
         HBox colorsBox = new HBox();

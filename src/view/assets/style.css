@@ -1,19 +1,35 @@
 .root{
-	-fx-background-color:#212121; 
+	/* ROOT */
+	-fx-background-color:-dark-color; 
 	-fx-font-size:13pt;
-	-grey-color: #e9e9e9;
-	-dark-color:#212121;
-	-light-color:#f5f5f5;
+	
+	/* VAR */
+	-grey-color: #353535;
+	-dark-color:#121212;
+	-light-color:#e8f0fe;
+}
+
+.brand{
+	-fx-padding:24 0 24 0;
 }
 
 .button {
-    -fx-background-color: -grey-color;   
+    -fx-background-color:-grey-color;   
     -fx-text-fill: black;        
     -fx-font-size: 1em;        
 }
 .msg{
+	-fx-background-color:-dark-color;
 	-fx-text-fill:-light-color;
 	-fx-font-size:1.2em;
+}
+.statsBox{
+	-fx-background-color:-grey-color;
+	-fx-padding:16 0;
+}
+.msgBox{
+	-fx-pref-height:64;
+	-fx-alignment: center; 
 }
 
 .statsText{
@@ -38,8 +54,8 @@
 	-fx-border-radius:16;
 }
 .hint{
-	-fx-border-color: black;
-	-fx-text-fill:black;
+	-fx-border-color: -dark-color;
+	-fx-text-fill:-dark-color;
 	-fx-pref-width:120;
 }
 
@@ -82,11 +98,10 @@
 
 .containerStats{
 	-fx-background-color: -light-color;
-	
 }
 
 .btnMain{
-	-fx-background-color:-dark-color;
+	-fx-background-color: -dark-color;
 	-fx-border-color: -light-color;
 	-fx-border-width: 2;
 	-fx-border-style: solid;
