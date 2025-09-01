@@ -24,7 +24,7 @@
 	-fx-font-size:1.2em;
 }
 .statsBox{
-	-fx-background-color:-grey-color;
+	-fx-background-color:-light-color;
 	-fx-padding:16 0;
 }
 .msgBox{
@@ -33,18 +33,15 @@
 }
 
 .statsText{
-	-fx-font-size:1.4em;
-	-fx-text-fill:white; 
+	-fx-font-size:1.2em;
+	-fx-text-fill:-dark-color; 
 	-fx-font-weight: bold;
-	-fx-padding:25 50 25 50;
 }
 
 .statsValue{
-	-fx-font-size:1.1em;
-	-fx-text-fill:-light-color;
-	-fx-padding:25 50 25 50;
-	-fx-min-width:180;
-	-fx-max-width:180;
+	-fx-font-size:1.2em;
+	-fx-text-fill:-dark-color;
+
 }
 
 .cell{

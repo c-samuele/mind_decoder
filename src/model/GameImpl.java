@@ -35,7 +35,7 @@ public class GameImpl implements Game {
 	
 	private Hints hints;
 	
-	private StopWatch stopWatch;
+	private int time;
 	
 	
 	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
@@ -49,9 +49,7 @@ public class GameImpl implements Game {
 		this.hints = new Hints();
 		this.stats = new GameStatsImpl();
 		this.maxAttempts = attempts; // dopo dell'init di attempts poichè dipende da esso
-		this.stopWatch = new StopWatch();
-		
-		stopWatch.start(); // start stopWatch
+		this.time = 0;
 	}
 	
 	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
@@ -125,7 +123,7 @@ public class GameImpl implements Game {
 		 * IMPORTANT FIRST BY LOSE CHECK FOR ATTEMPT = 0
 		 */
 		if(isWon(indexCorrect,this.nColors)) {
-			stopWatch.stop();
+			
 			// GENERATE GAMESTATS
 			this.generateStats();
 			SessionImpl.getInstance().addGameStats(stats);
@@ -259,13 +257,11 @@ public class GameImpl implements Game {
 			return 12;
 	}
 	
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
 	public int getTime() {
-		return stopWatch.getSecondsInt();
+		return time;
 	}
-	
-	
-	public StopWatch getStopWatch() {
-		return this.stopWatch;
-	}
-	
 }

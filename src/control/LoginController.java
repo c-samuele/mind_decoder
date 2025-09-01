@@ -10,23 +10,33 @@ import view.SessionView;
 
 public class LoginController {
 	
-	private LoginView view;
 	private Stage stage;
+	private LoginView loginView;
+	private SessionController sessionController;
+	private SessionView sessionView;
 	
 	
 	public LoginController(LoginView view,Stage stage){
-		this.view = view;
+		this.loginView = view;
 		this.stage = stage;
 		view.getLoginBtn().setOnAction(e -> handleStart());
 	}
 
 	private void handleStart() {
-		String playerName = view.getPlayerName();
+		String playerName = loginView.getPlayerName();
 		Player player = new PlayerImpl(playerName);
 		
-		SessionImpl session = SessionImpl.getInstance(player,Optional.empty());
+		// singleton
+		SessionImpl singletonSession = SessionImpl.getInstance(player,Optional.empty());
 		
-		SessionView sessionView = new SessionView(SessionImpl.getInstance());
+		sessionView = new SessionView();
+		sessionController = new SessionController(stage);
+		sessionView.setController(sessionController);
+	
+		// BTN SINGLE
+		sessionView.getSinglePlayerBtn().setOnAction(e -> sessionController.handleStartSinglePlayer());
+		// BTN MULTY
+		// BTN CHALLENGE 
 		
 		stage.getScene().setRoot(sessionView.getRoot());
 		stage.setWidth(1024);
@@ -35,6 +45,6 @@ public class LoginController {
 	    stage.setMinHeight(800);
 	    stage.centerOnScreen();
 	    
-	    new SessionController(stage, sessionView);
+	   
 	}
 }

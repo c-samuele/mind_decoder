@@ -2,8 +2,11 @@ package view;
 
 import java.util.Arrays;
 import java.util.List;
+
+import control.GameController;
 import model.Color;
 import model.GameImpl;
+import model.SessionImpl;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,50 +20,81 @@ import javafx.scene.text.Text;
 public class GameView {
 
     private BorderPane root;
+    private GameController gameController;
 
     private GridPane attemptsGrid;
+    
+    VBox topBox;
+    
+    HBox statsBox,
+    	 attemptsBox,
+    	 timeBox;
+    
+    Label attemptsLabel,
+    	  timeLabel;
+    
+    Label attemptsValue,
+    	  timeValue;
  
-
-    public GameView(GameImpl game) {
+    StackPane msgBox;
+    
+    Label msg;
+    
+    ScrollPane scrollPane;
+    
+    HBox colorsBox;
+    
+    public GameView(GameController controller) {
         root = new BorderPane();
+        gameController = controller;
         
-        int attempts = game.getRemainingAttempts();
-        
-        VBox topBox = new VBox(); // container for stats and msg
+        topBox = new VBox(); // container for stats and msg
         
         // GAME STATS
-        HBox statsBox = new HBox();
+        statsBox = new HBox();
         statsBox.setAlignment(Pos.CENTER);
         statsBox.getStyleClass().add("statsBox");        
-        
-        Label titleAttemptsLabel = new Label("Attempts: ");
-        titleAttemptsLabel.getStyleClass().add("statsText");
-        Label attemptsLabel = new Label("" + attempts);
-        attemptsLabel.getStyleClass().add("statsValue");
-        
-        Label titleTimeLabel = new Label("Time: ");
-        titleTimeLabel.getStyleClass().add("statsText");
-        Label timeLabel = new Label("");
-        timeLabel.getStyleClass().add("statsValue"); 
-        
-        timeLabel.textProperty().bind(
-        	    Bindings.createStringBinding(() -> {
-        	        int second = game.getStopWatch().getSecondsInt();
-        	        int hours = second / 3600;
-        	        int minutes = (second % 3600) / 60;
-        	        int seconds = second % 60;
-        	        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        	    }, game.getStopWatch().getSecondsProperty())
-        	);
-        
-        statsBox.getChildren().addAll(titleAttemptsLabel,attemptsLabel,titleTimeLabel,timeLabel);
+	        
+	        // ATTEMTPS
+	        attemptsLabel = new Label("Attempts: ");
+	        attemptsLabel.getStyleClass().add("statsLabel");
+	        attemptsValue = new Label("");
+	        attemptsValue.getStyleClass().add("statsValue");
+	        attemptsValue.textProperty().bind(
+	                gameController.remainingAttemptsProperty().asString()
+	            );
+	        
+	        attemptsBox = new HBox(attemptsLabel,attemptsValue);
+	        
+	        
+	        // TIME
+	        timeLabel = new Label("Time: ");
+	        timeLabel.getStyleClass().add("statsLabel");
+	        timeValue = new Label("");
+	        timeValue.getStyleClass().add("statsValue");
+	        timeValue.textProperty().bind(
+	        	    Bindings.createStringBinding(
+	        	        () -> {
+	        	            int second = gameController.timeProperty().get();
+	        	            int hours = second / 3600;
+	        	            int minutes = (second % 3600) / 60;
+	        	            int seconds = second % 60;
+	        	            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	        	        },
+	        	        gameController.timeProperty()
+	        	    )
+	        	);
+	        timeBox = new HBox(timeLabel,timeValue);
+	     
+	    statsBox.getChildren().addAll(attemptsBox,timeBox);
+	    
         topBox.getChildren().add(statsBox);
         
         // MSG
-        StackPane msgBox = new StackPane();
+        msgBox = new StackPane();
         msgBox.getStyleClass().add("msgBox");
         
-        Label msg = new Label("Make your guess!");
+        msg = new Label("Make your guess!");
         msg.getStyleClass().add("msg");
         msgBox.getChildren().add(msg);
         
@@ -79,7 +113,7 @@ public class GameView {
         for(int i=0;i<20;i++)
         	createRowAttempts(i,3);
 
-        ScrollPane scrollPane = new ScrollPane(attemptsGrid);
+        scrollPane = new ScrollPane(attemptsGrid);
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefViewportHeight(500);
         scrollPane.getStyleClass().add("scrollPane");
@@ -87,17 +121,18 @@ public class GameView {
         root.setCenter(scrollPane);
 
         // AVAILABLE COLORS
-        HBox colorsBox = new HBox();
-        colorsBox.setAlignment(Pos.CENTER);
+        colorsBox = new HBox();
+        colorsBox.setAlignment(Pos.BOTTOM_CENTER);
         colorsBox.setSpacing(16);
         colorsBox.setPadding(new Insets(16, 16, 16, 16));
-        
-        List<Color> colorsAvailable = game.getAvailableColors(Arrays.asList(Color.values()), game.getLevel());
+       
+        List<Color> colorsAvailable = gameController.getAvailableColors();
 
         for (Color c : colorsAvailable) {
             Circle circle = new Circle(18, toFXColor(c));
             colorsBox.getChildren().add(circle);
         }
+       
 
         root.setBottom(colorsBox);
     }
@@ -146,6 +181,14 @@ public class GameView {
     		
     		
     	// DRAG & DROP...
+    }
+    
+    public Label getAttemptsLabel() {
+    	return attemptsValue;
+    }
+    
+    public Label getTimeLabel() {
+    	return timeLabel;
     }
 
     

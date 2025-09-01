@@ -1,96 +1,81 @@
 package control;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.stage.Stage;
 import model.GameMode;
-import model.Player;
-import model.PlayerImpl;
-import model.Session;
 import model.SessionImpl;
 import model.GameImpl;
-import model.Color;
-import model.Game;
 import view.GameView;
-import view.SessionView;
+
 
 public class SessionController {
 	
 	private Stage stage;
-	private SessionView sessionView;
+	
 	private SessionImpl sessionModel;
+
+	private final IntegerProperty bestScore;
+	private final IntegerProperty attemptsAvg;
+	private final IntegerProperty levelUnlocked;
+	private final DoubleProperty timeAvg;
 	
-	public SessionController(Stage stage,SessionView sessionView) {
+	
+	
+	public SessionController(Stage stage) {
 		this.stage = stage;
-		this.sessionView = sessionView;
+		this.sessionModel = SessionImpl.getInstance();
 		
-		sessionView.getSinglePlayerBtn().setOnAction(e -> handleStartSinglePlayer());
-//		sessionView.getMultyPlayerBtn().setOnAction(e -> handleStartMultyPlayer());
-//		sessionView.getAiChallengeBtn().setOnAction(e -> handleStartAiChallenge());
+		// Stats for sessionView
+		bestScore = new SimpleIntegerProperty(sessionModel.getBestScore());
+		attemptsAvg = new SimpleIntegerProperty(sessionModel.getAttemptsAvg());
+		levelUnlocked = new SimpleIntegerProperty(sessionModel.getUnlockedLevel());
+		timeAvg = new SimpleDoubleProperty(sessionModel.getTimeAvg());
+		
 	}
 	
 	
-	
-	
-	private void handleStartSinglePlayer() {
-		
-		GameImpl gameModel = new GameImpl(GameMode.SINGLE_PLAYER,
-									 SessionImpl.getInstance().getUnlockedLevel());
-		
-		SessionImpl.getInstance().setCurrentGame(gameModel);
-		
-		List<Color> allColors = new ArrayList<>(Arrays.asList(Color.values()));
-		
-		int level = SessionImpl.getInstance().getUnlockedLevel();
-		
-		GameView gameView = new GameView(gameModel);
-		
-		
-		
-		stage.getScene().setRoot(gameView.getRoot());
-		stage.setWidth(1024);
-		stage.setHeight(800);
-		stage.setMinWidth(1024);
-	    stage.setMinHeight(800);
-	    stage.centerOnScreen();
+	// Getter for Bind
+	public IntegerProperty bestScoreProperty() {
+		return bestScore;
 	}
-//	
-//	private void handleStartMultyPlayer() {
-//		
-//		Game gameModel = new GameImpl(GameMode.MULTY_PLAYER,
-//									 SessionImpl.getInstance().getUnlockedLevel());
-//		
-//		GameView gameView = new GameView(GameMode.MULTY_PLAYER);
-//		
-//		
-//		
-//		stage.getScene().setRoot(gameView.getRoot());
-//		stage.setWidth(1200);
-//		stage.setHeight(800);
-//		stage.setMinWidth(1200);
-//	    stage.setMinHeight(800);
-//	    stage.centerOnScreen();
-//	}
-//	
-//
-//	private void handleStartAiChallenge() {
-//		
-//		Game gameModel = new GameImpl(GameMode.AI_CHALLENGE,
-//									 SessionImpl.getInstance().getUnlockedLevel());
-//		
-//		GameView gameView = new GameView(GameMode.AI_CHALLENGE);
-//		
-//		
-//		
-//		stage.getScene().setRoot(gameView.getRoot());
-//		stage.setWidth(1200);
-//		stage.setHeight(800);
-//		stage.setMinWidth(1200);
-//	    stage.setMinHeight(800);
-//	    stage.centerOnScreen();
-//	}
+	public IntegerProperty attemptsAvgProperty() {
+		return attemptsAvg;
+	}
+	public IntegerProperty levelUnlockedProperty() {
+		return levelUnlocked;
+	}
+	public DoubleProperty timeAvgProperty() {
+		return timeAvg;
+	}
+	
+	public void updateStats() {
+        bestScore.set(sessionModel.getBestScore());
+        attemptsAvg.set(sessionModel.getAttemptsAvg());
+        levelUnlocked.set(sessionModel.getUnlockedLevel());
+        timeAvg.set(sessionModel.getTimeAvg());
+    }
+	
+	
+	public void handleStartSinglePlayer() {
+        GameImpl gameModel = new GameImpl(GameMode.SINGLE_PLAYER, sessionModel.getUnlockedLevel());
+        sessionModel.setCurrentGame(gameModel);
+        
+        GameController gameController = new GameController(gameModel);
+        
+        gameController.startStopWatch();
+        
+        GameView gameView = new GameView(gameController);
+        
+        stage.getScene().setRoot(gameView.getRoot());
+        stage.setWidth(1024);
+        stage.setHeight(800);
+        stage.setMinWidth(1024);
+        stage.setMinHeight(800);
+        stage.centerOnScreen();
+    }
 	
 
 }

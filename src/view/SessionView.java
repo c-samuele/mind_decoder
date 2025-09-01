@@ -1,5 +1,6 @@
 package view;
 
+import control.SessionController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -9,20 +10,44 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import model.GameStats;
 import model.SessionImpl;
 
 public class SessionView {
 
     private BorderPane root;
     
+    private SessionController sessionController;
+    
     Button 	singleBtn,
 			multyBtn,
 			aiBtn;
+    
+    VBox topBox,
+    	 btnBox;
+    
+    GridPane stats;
+    
+    HBox scoreBox,
+    	 attemptsBox,
+    	 levelBox,
+    	 timeBox;
+    
+    Label scoreLabel,
+    	  attemptsLabel,
+    	  levelLabel,
+    	  timeLabel;
+    
+    Label scoreValue,
+    	  attemptsValue,
+    	  levelValue,
+    	  timeValue;
+    
+    Label welcomeMsg;
 
-    public SessionView(SessionImpl session) {
+    public SessionView() {
         root = new BorderPane();
         
         // TITLE
@@ -30,35 +55,60 @@ public class SessionView {
         ImageView brandView = new ImageView(brand); 
         StackPane brandPane = new StackPane(brandView);
         brandPane.getStyleClass().add("brand");
-        
         brandView.setFitHeight(80); 
         brandView.setPreserveRatio(true); 
 
         // STATS
-        GridPane stats = new GridPane();
+        stats = new GridPane();
         stats.getStyleClass().add("containerStats");
-
-        Label score = new Label("BEST SCORE: " + session.getBestScore());
-        score.getStyleClass().add("statsLabel");
-        Label attemptsAvg = new Label("AVG ATTEMPTS: "+ session.getAttemptsAvg());
-        attemptsAvg.getStyleClass().add("statsLabel");
-        Label timeAvg = new Label("AVG TIME: " + session.getTimeAvg());
-        timeAvg.getStyleClass().add("statsLabel");
-        Label level = new Label("CURRENT LEVEL: " + session.getUnlockedLevel());
-        level.getStyleClass().add("statsLabel");
         
-        Label welcomeMsg = new Label("Welcome " + session.getFirstPlayer().getName());
+	        // BEST SCORE 
+	        scoreBox = new HBox();
+	        scoreLabel = new Label("BEST SCORE: ");
+	        scoreLabel.getStyleClass().add("statsLabel");
+	        scoreValue = new Label();
+	        scoreValue.getStyleClass().add("statsValue");
+	        scoreBox.getChildren().addAll(scoreLabel,scoreValue);
+	        
+	        // ATTEMPTS AVG
+	        attemptsBox = new HBox();
+	        attemptsLabel = new Label("AVG ATTEMPTS: ");
+	        attemptsLabel.getStyleClass().add("statsLabel");
+	        attemptsValue = new Label();
+	        attemptsValue.getStyleClass().add("statsValue");
+	        attemptsBox.getChildren().addAll(attemptsLabel,attemptsValue);
+	        
+	        // LEVEL UNLOCKED
+	        levelBox = new HBox();
+	        levelLabel = new Label("LEVEL: ");
+	        levelLabel.getStyleClass().add("statsLabel");
+	        levelValue = new Label();
+	        levelValue.getStyleClass().add("statsValue");
+	        levelBox.getChildren().addAll(levelLabel,levelValue);
+        
+	        // TIME AVG
+	        timeBox = new HBox();
+	        timeLabel = new Label("AVG Time: ");
+	        timeLabel.getStyleClass().add("statsLabel");
+	        timeValue = new Label();
+	        timeValue.getStyleClass().add("statsValue");
+	        timeBox.getChildren().addAll(timeLabel,timeValue);
+	        
+        // MSG
+        welcomeMsg = new Label("Welcome " + SessionImpl.getInstance().getFirstPlayer().getName());
         welcomeMsg.getStyleClass().add("username");
-
-        stats.add(score,0,0);
-        stats.add(attemptsAvg,1,0);
-        stats.add(timeAvg,2,0);
-        stats.add(level,3,0);
+        
+        // ADD BOX TO STATS
+        stats.add(scoreBox,0,0);
+        stats.add(attemptsBox,1,0);
+        stats.add(timeBox,2,0);
+        stats.add(levelBox,3,0);
         stats.setAlignment(Pos.CENTER);
         stats.setPadding(new Insets(10,10,10,10));
         stats.setHgap(40);
-
-        VBox topBox = new VBox(brandPane, stats,welcomeMsg);
+        
+        // TOP BOX ALL ITEM
+        topBox = new VBox(brandPane, stats,welcomeMsg);
         topBox.setAlignment(Pos.CENTER);
         root.setTop(topBox);
 
@@ -70,16 +120,28 @@ public class SessionView {
         aiBtn = new Button("Challenge Ai");
         aiBtn.getStyleClass().add("btnMain");
 
-        VBox boxBtn = new VBox(singleBtn, multyBtn, aiBtn);
-        boxBtn.setAlignment(Pos.CENTER);
-        boxBtn.setSpacing(30);
+        btnBox = new VBox(singleBtn, multyBtn, aiBtn);
+        btnBox.setAlignment(Pos.CENTER);
+        btnBox.setSpacing(30);
 
-        root.setCenter(boxBtn);
+        root.setCenter(btnBox);
     }
     
     public Parent getRoot() {
 		return root;
 	}
+   
+    public void setController(SessionController controller) {
+    	this.sessionController = controller;
+    	this.bindStats(controller);
+    }
+    
+   public void bindStats(SessionController sessionController) {
+	   scoreValue.textProperty().bind(sessionController.bestScoreProperty().asString());
+	   attemptsValue.textProperty().bind(sessionController.attemptsAvgProperty().asString());
+	   levelValue.textProperty().bind(sessionController.levelUnlockedProperty().asString());
+	   timeValue.textProperty().bind(sessionController.timeAvgProperty().asString());
+   }
 	
    public Button getSinglePlayerBtn() {
         return this.singleBtn;
