@@ -9,10 +9,13 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
     	
-    	LoginView login = new LoginView();
-    	LoginController controller = new LoginController(login,stage);
-    	Scene scene = new Scene(login.getRoot(),600,350);
     	stage.setTitle("Mind Decoder");
+    	
+    	LoginView loginView = new LoginView();
+    	
+    	LoginController controller = new LoginController(loginView,stage);
+    	
+    	Scene scene = new Scene(loginView.getRoot(),600,350);
 
         scene.getStylesheets().add(getClass().getResource("/view/assets/style.css").toExternalForm());
     	

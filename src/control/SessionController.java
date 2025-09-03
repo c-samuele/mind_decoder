@@ -9,33 +9,44 @@ import model.GameMode;
 import model.SessionImpl;
 import model.GameImpl;
 import view.GameView;
-
+import view.SessionView;
 
 public class SessionController {
 	
 	private Stage stage;
 	
 	private SessionImpl sessionModel;
+	private SessionView sessionView;
 
+	// Statistics values
 	private final IntegerProperty bestScore;
 	private final IntegerProperty attemptsAvg;
 	private final IntegerProperty levelUnlocked;
 	private final DoubleProperty timeAvg;
 	
 	
-	
 	public SessionController(Stage stage) {
 		this.stage = stage;
 		this.sessionModel = SessionImpl.getInstance();
 		
-		// Stats for sessionView
+		// Statistics values for sessionView 
 		bestScore = new SimpleIntegerProperty(sessionModel.getBestScore());
 		attemptsAvg = new SimpleIntegerProperty(sessionModel.getAttemptsAvg());
 		levelUnlocked = new SimpleIntegerProperty(sessionModel.getUnlockedLevel());
 		timeAvg = new SimpleDoubleProperty(sessionModel.getTimeAvg());
 		
+		// Creation sessionView
+		sessionView = new SessionView(this);
+		
+		// Set welcome message
+		sessionView.getMsg().setText("Welcome " + SessionImpl.getInstance().getFirstPlayer().getName());
+		
+		// Button for single player
+		sessionView.getSinglePlayerBtn().setOnAction(e -> handleStartSinglePlayer());
+		
+		// Button for challenge ai
+		
 	}
-	
 	
 	// Getter for Bind
 	public IntegerProperty bestScoreProperty() {
@@ -51,6 +62,7 @@ public class SessionController {
 		return timeAvg;
 	}
 	
+	// Statistics update
 	public void updateStats() {
         bestScore.set(sessionModel.getBestScore());
         attemptsAvg.set(sessionModel.getAttemptsAvg());
@@ -58,24 +70,20 @@ public class SessionController {
         timeAvg.set(sessionModel.getTimeAvg());
     }
 	
-	
+	// Handler for single player mode
 	public void handleStartSinglePlayer() {
-        GameImpl gameModel = new GameImpl(GameMode.SINGLE_PLAYER, sessionModel.getUnlockedLevel());
-        sessionModel.setCurrentGame(gameModel);
-        
-        GameController gameController = new GameController(gameModel);
-        
-        gameController.startStopWatch();
-        
-        GameView gameView = new GameView(gameController);
-        
-        stage.getScene().setRoot(gameView.getRoot());
-        stage.setWidth(1024);
-        stage.setHeight(800);
-        stage.setMinWidth(1024);
-        stage.setMinHeight(800);
-        stage.centerOnScreen();
+		// Creation gameMolde
+		GameImpl gameModel = new GameImpl(GameMode.SINGLE_PLAYER, sessionModel.getUnlockedLevel());
+		// Set current game
+		sessionModel.setCurrentGame(gameModel);
+		GameController gameController = new GameController(gameModel,stage,this);
+
+		stage.getScene().setRoot(gameController.getGameRoot());
     }
+	
+	public SessionView getSessionView() {
+	    return sessionView;
+	}
 	
 
 }

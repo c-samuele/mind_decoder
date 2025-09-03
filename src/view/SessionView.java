@@ -21,36 +21,45 @@ public class SessionView {
     
     private SessionController sessionController;
     
+    // Button for the main menu
     Button 	singleBtn,
 			multyBtn,
 			aiBtn;
     
+    // Box for the scene
     VBox topBox,
     	 btnBox;
     
+    // Grid for the sessionStats
     GridPane stats;
     
+    // Box for the label and value
     HBox scoreBox,
     	 attemptsBox,
     	 levelBox,
     	 timeBox;
     
+    // Text label
     Label scoreLabel,
     	  attemptsLabel,
     	  levelLabel,
     	  timeLabel;
     
+    // Value label
     Label scoreValue,
     	  attemptsValue,
     	  levelValue,
     	  timeValue;
     
+    // Start message with user
     Label welcomeMsg;
 
-    public SessionView() {
+    public SessionView(SessionController controller) {
+    	this.sessionController = controller;
+    	
         root = new BorderPane();
         
-        // TITLE
+        // Brand image
         Image brand = new Image(getClass().getResourceAsStream("/negativo.png"));
         ImageView brandView = new ImageView(brand); 
         StackPane brandPane = new StackPane(brandView);
@@ -58,11 +67,11 @@ public class SessionView {
         brandView.setFitHeight(80); 
         brandView.setPreserveRatio(true); 
 
-        // STATS
+        // Session stats
         stats = new GridPane();
         stats.getStyleClass().add("containerStats");
         
-	        // BEST SCORE 
+	        // Best Score
 	        scoreBox = new HBox();
 	        scoreLabel = new Label("BEST SCORE: ");
 	        scoreLabel.getStyleClass().add("statsLabel");
@@ -70,7 +79,7 @@ public class SessionView {
 	        scoreValue.getStyleClass().add("statsValue");
 	        scoreBox.getChildren().addAll(scoreLabel,scoreValue);
 	        
-	        // ATTEMPTS AVG
+	        // Attempts avg
 	        attemptsBox = new HBox();
 	        attemptsLabel = new Label("AVG ATTEMPTS: ");
 	        attemptsLabel.getStyleClass().add("statsLabel");
@@ -78,7 +87,7 @@ public class SessionView {
 	        attemptsValue.getStyleClass().add("statsValue");
 	        attemptsBox.getChildren().addAll(attemptsLabel,attemptsValue);
 	        
-	        // LEVEL UNLOCKED
+	        // Current level
 	        levelBox = new HBox();
 	        levelLabel = new Label("LEVEL: ");
 	        levelLabel.getStyleClass().add("statsLabel");
@@ -86,16 +95,16 @@ public class SessionView {
 	        levelValue.getStyleClass().add("statsValue");
 	        levelBox.getChildren().addAll(levelLabel,levelValue);
         
-	        // TIME AVG
+	        // Time avg
 	        timeBox = new HBox();
 	        timeLabel = new Label("AVG Time: ");
 	        timeLabel.getStyleClass().add("statsLabel");
 	        timeValue = new Label();
 	        timeValue.getStyleClass().add("statsValue");
-	        timeBox.getChildren().addAll(timeLabel,timeValue);
+	        timeBox.getChildren().addAll(timeLabel,timeValue);  
 	        
         // MSG
-        welcomeMsg = new Label("Welcome " + SessionImpl.getInstance().getFirstPlayer().getName());
+        welcomeMsg = new Label();
         welcomeMsg.getStyleClass().add("username");
         
         // ADD BOX TO STATS
@@ -123,24 +132,26 @@ public class SessionView {
         btnBox = new VBox(singleBtn, multyBtn, aiBtn);
         btnBox.setAlignment(Pos.CENTER);
         btnBox.setSpacing(30);
-
+        
+        // Bind to session stats
+        bindStats();
+        
         root.setCenter(btnBox);
     }
     
     public Parent getRoot() {
 		return root;
 	}
-   
-    public void setController(SessionController controller) {
-    	this.sessionController = controller;
-    	this.bindStats(controller);
-    }
     
-   public void bindStats(SessionController sessionController) {
+   public void bindStats() {
 	   scoreValue.textProperty().bind(sessionController.bestScoreProperty().asString());
 	   attemptsValue.textProperty().bind(sessionController.attemptsAvgProperty().asString());
 	   levelValue.textProperty().bind(sessionController.levelUnlockedProperty().asString());
 	   timeValue.textProperty().bind(sessionController.timeAvgProperty().asString());
+   }
+   
+   public Label getMsg() {
+	   return this.welcomeMsg;
    }
 	
    public Button getSinglePlayerBtn() {
@@ -152,4 +163,7 @@ public class SessionView {
    public Button getAiChallengeBtn() {
        return this.aiBtn;
    }
+   
+   
+   
 }

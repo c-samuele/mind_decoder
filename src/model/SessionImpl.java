@@ -12,14 +12,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class SessionImpl implements Session,GameAction {
+public class SessionImpl implements Session {
 	
 	private static SessionImpl sessionInst; 
 	
 	private static final int MAX_LEVEL = 12;						// Max Level
 	
 	private final Player firstPlayer;						// 1° player
-	private final Optional<Player> secondPlayer; 			// 2° player
 	
 	private int unlockedLevel;
 	
@@ -34,17 +33,16 @@ public class SessionImpl implements Session,GameAction {
 	 * @param first player
 	 * @param second player optional
 	 */
-	private SessionImpl(Player p1,Optional<Player> p2) {
+	private SessionImpl(Player p1) {
 		this.unlockedLevel = 1;		// current unlocked level
 		this.gameActive = false;	// status game
 		this.firstPlayer = p1;		// player1
-		this.secondPlayer = p2;		// player2
 	}
 	
 	
-	public static SessionImpl getInstance(Player p1, Optional<Player> p2) {
+	public static SessionImpl getInstance(Player p1) {
 	    if (sessionInst == null) {
-	    	sessionInst = new SessionImpl(p1, p2); 
+	    	sessionInst = new SessionImpl(p1); 
 	    }
 	    return sessionInst;
 	}
@@ -60,12 +58,6 @@ public class SessionImpl implements Session,GameAction {
 	public Player getFirstPlayer() {
 		return firstPlayer;
 	}
-	
-	@Override
-	public Optional<Player> getSecondPlayer() {
-		return secondPlayer;
-	}
-	
 	
 	@Override
 	public int getMaxLevel() {
@@ -177,61 +169,10 @@ public class SessionImpl implements Session,GameAction {
 	}
 
 	@Override
-	public void start() {
-		if(gameActive==false) {
-			this.gameActive = true;
-			this.getCurrentGame().start();
-		}
-	}
-
-	@Override
-	public void end() {
-		if(gameActive==true) {
-			this.gameActive = false;
-			this.getCurrentGame().end();
-		}
-	}
-
-	@Override
-	public void makeAttempt(Code c) {
-		
-	}
-
-	@Override
-	public boolean isOver() {
-		return false;
-	}
-
-	@Override
-	public boolean isWon() {
-		return false;
-	}
-
-	@Override
-	public int getRemainingAttempts() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void getHints() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public GameStats generateStats() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void sessionLog() {
 		System.out.println("[FIRST PLAYER] \t\t" + this.getFirstPlayer().getName());
-		System.out.println("[SECOND PLAYER] \t" + this.getSecondPlayer());
 		System.out.println("[UNLOCKED LEVEL] \t" + this.getUnlockedLevel()+"/"+this.getMaxLevel());
 		System.out.println("[GAME ACTIVE] \t\t"+this.hasActiveGame());
-		
 	}
 
 

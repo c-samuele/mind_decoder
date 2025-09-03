@@ -7,15 +7,15 @@
 
 package model;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
 		System.out.print("|-- PLAYER CREATE\n");				Player p1 = new PlayerImpl("Samuele");	
-		System.out.print("|-- SESSION CREATE \n");				Session tSession = SessionImpl.getInstance(p1, Optional.empty());
+		System.out.print("|-- SESSION CREATE \n");				Session tSession = SessionImpl.getInstance(p1);
 		System.out.print("|   |- GAME CREATE \n");			
 		System.out.print("|   |  |- MAKE A SECRET CODE \n");
 		System.out.print("|---|------------------------------------------------------------------------------------------------------|\n\n");
@@ -28,7 +28,15 @@ public class Main {
 		System.out.print("|   |---- MAKE ATTEMPT \n");
 		System.out.print("|---|------------------------------------------------------------------------------------------------------|\n\n");
 																List<Color> l1 = List.of(Color.GREEN, Color.GREEN, Color.BLUE); 
-																List<Color> l2 = List.of(Color.BLUE, Color.BLUE, Color.GREEN); 
+																List<Color> l2 = List.of(Color.BLUE, Color.BLUE, Color.GREEN);
+																
+																tSession.getCurrentGame().setColorCurrentAttempt(0, Color.RED);
+																tSession.getCurrentGame().setColorCurrentAttempt(1, Color.GREEN);
+																tSession.getCurrentGame().setColorCurrentAttempt(2, Color.BLUE);
+																Code attemptCode = new CodeImpl(Arrays.asList(tSession.getCurrentGame().getCurrentAttempt()));
+																tSession.getCurrentGame().makeAttempt(attemptCode);
+																
+																
 																Code wrong1 = new CodeImpl(l1);
 																Code wrong2 = new CodeImpl(l2);
 																tSession.getCurrentGame().makeAttempt(wrong1);

@@ -18,11 +18,32 @@
     -fx-text-fill: black;        
     -fx-font-size: 1em;        
 }
+
+.exitBtn{
+	-fx-background-color: -dark-color;
+	-fx-border-color: -light-color;
+	-fx-border-width: 2;
+	-fx-border-style: solid;
+	-fx-padding:5 10;
+	-fx-text-fill:-light-color;
+	-fx-cursor:hand;
+	-fx-font-weight:600;
+}
+.usernameLabel{
+	-fx-font-size:1em;
+	-fx-text-fill:-light-color;
+}
+
+
 .msg{
 	-fx-background-color:-dark-color;
 	-fx-text-fill:-light-color;
 	-fx-font-size:1.2em;
 }
+.boxStatsGame{
+	-fx-pref-width:180;
+}
+
 .statsBox{
 	-fx-background-color:-light-color;
 	-fx-padding:16 0;

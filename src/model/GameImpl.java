@@ -9,33 +9,34 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class GameImpl implements Game {
 	
-	private GameMode mode;
+	private GameMode mode; // mode of game
+	private GameState state; // state of game
 	
-	private GameState state;
+	private int level; // current level
 	
-	private int level; 
+	private final int maxAttempts;	// max num of attempts for level
+	private int attemptsRemaining;	// attempts remaining
 	
-	private final int maxAttempts;
-	private int attempts;
+	private Code secretCode;	// secret code
 	
-	private Code secretCode;
+	private int nColors;	// num of color for secretCode
 	
-	private int nColors;
+	private GameStats stats;	// stats of current game
 	
-	private GameStats stats;
+	private Hints hints;	// hint for current attempts
 	
-	private Hints hints;
+	private int time;	// time of current game
 	
-	private int time;
+	private List<Color> availableColors;
+	private Color[] currentAttempt;	// current attempt
+	
+	private int currentAttemptRow = 0; 
+
 	
 	
 	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
@@ -44,12 +45,15 @@ public class GameImpl implements Game {
 		this.mode = mode;
 		this.level = level;
 		this.nColors = numberOfColors(level);
-		this.attempts = calculateAttempts(level);
-		this.secretCode = makeSecretCode(level); 
+		this.attemptsRemaining = calculateAttempts(level); 
 		this.hints = new Hints();
 		this.stats = new GameStatsImpl();
-		this.maxAttempts = attempts; // dopo dell'init di attempts poichè dipende da esso
+		this.maxAttempts = attemptsRemaining;
 		this.time = 0;
+		this.currentAttempt = new Color[nColors];
+		this.availableColors = new ArrayList<>(Arrays.asList(Color.values()).subList(0, numberOfColors(level)));
+		this.secretCode = makeSecretCode(level);
+
 	}
 	
 	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
@@ -57,48 +61,80 @@ public class GameImpl implements Game {
 //		this.mode = mode;
 //	}	
 	
+
 	@Override
-	public void start() {
-		
+	public GameState getState() {
+		return state;
 	}
 	
 	@Override
-	public void end() {
-		
+	public int getCurrentAttemptRow() {
+	    return currentAttemptRow;
 	}
 	
 	@Override
-	public List<Color> getAvailableColors(List<Color> allColors,int level){
-		return allColors.subList(0,numberOfColors(level));
+	public void setColorCurrentAttempt(int position, Color color) {
+		if(position < 0 || position >= nColors)
+			throw new IllegalArgumentException("Position out of bounds");
+		currentAttempt[position] = color;
+	}
+	
+	public Color[] getCurrentAttempt() {
+		return currentAttempt;
+	}
+	
+	@Override
+	public Color getColorCurrentAttempt(int position) {
+	    if(position < 0 || position >= currentAttempt.length) 
+	        throw new IllegalArgumentException("Position out of bounds");
+	    return currentAttempt[position];
+	}
+	@Override
+	public boolean isCurrentAttemptFull() {
+	    for(Color c : currentAttempt) {
+	        if(c == null) return false;
+	    }
+	    return true;
+	}
+	@Override
+	public void resetCurrentAttempt() {
+	    Arrays.fill(currentAttempt, null);
+	}
+	
+	@Override
+	public List<Color> getAvailableColors() {
+	    return Collections.unmodifiableList(availableColors);
+	}
+	
+	public void removeAvailableColor(Color c) {
+	    availableColors.remove(c);
+	}
+	
+	public void resetAvailableColors() {
+	    availableColors = new ArrayList<>(Arrays.asList(Color.values()).subList(0, numberOfColors(level)));
 	}
 	
 	
 	public Code makeSecretCode(int level) {
 		System.out.print("Number of color for level:\t" + numberOfColors(level) + "\n");
 		
-		List<Color> allColors = new ArrayList<>(Arrays.asList(Color.values()));
+		List<Color> secretCodeColors = new ArrayList<>(availableColors);
+
+		Collections.shuffle(secretCodeColors);
 		
-		System.out.print("All colors:\t\t" + allColors + "\n");
-		
-		List<Color> availableColors = getAvailableColors(allColors,level);
-		
-		System.out.print("Availables colors:\t" + availableColors + "\n");
-		Collections.shuffle(availableColors);
-		
-		Code secretCode = new CodeImpl(availableColors);
+		Code secretCode = new CodeImpl(secretCodeColors);
 	
 		return secretCode;
 	}
 	
 	public Code getSecretCode(){
-		System.out.println("Secret Code:\t\t" + secretCode.getColor());
 		return secretCode;
 	}
 
 	@Override
 	public void makeAttempt(Code codeAttempt) throws IllegalStateException {
 		
-		if(state != GameState.PLAYING || attempts == 0) {
+		if(state != GameState.PLAYING || attemptsRemaining == 0) {
 		    state = GameState.LOSE;
 		    throw new IllegalStateException("Game is over, no more attempts allowed.");
 		}
@@ -108,7 +144,7 @@ public class GameImpl implements Game {
 		int colorCorrect,		/* Number of correct colors for gameStats */
 			indexCorrect = 0;	/* Number of color and index correct for gameStats */
 		
-		this.attempts--;
+		this.attemptsRemaining--;
 		System.out.println("Attempts code:\t\t" + codeAttempt.getColor() + "\n");
 		
 		// Color check
@@ -132,6 +168,8 @@ public class GameImpl implements Game {
 			
 			// LOG
 			System.out.println("You win!");
+			System.out.print("\ntime:"+getTime()+"\n");
+			System.out.print("attempts remaining:"+getRemainingAttempts()+"\n");
 			
 			// EXIT THE GAME
 		}
@@ -150,18 +188,17 @@ public class GameImpl implements Game {
 			// EXIT THE GAME
 		}
 		
-		
 		// GENERATE AND ADD HINTS TO LIST
 		currentHint = new HintImpl(colorCorrect,indexCorrect);
-		
 		hints.addHint(currentHint);
-		System.out.print("\nHINT:\n" +" |- Number of correct colors: " + currentHint.getColorCorrect() + "\n" +" |- Number of correct index: "+ currentHint.getIndexCorrect()+"\n\n");
-			
+		
+		// increments row attempts for view
+		currentAttemptRow++;
 	}
 	
 	@Override
 	public int calculateAttempts(int level) {
-		return (10 + (level * 2));
+		return (6 + (level * 2));
 	}
 	
 	
@@ -207,7 +244,7 @@ public class GameImpl implements Game {
 	
 	@Override
 	public boolean isOver() {
-		if(this.attempts == 0)
+		if(this.attemptsRemaining == 0)
 			return true;
 		else 
 			return false;
@@ -215,8 +252,7 @@ public class GameImpl implements Game {
 
 	@Override
 	public int getRemainingAttempts() {
-		System.out.println("Attempts remaining:\t" + attempts);
-		return attempts;
+		return attemptsRemaining;
 	}
 
 	@Override
@@ -230,8 +266,8 @@ public class GameImpl implements Game {
 			time,
 			score;
 		
-		attemptsUsed = (maxAttempts - attempts);
-		score = attempts * 10;
+		attemptsUsed = (maxAttempts - attemptsRemaining);
+		score = attemptsRemaining * 10;
 		time = getTime();
 		
 		this.stats.setScore(score);
@@ -264,4 +300,5 @@ public class GameImpl implements Game {
 	public int getTime() {
 		return time;
 	}
+
 }

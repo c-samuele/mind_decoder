@@ -10,6 +10,7 @@
 #.classpath
 #.project
 #.settings/
+.metadata
 
 # macOS files
 .DS_Store

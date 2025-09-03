@@ -13,12 +13,10 @@ public class LoginView {
 	 private TextField nameField;
 	 private Button loginBtn;
 	 
-	 
 	public LoginView(){
 		root = new VBox(20);
 		root.setAlignment(Pos.CENTER);
-		root.getStyleClass().add("loginView");
-		
+		root.getStyleClass().add("loginView");	
 
 		Label label = new Label("Enter the name of player");
 		label.getStyleClass().add("titleLogin");
@@ -27,12 +25,10 @@ public class LoginView {
 		nameField.setPromptText("Player name");
 		nameField.getStyleClass().add("nameField");
 		
-		
 		loginBtn = new Button("Confirm");
 		loginBtn.getStyleClass().add("btnMain");
 		
 		root.getChildren().addAll(label,nameField,loginBtn);
-		
 	 }
 	
 	public Parent getRoot() {

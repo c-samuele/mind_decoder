@@ -91,14 +91,6 @@ public interface Session {
 	public Player getFirstPlayer();
 	
 	/**
-	 * Get the current second player
-	 * 
-	 * @return the current second player
-	 */
-	public Optional<Player> getSecondPlayer();
-	
-	
-	/**
 	 * Get the max level of the session
 	 * 
 	 * @return max level of the session

@@ -10,16 +10,11 @@ package model;
 import java.util.List;
 
 public interface Game {
-	
 	/**
-	 * For Start the game
+	 * 
+	 * @return state of the current game (PLAYNG,WIN,LOSE)
 	 */
-	public void start();
-	
-	/**
-	 * For End the game
-	 */
-	public void end();
+	public GameState getState();
 	
 	/**
 	 * Get current Level
@@ -27,13 +22,12 @@ public interface Game {
 	 * @return the level
 	 */	
 	public int getLevel();
+	
 	/**
 	 * 
-	 * @param allColors
-	 * @param level
 	 * @return available Colors
 	 */
-	public List<Color> getAvailableColors(List<Color> allColors,int level);
+	public List<Color> getAvailableColors();
 	
 	/**
 	 * For make a secret code
@@ -87,8 +81,12 @@ public interface Game {
 	 * @return
 	 */
 	public boolean isOver();
-	
-	
+	public int getCurrentAttemptRow();
+	public void setColorCurrentAttempt(int position, Color color);
+	public Color getColorCurrentAttempt(int position);
+	public boolean isCurrentAttemptFull();
+	public void resetCurrentAttempt();
+	public Color[] getCurrentAttempt();
 	
 	
 	public int getRemainingAttempts();

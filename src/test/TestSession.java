@@ -24,7 +24,7 @@ public class TestSession {
 		name = "Samuele";
 		player = new PlayerImpl(name);
 		mode = GameMode.SINGLE_PLAYER;
-		session = SessionImpl.getInstance(player, null);
+		session = SessionImpl.getInstance(player);
 	}
 	
 // --- GAME TEST --------------------------------------- //

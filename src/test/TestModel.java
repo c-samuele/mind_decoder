@@ -23,7 +23,7 @@ public class TestModel {
 	public void setUp() {
 		Player player = new PlayerImpl(name);
 		mode = GameMode.SINGLE_PLAYER;
-		session = SessionImpl.getInstance(player, null);
+		session = SessionImpl.getInstance(player);
 		session.createNewGame(mode,session.getUnlockedLevel());
 
 		l1 = List.of(Color.RED, Color.BLUE, Color.GREEN,Color.PINK);
