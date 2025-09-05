@@ -116,8 +116,6 @@ public class GameImpl implements Game {
 	
 	
 	public Code makeSecretCode(int level) {
-		System.out.print("Number of color for level:\t" + numberOfColors(level) + "\n");
-		
 		List<Color> secretCodeColors = new ArrayList<>(availableColors);
 
 		Collections.shuffle(secretCodeColors);
