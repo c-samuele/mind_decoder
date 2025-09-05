@@ -87,6 +87,7 @@ public interface Game {
 	public boolean isCurrentAttemptFull();
 	public void resetCurrentAttempt();
 	public Color[] getCurrentAttempt();
+	public int numberOfColors();
 	
 	
 	public int getRemainingAttempts();

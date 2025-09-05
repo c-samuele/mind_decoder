@@ -1,10 +1,13 @@
 package model;
 
+import java.util.List;
+
 public interface Cpu {
 
 	
-	public void initMatrix(Color[] availableColors);
+	public void initMatrix(List<Color> availableColors);
 	public void printMatrix();
+	public void addAttempt(Code attemptCode,Hint hint);
 	
 	
 //	public void addAttemptToMatrix();

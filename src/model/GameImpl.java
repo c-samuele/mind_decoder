@@ -44,14 +44,14 @@ public class GameImpl implements Game {
 		this.state = GameState.PLAYING;
 		this.mode = mode;
 		this.level = level;
-		this.nColors = numberOfColors(level);
+		this.nColors = numberOfColors();
 		this.attemptsRemaining = calculateAttempts(level); 
 		this.hints = new Hints();
 		this.stats = new GameStatsImpl();
 		this.maxAttempts = attemptsRemaining;
 		this.time = 0;
 		this.currentAttempt = new Color[nColors];
-		this.availableColors = new ArrayList<>(Arrays.asList(Color.values()).subList(0, numberOfColors(level)));
+		this.availableColors = new ArrayList<>(Arrays.asList(Color.values()).subList(0, numberOfColors()));
 		this.secretCode = makeSecretCode(level);
 
 	}
@@ -92,7 +92,8 @@ public class GameImpl implements Game {
 	@Override
 	public boolean isCurrentAttemptFull() {
 	    for(Color c : currentAttempt) {
-	        if(c == null) return false;
+	        if(c == null) 
+	        	return false;
 	    }
 	    return true;
 	}
@@ -111,7 +112,7 @@ public class GameImpl implements Game {
 	}
 	
 	public void resetAvailableColors() {
-	    availableColors = new ArrayList<>(Arrays.asList(Color.values()).subList(0, numberOfColors(level)));
+	    availableColors = new ArrayList<>(Arrays.asList(Color.values()).subList(0, numberOfColors()));
 	}
 	
 	
@@ -203,7 +204,7 @@ public class GameImpl implements Game {
 	@Override
 	public int verifyColor(Code codeAttempt) throws IllegalArgumentException {
 		
-		int numberOfColors = this.numberOfColors(this.level);
+		int numberOfColors = this.numberOfColors();
 		int colorCorrect = 0; 
 		
 		if(codeAttempt.size() != numberOfColors)
@@ -219,7 +220,7 @@ public class GameImpl implements Game {
 	@Override
 	public int verifyIndex(Code codeAttempt) throws IllegalArgumentException {
 		
-		int numberOfColors = this.numberOfColors(this.level);
+		int numberOfColors = this.numberOfColors();
 		int indexCorrect = 0;
 		
 		if(codeAttempt.size() != numberOfColors)
@@ -283,8 +284,8 @@ public class GameImpl implements Game {
 		return this.level;
 	}
 
-	
-	public int numberOfColors(int level) {
+	@Override
+	public int numberOfColors() {
 		if(level<=9)
 			return level + 2;
 		else

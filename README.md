@@ -2,42 +2,38 @@
 
 ## Motivazione e obiettivi
 
-Il gruppo si pone come obiettivo la realizzazione di un gioco di decodifica in stile Master Mind.
+I'obiettivo è la realizzazione di un gioco di decodifica in stile Master Mind.
 
-L'obiettivo è indovinare una sequenza segreta di colori entro un numero finito di tentativi o un limite di tempo.
+Lo scopo è indovinare una sequenza segreta di colori entro un numero finito di tentativi.
 
-Al termine di ogni tentativo, vengono forniti indizi tramite:
-- **segnale nero**: se un colore è corretto e nella posizione giusta.
-- **segnale bianco**: un colore è corretto ma nella posizione sbagliata.
+Al termine di ogni tentativo, vengono forniti indizi:
+- **Il numero di colori corretti**
+- **Il numero di colori in posizione corretta**
 
-Il gioco termina con un fallimento se il giocatore esaurisce i tentativi senza aver indovinato la sequenza (o se scade il tempo). Termina con un successo non appena il giocatore indovina la sequenza segreta.
+Il gioco termina con un fallimento se il giocatore esaurisce i tentativi senza aver indovinato la sequenza.
+Il gioco termina con un successo non appena il giocatore indovina la sequenza segreta.
 
 Il gioco può essere svolto in:
-- **Single player**: La sequenza segreta verrà generata in modo casuale, il giocatore dovrà trovarla entro un numero finito di tentativi, il gioco si estende su più livelli.
-- **Multi player**: Ogni giocatore crea la propria sequenza segreta con lo stesso numero di colori. Il giocatore deve riuscire a individuarla con un tempo minore dell'avversario (se modalità a tempo) o con un punteggio maggiore (se in modalità a tentativi), in caso di pareggio si considerano i tentativi utilizzati e il tempo impiegato.
+- **Single player**: La sequenza segreta verrà generata in modo pseudocasuale, il giocatore dovrà trovarla entro un numero finito di tentativi, il gioco si estende su più livelli.
+- **Challenge Cpu**: La sfida viene fatta contro un'algoritmo basato su distribuzioni di probabilità che tiene traccia delle posizioni più probabili in una matrice e massimizza le probabilità utilizzando tecniche random o alla ricerca degli zeri. 
 
 ## Funzionalità minimali ritenute obbligatorie
 
-- Livelli
-- Punteggio e Tentativi
-- Legenda e regole di gioco
-- Indizi partita
-- Log di gioco
+- Single player.
+- Challenge Cpu.
+- Livelli.
+- Statistiche con livello corrente, punteggio, tentativi medi e tempo impiegato.
+- Legenda e regole di gioco.
+- Suggerimenti per tentativo effettuato.
 
 ## Funzionalità opzionali
 
-- Modalità 2 giocatori
-- Modalità a tempo
-- Modalità sfida
+- Modalità multy player.
+- Drag and drop sui colori.
 
 ## "Challenge" principali
 
-- Creazione di un controllore che verificare la corretta applicazione delle regole di gioco.
-- Gestione dei livelli e round di gioco.
+- Algoritmo di distribuzione probabilitstica per la cpu. 
+- Creazione di un controllore per i tentativi.
 - Gestione dei comportamenti imprevisti dell'utente.
-- Generazione procedurale del codice segreto.
 
-## Suddivisione del lavoro
-
--
--
