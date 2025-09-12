@@ -88,6 +88,7 @@ public interface Game {
 	public void resetCurrentAttempt();
 	public Color[] getCurrentAttempt();
 	public int numberOfColors();
+	public Code generateRandomAttempt();
 	
 	
 	public int getRemainingAttempts();

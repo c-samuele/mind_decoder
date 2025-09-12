@@ -15,30 +15,14 @@ public class TestCpu {
 
 	private Cpu cpu;
 	private Game game;
-	List<Color> s1,s2,s3,s4,s5;
-	private Code c1,c2,c3,c4,c5;
+	private List<Color> testAttempt;
 	
 	@Before
 	public void setUp() {
-		 game = new GameImpl(GameMode.AI_CHALLENGE,3);
-		 
-		 s1 = List.of(Color.RED,Color.BLUE,Color.GREEN,Color.YELLOW,Color.ORANGE);
-		 c1 = new CodeImpl(s1);
-		 
-		 s2 = List.of(Color.BLUE,Color.YELLOW,Color.ORANGE,Color.RED,Color.GREEN);
-		 c2 = new CodeImpl(s2);
-		 
-		 s3 = List.of(Color.YELLOW,Color.RED,Color.BLUE,Color.GREEN,Color.ORANGE);
-		 c3 = new CodeImpl(s3);
-		 
-		 s4 = List.of(Color.ORANGE,Color.BLUE,Color.GREEN,Color.YELLOW,Color.RED);
-		 c4 = new CodeImpl(s4);
-		 
-		 s5 = List.of(Color.BLUE,Color.RED,Color.GREEN,Color.ORANGE,Color.YELLOW);
-		 c5 = new CodeImpl(s5);
+		 game = new GameImpl(GameMode.AI_CHALLENGE,4);
 		 			 
 		 System.out.println("SECRET CODE:\t\t" + game.getSecretCode().getColor());
-		 
+		 testAttempt = List.of(Color.RED,Color.RED,Color.RED,Color.RED,Color.RED,Color.BLUE);
 	}
 	
 	@Test
@@ -47,26 +31,28 @@ public class TestCpu {
 						  game.getAvailableColors());
 		
 		
-		game.makeAttempt(c1);
-		cpu.addAttempt(c1, game.getHints().getLast());
-		cpu.printMatrix();
+		for(int i = 0; i < 20;i++) {
+			Code c = cpu.makeUniqueRandomAttempt();
+			game.makeAttempt(c);
+			cpu.addAttempt(c, game.getHints().getLast());
+			System.out.println("ATTEMPT N:"+game.getCurrentAttemptRow());
+			cpu.printMatrix();
+		}
 		
-		game.makeAttempt(c2);
-		cpu.addAttempt(c2, game.getHints().getLast());
-		cpu.printMatrix();
+		Code c = cpu.chooseAttempt();
 		
-		game.makeAttempt(c3);
-		cpu.addAttempt(c3, game.getHints().getLast());
-		cpu.printMatrix();
 		
-		game.makeAttempt(c4);
-		cpu.addAttempt(c4, game.getHints().getLast());
-		cpu.printMatrix();
 		
-		game.makeAttempt(c5);
-		cpu.addAttempt(c5, game.getHints().getLast());
-		cpu.printMatrix();
-		
+//		
+//		
+//		for(int j = 0;j<16;j++){
+//			Code c = cpu.chooseAttempt();
+//			game.makeAttempt(c);
+//			cpu.addAttempt(c, game.getHints().getLast());
+//			System.out.println("ATTEMPT N:"+game.getCurrentAttemptRow());
+//			cpu.printMatrix();
+//		}
+			
 
 	}
 

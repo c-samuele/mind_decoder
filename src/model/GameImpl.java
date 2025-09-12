@@ -61,6 +61,13 @@ public class GameImpl implements Game {
 //		this.mode = mode;
 //	}	
 	
+	public Code generateRandomAttempt() {
+		List<Color> available = new ArrayList<Color>(availableColors); 
+		Collections.shuffle(available);
+
+		return new CodeImpl(available);
+	}
+	
 
 	@Override
 	public GameState getState() {
@@ -197,7 +204,7 @@ public class GameImpl implements Game {
 	
 	@Override
 	public int calculateAttempts(int level) {
-		return (6 + (level * 2));
+		return (100 + (level * 2));
 	}
 	
 	
