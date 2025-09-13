@@ -34,7 +34,7 @@ public class LoginController {
 		stage.setWidth(1024);
 		stage.setHeight(800);
 		stage.setMinWidth(1024);
-	    stage.setMinHeight(800);
+	    stage.setMinHeight(300);
 	    stage.centerOnScreen();
 	    
 	   

@@ -23,7 +23,6 @@ public class SessionView {
     
     // Button for the main menu
     Button 	singleBtn,
-			multyBtn,
 			aiBtn;
     
     // Box for the scene
@@ -124,12 +123,10 @@ public class SessionView {
         // BUTTONS
         singleBtn = new Button("Single Player");
         singleBtn.getStyleClass().add("btnMain");
-        multyBtn = new Button("Multy Player");
-        multyBtn.getStyleClass().add("btnMain");
         aiBtn = new Button("Challenge Ai");
         aiBtn.getStyleClass().add("btnMain");
 
-        btnBox = new VBox(singleBtn, multyBtn, aiBtn);
+        btnBox = new VBox(singleBtn, aiBtn);
         btnBox.setAlignment(Pos.CENTER);
         btnBox.setSpacing(30);
         
@@ -157,9 +154,6 @@ public class SessionView {
    public Button getSinglePlayerBtn() {
         return this.singleBtn;
     }
-   public Button getMultyPlayerBtn() {
-       return this.multyBtn;
-   }
    public Button getAiChallengeBtn() {
        return this.aiBtn;
    }

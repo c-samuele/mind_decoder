@@ -55,11 +55,7 @@ public class GameImpl implements Game {
 		this.secretCode = makeSecretCode(level);
 
 	}
-	
-	// CONSTRUCTOR FOR GAMEMODE = MULTY_PLAYER OR AI_CHALLENGE
-//	public GameImpl(GameMode mode) {
-//		this.mode = mode;
-//	}	
+		
 	
 	public Code generateRandomAttempt() {
 		List<Color> available = new ArrayList<Color>(availableColors); 
@@ -77,6 +73,10 @@ public class GameImpl implements Game {
 	@Override
 	public int getCurrentAttemptRow() {
 	    return currentAttemptRow;
+	}
+	
+	public void nextAttemptRow() {
+		currentAttemptRow++;	
 	}
 	
 	@Override
@@ -166,9 +166,11 @@ public class GameImpl implements Game {
 		 */
 		if(isWon(indexCorrect,this.nColors)) {
 			
-			// GENERATE GAMESTATS
-			this.generateStats();
-			SessionImpl.getInstance().addGameStats(stats);
+			if(mode != GameMode.AI_CHALLENGE) {
+				// GENERATE GAMESTATS
+				this.generateStats();
+				SessionImpl.getInstance().addGameStats(stats);
+			}
 			// CHANGE STATE
 			state = GameState.WIN;
 			
@@ -182,9 +184,12 @@ public class GameImpl implements Game {
 			
 		// Lose check
 		if(isOver()) {
-			// GENERATE GAMESTATS
-			this.generateStats();
-			SessionImpl.getInstance().addGameStats(stats);
+			
+			if(mode != GameMode.AI_CHALLENGE) {
+				// GENERATE GAMESTATS
+				this.generateStats();
+				SessionImpl.getInstance().addGameStats(stats);
+			}
 			// CHANGE STATE
 			state = GameState.LOSE;
 			
@@ -198,13 +203,11 @@ public class GameImpl implements Game {
 		currentHint = new HintImpl(colorCorrect,indexCorrect);
 		hints.addHint(currentHint);
 		
-		// increments row attempts for view
-		currentAttemptRow++;
 	}
 	
 	@Override
 	public int calculateAttempts(int level) {
-		return (100 + (level * 2));
+		return (16 + (level * 2));
 	}
 	
 	
@@ -306,5 +309,11 @@ public class GameImpl implements Game {
 	public int getTime() {
 		return time;
 	}
+	
+	public GameMode getMode() {
+		return mode;
+	}
+	
+	
 
 }

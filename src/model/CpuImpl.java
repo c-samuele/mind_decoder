@@ -32,11 +32,11 @@ public class CpuImpl implements Cpu {
 		
 		
 		// Initialization matrix
-		initMatrix(availableColors);
+		initMatrix();
 	}
 	
 	@Override
-	public void initMatrix(List<Color> availableColors) {
+	public void initMatrix() {
 		for(Color c : availableColors) {
 			matrix.put(c,new Integer[lengthCode]);
 			Arrays.fill(matrix.get(c), 0);
@@ -96,7 +96,7 @@ public class CpuImpl implements Cpu {
 					Integer[] arrValue = matrix.get(c);
 					
 					if(arrValue[j] != null)
-						arrValue[j] = arrValue[j] + 1; 
+						arrValue[j] = arrValue[j] + indexCorrect; 
 				}
 			}
 				
@@ -106,10 +106,10 @@ public class CpuImpl implements Cpu {
 	@Override
 	public Code chooseAttempt() {
 	    List<Color> attempt = new ArrayList<>();
-	    List<Color> availableColors = new ArrayList<>(matrix.keySet());
+	    List<Color> available = new ArrayList<>(matrix.keySet());
 	    Random rand = new Random();
 	    
-	    System.out.println("\n\nAVAILABLE COLORS: " + availableColors);
+	    System.out.println("\n\nAVAILABLE COLORS: " + available);
 	    System.out.println("ATTEMPT: " + attempt);
 	    
 
@@ -148,19 +148,45 @@ public class CpuImpl implements Cpu {
 	    	        newAttempt.set(index, entry.getKey());
 	    	        
 	    	        // Remove the certain color from the available colors
-	    	        availableColors = availableColors.stream()
-	    	        								.filter(c->!(c.equals(entry.getKey())))
-	    	        								.collect(Collectors.toList());
-	    	        
+	    	        available.remove(entry.getKey());
 	    	    }
 	    	}
 
 	    }
 	
-	    System.out.println(newAttempt);
-	    System.out.println("\n\nAVAILABLE COLORS: " + availableColors);
+	    System.out.println("BEFORE SELECT REMAINING COLORS"+newAttempt);
+	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
+	    
+	    selectRamainingColors(newAttempt,available);
+	    
+	    System.out.println("AFTER SELECT REMAINING COLORS"+newAttempt);
+	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
 	    return new CodeImpl(attempt);
 	}
+	
+	public void selectRamainingColors(List<Color> partialAttempt, List<Color> available) {
+	    for (int i = 0; i < lengthCode; i++) {
+	        if (partialAttempt.get(i) == null) {
+	            Color bestColor = null;
+	            int maxValue = Integer.MIN_VALUE;
+
+	            for (Map.Entry<Color, Integer[]> entry : matrix.entrySet()) {
+	                Integer[] values = entry.getValue();
+	                if (values[i] != null && values[i] > maxValue && available.contains(entry.getKey())) {
+	                    maxValue = values[i];
+	                    bestColor = entry.getKey();
+	                }
+	            }
+
+	            if (bestColor != null) {
+	                partialAttempt.set(i, bestColor);
+	                available.remove(bestColor); 
+	            }
+	        }
+	    }
+	}
+
+	
 	
 	public Code makeUniqueRandomAttempt() {
 		List<Color> attempt; 

@@ -39,7 +39,14 @@ public class TestCpu {
 			cpu.printMatrix();
 		}
 		
-		Code c = cpu.chooseAttempt();
+		for(int j = 0;j<1;j++) {
+			Code c = cpu.chooseAttempt();	
+//			game.makeAttempt(c);
+//			cpu.addAttempt(c, game.getHints().getLast());
+//			System.out.println("ATTEMPT N:"+game.getCurrentAttemptRow());
+//			cpu.printMatrix();
+		}
+		
 		
 		
 		

@@ -45,6 +45,7 @@ public class SessionController {
 		sessionView.getSinglePlayerBtn().setOnAction(e -> handleStartSinglePlayer());
 		
 		// Button for challenge ai
+		sessionView.getAiChallengeBtn().setOnAction(e -> handleStartChallengeAi());
 		
 	}
 	
@@ -72,7 +73,7 @@ public class SessionController {
 	
 	// Handler for single player mode
 	public void handleStartSinglePlayer() {
-		// Creation gameMolde
+		// Creation gameModel
 		GameImpl gameModel = new GameImpl(GameMode.SINGLE_PLAYER, sessionModel.getUnlockedLevel());
 		// Set current game
 		sessionModel.setCurrentGame(gameModel);
@@ -80,6 +81,16 @@ public class SessionController {
 
 		stage.getScene().setRoot(gameController.getGameRoot());
     }
+	
+	public void handleStartChallengeAi() {
+		// creation gameModel
+		GameImpl gameModel = new GameImpl(GameMode.AI_CHALLENGE,4); // fix level 
+		// set current game
+		sessionModel.setCurrentGame(gameModel);
+		GameController gameController = new GameController(gameModel,stage,this);
+		
+		stage.getScene().setRoot(gameController.getGameRoot());
+	}
 	
 	public SessionView getSessionView() {
 	    return sessionView;

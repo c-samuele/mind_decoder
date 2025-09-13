@@ -10,7 +10,10 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Color;
+import model.Cpu;
+import model.CpuImpl;
 import model.GameImpl;
+import model.GameMode;
 import model.GameState;
 import model.Hint;
 import model.SessionImpl;
@@ -31,13 +34,28 @@ public class GameController {
     private final IntegerProperty time;
     private final IntegerProperty remainingAttempts;
     
+    private Cpu cpu;
+    private int round;
+    
+    
     public GameController(GameImpl gameModel,Stage stage,SessionController sessionController) {
     	this.gameModel = gameModel;
         this.sessionController = sessionController;
         this.stage = stage;
+        this.round = 1;
         
         time = new SimpleIntegerProperty(gameModel.getTime());
         remainingAttempts = new SimpleIntegerProperty(gameModel.getRemainingAttempts());
+        
+        
+        // CPU
+        if(gameModel.getMode() == GameMode.AI_CHALLENGE){
+        	cpu = new CpuImpl(gameModel.numberOfColors(),gameModel.getAvailableColors());
+        	cpu.initMatrix();
+        	cpu.printMatrix();
+        }
+        
+        
         
         startStopWatch();
         
@@ -77,8 +95,11 @@ public class GameController {
         // se il tentativo è completo
         if (gameModel.isCurrentAttemptFull()) {
             submitAttempt();
-            List<Hint> hints = gameModel.getHints();
-            Hint lastHint = hints.get(hints.size() - 1);
+            
+            gameModel.nextAttemptRow(); // incremento il numero di riga
+            
+            Hint lastHint = gameModel.getHints().getLast();
+            
             gameView.showHints(gameModel.getCurrentAttemptRow() - 1, 
                     		   lastHint.getColorCorrect(), 
                     		   lastHint.getIndexCorrect());
@@ -100,6 +121,9 @@ public class GameController {
             	gameView.setMsgLabel("Game Over!!");
             	stopTimer();
             }
+            
+            if(gameModel.getMode() == GameMode.AI_CHALLENGE)
+            	nextRound();
         }
     }
 
@@ -117,8 +141,8 @@ public class GameController {
     public void submitAttempt() {
         Code code = new CodeImpl(Arrays.asList(gameModel.getCurrentAttempt()));
         try {
-            gameModel.makeAttempt(code);
-            remainingAttempts.setValue(gameModel.getRemainingAttempts());
+            gameModel.makeAttempt(code);// faccio il tentativo
+            remainingAttempts.setValue(gameModel.getRemainingAttempts()); // aggiorno la property per il binding dei tentativi rimasti 
             
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
@@ -157,6 +181,39 @@ public class GameController {
     
     public Parent getGameRoot() {
     	return gameView.getRoot();
+    }
+    
+    
+    // for Challenge ai
+    public void nextRound() {
+    	if (gameModel.getState() != GameState.PLAYING) 
+    		return;
+    	
+    	if (round % 2 != 0) { // turn of player
+            return;
+    	} else { // turn of cpu
+    		Code cpuAttempt;
+    		
+    		if(gameModel.getCurrentAttemptRow() < 18) 
+    			cpuAttempt = cpu.makeUniqueRandomAttempt();
+    		else 
+    			cpuAttempt = cpu.chooseAttempt();
+    		
+    			gameModel.makeAttempt(cpuAttempt);
+    			gameModel.nextAttemptRow();
+    			
+    			cpu.addAttempt(cpuAttempt, gameModel.getHints().getLast());
+    			
+    			cpu.printMatrix();
+    			
+    			Hint lastHint = gameModel.getHints().getLast();
+    			
+		        gameView.showHints(gameModel.getCurrentAttemptRow()-1, 
+		                           lastHint.getColorCorrect(), 
+		                           lastHint.getIndexCorrect());
+    		        createNewAttemptRow();
+    		}
+    	round++;
     }
     
 }

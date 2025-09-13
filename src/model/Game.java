@@ -89,6 +89,7 @@ public interface Game {
 	public Color[] getCurrentAttempt();
 	public int numberOfColors();
 	public Code generateRandomAttempt();
+	public void nextAttemptRow();
 	
 	
 	public int getRemainingAttempts();
@@ -103,5 +104,6 @@ public interface Game {
 	public void generateStats();
 	
 	public int getTime();
+	public GameMode getMode();
 	
 }

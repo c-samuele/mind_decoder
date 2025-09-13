@@ -5,7 +5,7 @@ import java.util.List;
 public interface Cpu {
 
 	
-	public void initMatrix(List<Color> availableColors);
+	public void initMatrix();
 	public void printMatrix();
 	public void addAttempt(Code attemptCode,Hint hint);
 	public Code chooseAttempt();
