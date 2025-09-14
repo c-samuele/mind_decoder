@@ -19,16 +19,13 @@ public class CpuImpl implements Cpu {
 	private final List<Color> availableColors;
 	private List<Code> attemptsStory; 
 	
-	private List<Color> newAttempt;
+	
 	
 	public CpuImpl(int length,List<Color> availableColors){
 		this.lengthCode = length;
-		this.availableColors = availableColors;
+		this.availableColors = new ArrayList<>(availableColors);
 		matrix = new LinkedHashMap<>();
 		attemptsStory = new ArrayList<>();
-	
-		newAttempt = new ArrayList<>(Collections.nCopies(lengthCode, null));
-		
 		
 		
 		// Initialization matrix
@@ -41,6 +38,11 @@ public class CpuImpl implements Cpu {
 			matrix.put(c,new Integer[lengthCode]);
 			Arrays.fill(matrix.get(c), 0);
 		}
+	}
+	
+	@Override
+	public Map<Color,Integer[]> getMatrix(){
+		return matrix;
 	}
 
 	@Override
@@ -63,6 +65,7 @@ public class CpuImpl implements Cpu {
 	        }
 	        System.out.print("\n");
 	    }   
+	    System.out.print("---------".repeat(lengthCode));
 	}
 	
 	@Override
@@ -71,9 +74,6 @@ public class CpuImpl implements Cpu {
 		
 		List<Color> colors = attemptCode.getColor();		// Current colors of attempt
 		int indexCorrect = hint.getIndexCorrect();			// Current number of index correct
-		
-		System.out.println(colors);
-		System.out.println(indexCorrect);
 		
 		// Case index = 0
 		if(indexCorrect == 0) {
@@ -105,12 +105,12 @@ public class CpuImpl implements Cpu {
 	
 	@Override
 	public Code chooseAttempt() {
-	    List<Color> attempt = new ArrayList<>();
+		List<Color> newAttempt = new ArrayList<>(Collections.nCopies(lengthCode, null));
+		
 	    List<Color> available = new ArrayList<>(matrix.keySet());
-	    Random rand = new Random();
 	    
-	    System.out.println("\n\nAVAILABLE COLORS: " + available);
-	    System.out.println("ATTEMPT: " + attempt);
+	    System.out.println("\n\nREMAINING COLORS: " + available);
+	    System.out.println("ATTEMPT: " + newAttempt);
 	    
 
 	    // Calculate the possible indices for each color
@@ -133,7 +133,7 @@ public class CpuImpl implements Cpu {
 	    }
 	    
 	    for(Map.Entry<Color, Integer[]> entry : matrix.entrySet()) { 
-	    	System.out.println("Color:["+entry.getKey()+"]PossibleIndex:"+Arrays.toString(entry.getValue()));
+	    	System.out.println("Color:[" + entry.getKey() + "]PossibleIndex:" + Arrays.toString(entry.getValue()));
 	    
 	    	// Check if there are unique colors for the index
 	    	if (hasSingleValue(entry.getValue())) {
@@ -161,7 +161,7 @@ public class CpuImpl implements Cpu {
 	    
 	    System.out.println("AFTER SELECT REMAINING COLORS"+newAttempt);
 	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
-	    return new CodeImpl(attempt);
+	    return new CodeImpl(newAttempt);
 	}
 	
 	public void selectRamainingColors(List<Color> partialAttempt, List<Color> available) {
@@ -189,20 +189,15 @@ public class CpuImpl implements Cpu {
 	
 	
 	public Code makeUniqueRandomAttempt() {
-		List<Color> attempt; 
+		List<Color> shuffled;
 		
 		    do {
-		        List<Color> shuffled = new ArrayList<>(availableColors);
+		        shuffled = new ArrayList<>(availableColors);
 		        Collections.shuffle(shuffled);
-		        attempt = shuffled.subList(0, availableColors.size()); 
-	       
-		    // DEBUG
-	        if(ifContain(attempt))
-	        	System.out.println("SEQUENZA DUPLICATA  ####################### ####################### ####################### #######################");
-	        
-	    } while (ifContain(attempt));
+		        
+	    } while (ifContain(shuffled));
 
-		return new CodeImpl(attempt);
+		return new CodeImpl(shuffled);
 	}
 	
 	

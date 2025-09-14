@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Cpu {
 
@@ -11,7 +12,7 @@ public interface Cpu {
 	public Code chooseAttempt();
 	public boolean ifContain(List<Color> att);
 	public Code makeUniqueRandomAttempt();
-	
+	public Map<Color,Integer[]> getMatrix();
 	
 //	public void addAttemptToMatrix();
 //	public Code getBestAttempt();

@@ -151,7 +151,7 @@ public class GameImpl implements Game {
 			indexCorrect = 0;	/* Number of color and index correct for gameStats */
 		
 		this.attemptsRemaining--;
-		System.out.println("Attempts code:\t\t" + codeAttempt.getColor() + "\n");
+		System.out.println("\nAttempts code:\t\t" + codeAttempt.getColor() + "\n");
 		
 		// Color check
 		colorCorrect = verifyColor(codeAttempt);	

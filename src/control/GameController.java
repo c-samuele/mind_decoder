@@ -1,7 +1,6 @@
 package control;
 
 import java.util.Arrays;
-import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
@@ -37,19 +36,22 @@ public class GameController {
     private Cpu cpu;
     private int round;
     
+    private GameMode gameMode;
+    
     
     public GameController(GameImpl gameModel,Stage stage,SessionController sessionController) {
     	this.gameModel = gameModel;
         this.sessionController = sessionController;
         this.stage = stage;
         this.round = 1;
+        this.gameMode = gameModel.getMode();
         
         time = new SimpleIntegerProperty(gameModel.getTime());
         remainingAttempts = new SimpleIntegerProperty(gameModel.getRemainingAttempts());
         
         
         // CPU
-        if(gameModel.getMode() == GameMode.AI_CHALLENGE){
+        if(gameMode == GameMode.AI_CHALLENGE){
         	cpu = new CpuImpl(gameModel.numberOfColors(),gameModel.getAvailableColors());
         	cpu.initMatrix();
         	cpu.printMatrix();
@@ -62,7 +64,7 @@ public class GameController {
         this.gameView = new GameView(this);
         
         // DEBUG SECRET CODE 
-        System.out.print("{SECRET CODE:"+SessionImpl.getInstance().getCurrentGame().getSecretCode().getColor()+"}");
+        System.out.print("\nSECRET CODE:"+SessionImpl.getInstance().getCurrentGame().getSecretCode().getColor()+"\n");
         
         // Mostra subito la prima riga vuota
         gameView.createRowAttempts(gameModel.getCurrentAttemptRow(), gameModel.getCurrentAttempt().length);
@@ -81,40 +83,46 @@ public class GameController {
     }
  
     
- // Notifica della view quando un colore viene droppato
+    
     public void colorDropped(int colIndex, Color draggedColor) {
-        // aggiorna il modello
+        // Update model
         gameModel.setColorCurrentAttempt(colIndex, draggedColor);
         gameModel.removeAvailableColor(draggedColor);
 
-        // aggiorna la view
+        // Update view
         int currentRow = gameModel.getCurrentAttemptRow();
         gameView.updateCell(currentRow, colIndex, draggedColor);
         gameView.refreshColorsBox(gameModel.getAvailableColors());
 
-        // se il tentativo è completo
         if (gameModel.isCurrentAttemptFull()) {
-            submitAttempt();
+        	
+            submitAttempt(); // Make attempt
             
-            gameModel.nextAttemptRow(); // incremento il numero di riga
+            Hint lastHint = gameModel.getHints().getLast(); 
             
-            Hint lastHint = gameModel.getHints().getLast();
+            gameView.showHints(gameModel.getCurrentAttemptRow(), // Show hints 
+         		   lastHint.getColorCorrect(), 
+         		   lastHint.getIndexCorrect());
             
-            gameView.showHints(gameModel.getCurrentAttemptRow() - 1, 
-                    		   lastHint.getColorCorrect(), 
-                    		   lastHint.getIndexCorrect());
-
-            gameModel.resetCurrentAttempt();
-            gameModel.resetAvailableColors();
+            gameModel.nextAttemptRow();			// Increment number of row
+      
+            round++;							// Increment round
+            
+            gameModel.resetCurrentAttempt();	// Reset attempt
+            gameModel.resetAvailableColors();	// Reset Available Colors
             
             GameState state = gameModel.getState();
+            
             if(state == GameState.PLAYING) {
             	createNewAttemptRow();
             	gameView.refreshColorsBox(gameModel.getAvailableColors());
             }
             else if(state == GameState.WIN) {
-            	gameView.setMsgLabel("is Win!!");
-            	SessionImpl.getInstance().unlockNextLevel();
+            	gameView.setMsgLabel(SessionImpl.getInstance().getFirstPlayer().getName()+" Win!!");
+            	
+            	if(gameMode == GameMode.SINGLE_PLAYER)
+            		SessionImpl.getInstance().unlockNextLevel();
+            	
             	stopTimer();
             }
             else {
@@ -122,8 +130,9 @@ public class GameController {
             	stopTimer();
             }
             
-            if(gameModel.getMode() == GameMode.AI_CHALLENGE)
+            if(gameMode == GameMode.AI_CHALLENGE)
             	nextRound();
+           
         }
     }
 
@@ -142,7 +151,10 @@ public class GameController {
         Code code = new CodeImpl(Arrays.asList(gameModel.getCurrentAttempt()));
         try {
             gameModel.makeAttempt(code);// faccio il tentativo
-            remainingAttempts.setValue(gameModel.getRemainingAttempts()); // aggiorno la property per il binding dei tentativi rimasti 
+            remainingAttempts.setValue(gameModel.getRemainingAttempts()); // aggiorno la property per il binding dei tentativi rimasti
+            
+            if(gameMode == GameMode.AI_CHALLENGE)
+            	cpu.addAttempt(code, gameModel.getHints().getLast());
             
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
@@ -199,8 +211,15 @@ public class GameController {
     		else 
     			cpuAttempt = cpu.chooseAttempt();
     		
+    			System.out.println("CPU ATTEMPT:"+cpuAttempt.getColor());
+    			
     			gameModel.makeAttempt(cpuAttempt);
-    			gameModel.nextAttemptRow();
+    			
+    			int cpuRow = gameModel.getCurrentAttemptRow();
+    			
+    			for (int i = 0; i < cpuAttempt.size(); i++) 
+    			    gameView.updateCell(cpuRow, i, cpuAttempt.getColorByIndex(i));
+    			
     			
     			cpu.addAttempt(cpuAttempt, gameModel.getHints().getLast());
     			
@@ -208,10 +227,20 @@ public class GameController {
     			
     			Hint lastHint = gameModel.getHints().getLast();
     			
-		        gameView.showHints(gameModel.getCurrentAttemptRow()-1, 
+		        gameView.showHints(gameModel.getCurrentAttemptRow(), 
 		                           lastHint.getColorCorrect(), 
 		                           lastHint.getIndexCorrect());
-    		        createNewAttemptRow();
+		        
+		        if(gameModel.getState() == GameState.WIN) {
+		        	gameView.setMsgLabel("Computer Win");
+	            	stopTimer();
+	            	return;
+		        }
+		        	
+		        
+		        gameModel.nextAttemptRow();
+		        
+    		    createNewAttemptRow();
     		}
     	round++;
     }
