@@ -1,5 +1,5 @@
 /**
- * Class implementing the Code interface.
+ * Code interface
  * 
  * @author Samuele Caporale
  * @version 0.1.0

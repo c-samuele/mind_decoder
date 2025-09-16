@@ -13,7 +13,7 @@ import java.util.List;
 public class CodeImpl implements Code {
 	
 	/**
-	 * secretCode sequence of code
+	 * sequence of color
 	 * */
 	private List<Color> code;	 
 	

@@ -1,4 +1,4 @@
-package control;
+package controller;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;

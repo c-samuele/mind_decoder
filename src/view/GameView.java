@@ -2,7 +2,8 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
-import control.GameController;
+
+import controller.GameController;
 import model.Color;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
@@ -26,32 +27,32 @@ public class GameView {
 
     private GridPane attemptsGrid;
     
-    VBox topBox;
+    private VBox topBox;
     
-    HBox settingsBox;
-    Label usernameLabel;
-    Button exit;
+    private HBox settingsBox;
+    private Label usernameLabel;
+    private Button exit;
    
-    HBox statsBox,
-    	 attemptsBox,
-    	 timeBox;
+    private HBox statsBox,
+    	 		 attemptsBox,
+    	 		 timeBox;
     
-    Label attemptsLabel,
-    	  timeLabel;
+    private Label attemptsLabel,
+    	  		  timeLabel;
     
-    Label attemptsValue,
-    	  timeValue;
+    private Label attemptsValue,
+    			  timeValue;
  
-    StackPane msgBox;
+    private StackPane msgBox;
     
-    Label msg;
+    private Label msg;
     
-    ScrollPane scrollPane;
+    private ScrollPane scrollPane;
     
     private final List<Text> colorHintsTexts;
     private final List<Text> indexHintsTexts;
     
-    HBox colorsBox;
+    private HBox colorsBox;
     
     public GameView(GameController controller) {
     	this.gameController = controller;
@@ -152,7 +153,6 @@ public class GameView {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
     
-    // Enum Color to javaFx Color
     private javafx.scene.paint.Color toFXColor(model.Color c) {
         return switch(c) {
             case RED     -> javafx.scene.paint.Color.RED;

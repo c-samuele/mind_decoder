@@ -1,4 +1,4 @@
-package control;
+package controller;
 
 import java.util.Arrays;
 import javafx.animation.KeyFrame;
@@ -63,13 +63,13 @@ public class GameController {
         
         this.gameView = new GameView(this);
         
-        // DEBUG SECRET CODE 
-        System.out.print("\nSECRET CODE:"+SessionImpl.getInstance().getCurrentGame().getSecretCode().getColor()+"\n");
+        // Debug: Print a SecretCode.
+        System.out.print("\nSECRET CODE:"+SessionImpl.getInstance().getCurrentGame().getSecretCode().getColor() + "\n");
         
-        // Mostra subito la prima riga vuota
+        // show first attempt row
         gameView.createRowAttempts(gameModel.getCurrentAttemptRow(), gameModel.getCurrentAttempt().length);
 
-        // Mostra subito i colori disponibili
+        // show colors available
         refreshColors();
         
         // Handler for exit to session
@@ -93,7 +93,7 @@ public class GameController {
         int currentRow = gameModel.getCurrentAttemptRow();
         gameView.updateCell(currentRow, colIndex, draggedColor);
         gameView.refreshColorsBox(gameModel.getAvailableColors());
-
+        
         if (gameModel.isCurrentAttemptFull()) {
         	
             submitAttempt(); // Make attempt
@@ -136,13 +136,13 @@ public class GameController {
         }
     }
 
-    // Crea nuova riga vuota nella view
+    // Create new attempt row
     private void createNewAttemptRow() {
         int currentRow = gameModel.getCurrentAttemptRow();
         gameView.createRowAttempts(currentRow, gameModel.getCurrentAttempt().length);
     }
 
-    // Aggiorna la barra dei colori disponibili
+    // Update view available colors
     private void refreshColors() {
         gameView.refreshColorsBox(gameModel.getAvailableColors());
     }
@@ -150,8 +150,8 @@ public class GameController {
     public void submitAttempt() {
         Code code = new CodeImpl(Arrays.asList(gameModel.getCurrentAttempt()));
         try {
-            gameModel.makeAttempt(code);// faccio il tentativo
-            remainingAttempts.setValue(gameModel.getRemainingAttempts()); // aggiorno la property per il binding dei tentativi rimasti
+            gameModel.makeAttempt(code);	
+            remainingAttempts.setValue(gameModel.getRemainingAttempts()); // Update attemptsProperty for bind of attempts remaining 
             
             if(gameMode == GameMode.AI_CHALLENGE)
             	cpu.addAttempt(code, gameModel.getHints().getLast());
@@ -196,7 +196,7 @@ public class GameController {
     }
     
     
-    // for Challenge ai
+    // Ai Challenge Round 
     public void nextRound() {
     	if (gameModel.getState() != GameState.PLAYING) 
     		return;

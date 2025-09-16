@@ -1,6 +1,6 @@
 package view;
 
-import control.SessionController;
+import controller.SessionController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -22,36 +22,36 @@ public class SessionView {
     private SessionController sessionController;
     
     // Button for the main menu
-    Button 	singleBtn,
-			aiBtn;
+    private Button singleBtn,
+				   aiBtn;
     
     // Box for the scene
-    VBox topBox,
-    	 btnBox;
+    private VBox topBox,
+    	 		 btnBox;
     
     // Grid for the sessionStats
-    GridPane stats;
+    private GridPane stats;
     
     // Box for the label and value
-    HBox scoreBox,
-    	 attemptsBox,
-    	 levelBox,
-    	 timeBox;
+    private HBox scoreBox,
+		    	 attemptsBox,
+		    	 levelBox,
+		    	 timeBox;
     
     // Text label
-    Label scoreLabel,
-    	  attemptsLabel,
-    	  levelLabel,
-    	  timeLabel;
+    private Label scoreLabel,
+		    	  attemptsLabel,
+		    	  levelLabel,
+		    	  timeLabel;
     
     // Value label
-    Label scoreValue,
-    	  attemptsValue,
-    	  levelValue,
-    	  timeValue;
+    private Label scoreValue,
+		    	  attemptsValue,
+		    	  levelValue,
+		    	  timeValue;
     
     // Start message with user
-    Label welcomeMsg;
+    private Label welcomeMsg;
 
     public SessionView(SessionController controller) {
     	this.sessionController = controller;

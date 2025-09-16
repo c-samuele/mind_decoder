@@ -16,9 +16,9 @@ public class SessionImpl implements Session {
 	
 	private static SessionImpl sessionInst; 
 	
-	private static final int MAX_LEVEL = 12;						// Max Level
+	private static final int MAX_LEVEL = 12;				
 	
-	private final Player firstPlayer;						// 1° player
+	private final Player firstPlayer;						
 	
 	private int unlockedLevel;
 	
@@ -27,25 +27,21 @@ public class SessionImpl implements Session {
 	private Game game;										// Current Game
 	private boolean gameActive;								// Active game
 	
-	/**
-	 * Constructor for the Session
-	 * 
-	 * @param first player
-	 * @param second player optional
-	 */
+	
 	private SessionImpl(Player p1) {
 		this.unlockedLevel = 1;		// current unlocked level
 		this.gameActive = false;	// status game
 		this.firstPlayer = p1;		// player1
 	}
 	
-	
+	/* Singleton */
 	public static SessionImpl getInstance(Player p1) {
 	    if (sessionInst == null) {
 	    	sessionInst = new SessionImpl(p1); 
 	    }
 	    return sessionInst;
 	}
+	/* Get instance of session */
 	public static SessionImpl getInstance() throws IllegalStateException {
 	    if (sessionInst != null)
 	    	return sessionInst;
@@ -77,18 +73,10 @@ public class SessionImpl implements Session {
 			throw new IllegalStateException("Maximum level already reached.");
 	}
 
-	
+	// for test
 	@Override
 	public void createNewGame(GameMode mode,int level) {
 		game = new GameImpl(mode,level);
-		gameActive = true;
-		
-	}
-	
-	// da modificare
-	@Override
-	public void createNewGame(GameMode mode) {
-		game = new GameImpl(mode,0);
 		gameActive = true;
 		
 	}
@@ -151,38 +139,17 @@ public class SessionImpl implements Session {
 					)/gameStats.size();
 	}
 
-
-	@Override
-	public boolean loadSession() {
-		
-		return false;
-	}
-
-	@Override
-	public boolean saveSession() {
-		return false;
-	}
-
-	@Override
-	public boolean resetSession() {
-		return false;
-	}
-
 	@Override
 	public void sessionLog() {
 		System.out.println("[FIRST PLAYER] \t\t" + this.getFirstPlayer().getName());
-		System.out.println("[UNLOCKED LEVEL] \t" + this.getUnlockedLevel()+"/"+this.getMaxLevel());
-		System.out.println("[GAME ACTIVE] \t\t"+this.hasActiveGame());
+		System.out.println("[UNLOCKED LEVEL] \t" + this.getUnlockedLevel() + "/" + this.getMaxLevel());
+		System.out.println("[GAME ACTIVE] \t\t"  + this.hasActiveGame());
 	}
-
 
 	@Override
 	public void addGameStats(GameStats stats) {
 		gameStats.add(stats);
 	}
-
-
-	
 	
 
 }
