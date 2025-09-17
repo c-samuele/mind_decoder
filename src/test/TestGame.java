@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
@@ -53,6 +54,11 @@ public class TestGame {
 		assertThrows(IllegalArgumentException.class, () -> game.makeAttempt(w1));
 		 // Attempt with too few colors
 		assertThrows(IllegalArgumentException.class, () -> game.makeAttempt(w2));
+	}
+	
+	@Test
+	public void testMakeSecretCode() {
+		assertEquals(game.numberOfColors(),game.getSecretCode().size());
 	}
 	
 	@Test
@@ -110,6 +116,14 @@ public class TestGame {
 	        assertNull(game.getCurrentAttempt()[i]);
 	}
 	
+	@Test 
+	public void testGenerateHint() {
+		game.makeAttempt(c1);
+		assertNotNull(game.getHints().getLast());
+		assertEquals(game.verifyColor(c1),game.getHints().getLast().getColorCorrect());
+		assertEquals(game.verifyIndex(c1),game.getHints().getLast().getIndexCorrect());
+	}
+	
 	@Test
 	public void testVerifyIndex() {	    
 	    int indexCorrect = game.verifyIndex(game.getSecretCode());
@@ -127,7 +141,6 @@ public class TestGame {
 	    assertThrows(IllegalArgumentException.class, () -> game.verifyColor(w1));
 	    assertThrows(IllegalArgumentException.class, () -> game.verifyColor(w2));
 	}
-	
 	
 	@Test
 	public void testIsWon() {

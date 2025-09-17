@@ -9,6 +9,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CodeImpl implements Code {
 	
@@ -33,4 +34,21 @@ public class CodeImpl implements Code {
 		return code.size();
 	}
 
+	@Override 
+	public boolean equals(Object obj) {
+		if (this == obj) 
+			return true;
+	    if (!(obj instanceof Code)) 
+	    	return false;
+	    
+	    Code code2 = (Code) obj;
+	    
+	    return Objects.equals(this.getColor(), code2.getColor());
+		
+	}
+	
+	@Override
+	public int hashCode() {
+	    return Objects.hash(code);
+	}
 }

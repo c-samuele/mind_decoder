@@ -9,19 +9,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import model.*;
+import view.SessionView;
 
 public class TestSession {
 	
 	private String name;
 	private Player player;
-	private GameMode mode;
 	private Session session;
 
 	@BeforeEach
 	public void Setup() {
+		SessionImpl.resetInstance(); 
 		name = "Samuele";
 		player = new PlayerImpl(name);
-		mode = GameMode.SINGLE_PLAYER;
 		session = SessionImpl.getInstance(player);
 	}
 	
@@ -77,6 +77,14 @@ public class TestSession {
 	    assertEquals(0, session.getBestScore());
 	    assertEquals(0, session.getTimeAvg());
 	    assertEquals(0, session.getAttemptsAvg());
+	}
+	
+	@Test
+	public void testGameStatsGameWin() {
+		Game game = new GameImpl(GameMode.SINGLE_PLAYER,1);
+		session.setCurrentGame(game);
+		game.makeAttempt(game.getSecretCode());// one attempt 
+		assertEquals(1,session.getGameStats().getLast().getAttemptsUsed()); // expected 1 
 	}
 
 	

@@ -56,8 +56,22 @@ public interface Cpu {
      *
      * @return a map representing the probability matrix
      */
-    public Map<Color, Integer[]> getMatrix();	
+    public Map<Color, Integer[]> getMatrix();
     
+    /**
+     * 	Decrement matrix values
+     * 
+     * @param attempt
+     */
     public void decrementValues(List<Color> attempt);
+    
+    /**
+     * Compose the sequence with the remaining colors
+     * 
+     * @param partialAttempt
+     * @param available colors
+     * @return final attempt
+     * @throws IllegalStateException 
+     */
     public List<Color> selectRamainingColors(List<Color> partialAttempt, List<Color> available) throws IllegalStateException;
 }

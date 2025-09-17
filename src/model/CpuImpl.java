@@ -161,8 +161,8 @@ public class CpuImpl implements Cpu {
 
 	    }
 	
-	    System.out.println("BEFORE SELECT REMAINING COLORS"+newAttempt);
-	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
+	    System.out.println("\nBefore selectRamainingColors: " + newAttempt);
+	    System.out.println("\nAvailable colors: " + available+"\n\n");
 	    
 	    List<Color> tmp;
 	    
@@ -222,7 +222,7 @@ public class CpuImpl implements Cpu {
 	            Integer[] row = matrix.get(c);
 	            if (row[i] != null && row[i] > 0) {
 	                row[i]--; 
-	                System.out.print("DECREMENTO;\n");
+	                System.out.print("Decrement;\n");
 	            }
 	        }
 	    }
@@ -241,16 +241,16 @@ public class CpuImpl implements Cpu {
 		return new CodeImpl(shuffled);
 	}
 	
-	
-	
-	// Check if the attempt has already been made
+	 
+	@Override // Check if the attempt has already been made
 	public boolean ifContain(List<Color> att){
 		  return attemptsStory.stream()
 		            .anyMatch(c -> c.getColor().equals(att));
 	}
 	
 
-	// Checks if there is only one color left in an index
+
+	// Checks if there is only one color left in an index 
 	public static boolean hasSingleValue(Integer[] values) {
 	    int count = 0;
 	    
