@@ -206,12 +206,12 @@ public class GameController {
     	} else { // turn of cpu
     		Code cpuAttempt;
     		
-    		if(gameModel.getCurrentAttemptRow() < 18) 
+    		if(gameModel.getCurrentAttemptRow() < 17) 
     			cpuAttempt = cpu.makeUniqueRandomAttempt();
     		else 
     			cpuAttempt = cpu.chooseAttempt();
     		
-    			System.out.println("CPU ATTEMPT:"+cpuAttempt.getColor());
+    			System.out.println("CPU ATTEMPT:" + cpuAttempt.getColor());
     			
     			gameModel.makeAttempt(cpuAttempt);
     			

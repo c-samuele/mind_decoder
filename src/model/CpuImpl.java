@@ -1,3 +1,10 @@
+/**
+ * CpuImpl Class
+ * 
+ * @author Samuele Caporale
+ * @version 0.1.0
+ */
+
 package model;
 
 import java.util.ArrayList;
@@ -157,36 +164,70 @@ public class CpuImpl implements Cpu {
 	    System.out.println("BEFORE SELECT REMAINING COLORS"+newAttempt);
 	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
 	    
-	    selectRamainingColors(newAttempt,available);
+	    List<Color> tmp;
 	    
-	    System.out.println("AFTER SELECT REMAINING COLORS"+newAttempt);
-	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
-	    return new CodeImpl(newAttempt);
+	    tmp = selectRamainingColors(newAttempt,available);
+	    
+	    System.out.println("AFTER SELECT REMAINING COLORS" + tmp);
+//	    System.out.println("\n\nAVAILABLE COLORS: " + available+"\n\n");
+	    return new CodeImpl(tmp);
 	}
 	
-	public void selectRamainingColors(List<Color> partialAttempt, List<Color> available) {
-	    for (int i = 0; i < lengthCode; i++) {
-	        if (partialAttempt.get(i) == null) {
-	            Color bestColor = null;
-	            int maxValue = Integer.MIN_VALUE;
+	@Override
+	public List<Color> selectRamainingColors(List<Color> partialAttempt, List<Color> available) throws IllegalStateException {
+	
+		boolean validAttempt;	// strict validation
+		
+		do {	
+			List<Color> tmpAttempt = new ArrayList<>(partialAttempt);
+			List<Color> tmpAvailable = new ArrayList<>(available);
+			
+		    for (int i = 0; i < lengthCode; i++) {
+		        if (tmpAttempt.get(i) == null) {
+		            Color bestColor = null;
+		            int maxValue = Integer.MIN_VALUE;
+	
+		            for (Map.Entry<Color, Integer[]> entry : matrix.entrySet()) {
+		                Integer[] values = entry.getValue();
+		                if (values[i] != null && values[i] > maxValue && tmpAvailable.contains(entry.getKey())) {
+		                    maxValue = values[i];
+		                    bestColor = entry.getKey();
+		                }
+		            }
+	
+		            if (bestColor != null) {
+		            	tmpAttempt.set(i, bestColor);
+		            	tmpAvailable.remove(bestColor); 
+		            }
+		        }
+		    }
+		   
+		    validAttempt = !tmpAttempt.contains(null) && !ifContain(tmpAttempt);
+		    
+		    if(!validAttempt)
+		    	decrementValues(tmpAttempt);
+		    else
+		    	return tmpAttempt;
+	    	
+		}while(!validAttempt);
+		
+		throw new IllegalStateException("Error selectRamainingColors");
+	}
 
-	            for (Map.Entry<Color, Integer[]> entry : matrix.entrySet()) {
-	                Integer[] values = entry.getValue();
-	                if (values[i] != null && values[i] > maxValue && available.contains(entry.getKey())) {
-	                    maxValue = values[i];
-	                    bestColor = entry.getKey();
-	                }
-	            }
-
-	            if (bestColor != null) {
-	                partialAttempt.set(i, bestColor);
-	                available.remove(bestColor); 
+	@Override
+	public void decrementValues(List<Color> attempt) {
+	    for (int i = 0; i < attempt.size(); i++) {
+	        Color c = attempt.get(i);
+	        if (c != null) {
+	            Integer[] row = matrix.get(c);
+	            if (row[i] != null && row[i] > 0) {
+	                row[i]--; 
+	                System.out.print("DECREMENTO;\n");
 	            }
 	        }
 	    }
 	}
 
-	
 	
 	public Code makeUniqueRandomAttempt() {
 		List<Color> shuffled;

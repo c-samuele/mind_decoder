@@ -19,5 +19,22 @@ public class PlayerImpl implements Player {
 	public String getName() {
 		return name;
 	}
+	
+	
+	public boolean equals(Object obj) {
+	    if (this == obj) 
+	    	return true; 
+	    
+	    if (!(obj instanceof PlayerImpl)) 
+	    	return false; 
+	    
+	    PlayerImpl p2 = (PlayerImpl) obj;
+	    return this.getName().equals(p2.getName());
+	}
+	
+	@Override
+	public int hashCode() {
+	    return getName().hashCode();
+	}
 
 }

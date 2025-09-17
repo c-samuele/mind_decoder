@@ -1,5 +1,5 @@
 /**
- * Class implementing the Code interface.
+ * Class CodeImpl.
  * 
  * @author Samuele Caporale
  * @version 0.1.0
@@ -12,14 +12,8 @@ import java.util.List;
 
 public class CodeImpl implements Code {
 	
-	/**
-	 * sequence of color
-	 * */
 	private List<Color> code;	 
 	
-	/**
-	 * @param colors variable sequence of secret colors 
-	 */
 	public CodeImpl(List<Color> colors){
 		code = new ArrayList<Color>(colors);
 	}

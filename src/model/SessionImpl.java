@@ -48,7 +48,11 @@ public class SessionImpl implements Session {
 	    else
 	    	throw new IllegalStateException("Singleton session null");
 	}
-
+	
+	
+	public static void resetInstance() {
+		sessionInst = null;
+	}
 	
 	@Override
 	public Player getFirstPlayer() {
@@ -78,10 +82,8 @@ public class SessionImpl implements Session {
 	public void createNewGame(GameMode mode,int level) {
 		game = new GameImpl(mode,level);
 		gameActive = true;
-		
 	}
 	
-
 	@Override
 	public List<GameStats> getGameStats() {
 		return this.gameStats;

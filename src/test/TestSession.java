@@ -2,10 +2,10 @@ package test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import model.*;
@@ -17,8 +17,6 @@ public class TestSession {
 	private GameMode mode;
 	private Session session;
 
-// --- SET UP -------------------------------------------- //
-	
 	@BeforeEach
 	public void Setup() {
 		name = "Samuele";
@@ -27,14 +25,21 @@ public class TestSession {
 		session = SessionImpl.getInstance(player);
 	}
 	
-// --- GAME TEST --------------------------------------- //
-	@Test 
-	public void SessionCreate() {
-		assertFalse("All'inizio non ci sono partite attive",session.hasActiveGame());
+	@Test
+	public void singletonSameInstance() {
+	    Session session2 = SessionImpl.getInstance();
+	    assertSame(session, session2,"Singleton must always return the same instance.");
 	}
 	
-// --- PLAYER TEST --------------------------------------- //
-	
+	@Test 
+	public void singletonNull() {
+		SessionImpl.resetInstance();
+		assertThrows(IllegalStateException.class, () -> {
+			  SessionImpl.getInstance();
+		
+		},"Singleton session null");
+	}
+		
 	@Test 
 	public void  PlayerNotNull() {
 		assertNotNull(session.getFirstPlayer());
@@ -45,10 +50,35 @@ public class TestSession {
 		assertTrue(session.getFirstPlayer().equals(player));
 	}
 	
-
-
-
+	@Test 
+	public void unlockNextLevel() {
+		while (session.getUnlockedLevel() < session.getMaxLevel()) {
+	        session.unlockNextLevel();
+	    }
+		 assertThrows(IllegalStateException.class, () -> {
+		        session.unlockNextLevel();
+		    }, "Maximum level already reached.");
+	}
 	
+	@Test 
+	public void hasActiveGameStartSession() {
+		assertFalse("There are active games when the session is created.",session.hasActiveGame());
+	}
+	
+	@Test
+	public void testSetCurrentGame() {
+	    Game game = new GameImpl(GameMode.SINGLE_PLAYER, 1);
+	    session.setCurrentGame(game);
+	    assertEquals(game, session.getCurrentGame());
+	}
+	
+	@Test
+	public void testGameStats() {
+	    assertEquals(0, session.getBestScore());
+	    assertEquals(0, session.getTimeAvg());
+	    assertEquals(0, session.getAttemptsAvg());
+	}
+
 	
 }
 

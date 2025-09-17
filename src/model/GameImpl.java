@@ -38,8 +38,6 @@ public class GameImpl implements Game {
 	private int currentAttemptRow = 0; 
 
 	
-	
-	// CONSTRUCTOR FOR GAMEMODE = SINGLE_PLAYER
 	public GameImpl(GameMode mode,int level) {
 		this.state = GameState.PLAYING;
 		this.mode = mode;
@@ -55,15 +53,15 @@ public class GameImpl implements Game {
 		this.secretCode = makeSecretCode(level);
 
 	}
-		
 	
+	
+	@Override
 	public Code generateRandomAttempt() {
 		List<Color> available = new ArrayList<Color>(availableColors); 
 		Collections.shuffle(available);
 
 		return new CodeImpl(available);
 	}
-	
 
 	@Override
 	public GameState getState() {
